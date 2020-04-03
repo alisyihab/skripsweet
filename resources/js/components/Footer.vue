@@ -4,8 +4,8 @@
             <div class="pull-right hidden-xs">
                 <b>Version</b> 2.4.0
             </div>
-            <strong>Copyright &copy; {{ date('Y') }} .</strong> buiild with
-            <i class="fa fa-heart"></i>
+            <strong>Copyright &copy; {{ new Date().getFullYear() }} .</strong> buiild with
+            <i class="fa fa-heart" style="color:red;"></i>
             <a href="https://instagram.com/alibelucky">
                 alibelucky
             </a>

@@ -11,7 +11,7 @@ Vue.use(BootstrapVue);
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 new Vue({
-    el: '#as',
+    el: '#dw',
     router,
     store,
     components: {

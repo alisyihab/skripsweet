@@ -22,7 +22,7 @@
 </head>
 <body class="hold-transition skin-blue layout-top-nav">
 
-    <div id="dw">
+    <div id="as">
         <app></app>
     </div>
 

@@ -19,6 +19,30 @@ const router = new Router({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: 'outlets',
+            component: 'IndexOutlet',
+            children: [
+                {
+                    path: '',
+                    name: 'outlets.data',
+                    component: DataOutlet,
+                    meta: { title: 'Manage Outlets'}
+                },
+                {
+                    path: 'add',
+                    name: 'outlets.data',
+                    component: AddOutlet,
+                    meta: { title: 'Add Outlets' }
+                },
+                {
+                    path: 'edit/:id',
+                    name: 'outlets.edit',
+                    component: EditOutlet,
+                    meta: { title: 'Edit Outlet' }
+                }
+            ]
         }
     ]
 });

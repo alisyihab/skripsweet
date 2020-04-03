@@ -2,20 +2,27 @@
     <div class="col-md-12">
         <div class="panel">
             <div class="panel-heading">
-                <router-link :to="{ name: 'outlets.add' }" class="btn btn-primary btn-sm btn-flat">Tambah</router-link>
+                <router-link
+                    :to="{ name: 'outlets.add' }"
+                    class="btn btn-primary btn-sm btn-flat">
+                    Tambah
+                </router-link>
                 <div class="pull-right">
                     <input type="text" class="form-control" placeholder="Cari..." v-model="search">
                 </div>
             </div>
             <div class="panel-body">
-                <b-table striped hover bordered :items="outlets.data" :fields="fields" show-empty>
-                    <template slot="status" slot-scope="row">
+                <b-table striped hover bordered :items="outlets.data" :fields="fields" show-empty id="outlets">
+                    <template v-slot:cell(status)="row">
                         <span class="label label-success" v-if="row.item.status == 1">Active</span>
                         <span class="label label-default" v-else>Inactive</span>
                     </template>
-                    <template slot="actions" slot-scope="row">
-                        <router-link :to="{ name: 'outlets.edit', params: {id: row.item.code} }"
-                                     class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></router-link>
+                    <template v-slot:cell(actions)="row">
+                        <router-link
+                            :to="{ name: 'outlets.edit', params: {id: row.item.code} }"
+                            class="btn btn-warning btn-sm">
+                            <i class="fa fa-pencil"></i>
+                        </router-link>
                         <button class="btn btn-danger btn-sm" @click="deleteOutlet(row.item.id)"><i
                             class="fa fa-trash"></i></button>
                     </template>
@@ -23,18 +30,22 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <p v-if="outlets.data"><i class="fa fa-bars"></i> {{ outlets.data.length }} item dari {{
-                            outlets.meta.total }} total data</p>
+                        <p v-if="outlets.data">
+                            <i class="fa fa-bars"></i>
+                            {{ outlets.data.length }} item dari {{ outlets.meta.total }} total data
+                        </p>
                     </div>
                     <div class="col-md-6">
                         <div class="pull-right">
-                            <b-pagination
+                            <div class="overflow-auto">
+                            <b-pagination-nav
                                 v-model="page"
                                 :total-rows="outlets.meta.total"
                                 :per-page="outlets.meta.per_page"
                                 aria-controls="outlets"
                                 v-if="outlets.data && outlets.data.length > 0"
-                            ></b-pagination>
+                            ></b-pagination-nav>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,6 +109,11 @@
                     confirmButtonText: 'Iya, Lanjutkan!'
                 }).then((result) => {
                     if (result.value) {
+                        this.$swal.fire(
+                            'Deleted!',
+                            'Data Berhasil Dihapus.',
+                            'success'
+                        );
                         this.removeOutlet(id)
                     }
                 })

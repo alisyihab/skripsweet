@@ -2,7 +2,6 @@ import $axios from '../api.js'
 
 const state = () => ({
     outlets: [],
-
     outlet: {
         code: '',
         name: '',
@@ -83,7 +82,7 @@ const actions = {
                 resolve(response.data)
             })
         })
-    } ,
+    },
     removeOutlet({ dispatch }, payload) {
         return new Promise((resolve, reject) => {
             $axios.delete(`/outlets/${payload}`)
@@ -93,6 +92,7 @@ const actions = {
         })
     }
 };
+
 export default {
     namespaced: true,
     state,

@@ -15,6 +15,9 @@
                         <li>
                             <router-link :to="{ name: 'outlets.data' }">Outlets</router-link>
                         </li>
+                        <li>
+                            <router-link :to="{ name: 'couriers.data' }">Courier</router-link>
+                        </li>
                     </ul>
                 </div>
 

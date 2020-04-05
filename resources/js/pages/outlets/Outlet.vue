@@ -1,27 +1,30 @@
 <template>
     <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <router-link
-                    :to="{ name: 'outlets.add' }"
-                    class="btn btn-primary btn-sm btn-flat">
-                    Tambah
-                </router-link>
-                <div class="pull-right">
-                    <input type="text" class="form-control" placeholder="Cari..." v-model="search">
+        <div class="card">
+            <div class="card-header">
+                <h4>Data Outlet</h4>
+                <div class="card-header-action">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" v-model="search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="panel-body">
-                <b-table striped hover bordered :items="outlets.data" :fields="fields" show-empty id="outlets">
+            <div class="card-body p-0">
+                <b-table striped hover bordered :items="outlets.data" :fields="fields" show-empty>
                     <template v-slot:cell(status)="row">
-                        <span class="label label-success" v-if="row.item.status == 1">Active</span>
-                        <span class="label label-default" v-else>Inactive</span>
+                        <span class="badge badge-success" v-if="row.item.status == 1">Active</span>
+                        <span class="badge badge-secondary" v-else>Inactive</span>
                     </template>
                     <template v-slot:cell(actions)="row">
                         <router-link
                             :to="{ name: 'outlets.edit', params: {id: row.item.code} }"
                             class="btn btn-warning btn-sm">
-                            <i class="fa fa-pencil"></i>
+                            <i class="fas fa-edit"></i>
                         </router-link>
                         <button class="btn btn-danger btn-sm" @click="deleteOutlet(row.item.id)"><i
                             class="fa fa-trash"></i></button>
@@ -30,22 +33,21 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <p v-if="outlets.data">
+                        <p v-if="outlets.data" style="padding-left: 20px;">
                             <i class="fa fa-bars"></i>
-                            {{ outlets.data.length }} item dari {{ outlets.meta.total }} total data
+                            {{ outlets.data.length }} item dari {{ outlets.meta.total }}
+                            total data
                         </p>
                     </div>
                     <div class="col-md-6">
                         <div class="pull-right">
-                            <div class="overflow-auto">
-                            <b-pagination-nav
-                                v-model="page"
-                                :total-rows="outlets.meta.total"
-                                :per-page="outlets.meta.per_page"
-                                aria-controls="outlets"
-                                v-if="outlets.data && outlets.data.length > 0"
-                            ></b-pagination-nav>
-                            </div>
+                            <b-pagination
+                                    v-model="page"
+                                    :total-rows="outlets.meta.total"
+                                    :per-page="outlets.meta.per_page"
+                                    aria-controls="outlets"
+                                    v-if="outlets.data && outlets.data.length > 0" align="right">
+                            </b-pagination>
                         </div>
                     </div>
                 </div>

@@ -1,9 +1,6 @@
 <template>
     <footer class="main-footer">
-        <div class="container">
-            <div class="pull-right hidden-xs">
-                <b>Version</b> 2.4.0
-            </div>
+        <div class="footer-left">
             <strong>Copyright &copy; {{ new Date().getFullYear() }} .</strong> buiild with
             <i class="fa fa-heart" style="color:red;"></i>
             <a href="https://instagram.com/alibelucky">

@@ -1,16 +1,11 @@
 <template>
-    <div class="container">
-        <section class="content-header">
-            <h1>
-                Manage Outlets
-            </h1>
+    <div class="main-content">
+        <section class="section">
             <breadcrumb></breadcrumb>
         </section>
 
-        <section class="content">
-            <div class="row">
-                <router-view></router-view>
-            </div>
+        <section class="section-body">
+            <router-view></router-view>
         </section>
     </div>
 </template>

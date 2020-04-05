@@ -1,151 +1,173 @@
 <template>
-    <header class="main-header">
-        <nav class="navbar navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <router-link to="/" class="navbar-brand"><b>DW</b>Laundry</router-link>
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#navbar-collapse">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <router-link to="/">Home <span class="sr-only">(current)</span></router-link>
-                        </li>
-                        <li>
-                            <router-link :to="{ name: 'outlets.data' }">Outlets</router-link>
-                        </li>
-                        <li>
-                            <router-link :to="{ name: 'couriers.data' }">Courier</router-link>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="navbar-search-input" placeholder="Search">
+    <div>
+        <div class="navbar-bg"></div>
+        <nav class="navbar navbar-expand-lg main-navbar">
+            <form class="form-inline mr-auto">
+                <ul class="navbar-nav mr-3">
+                    <li>
+                        <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg">
+                            <i class="fas fa-bars"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none">
+                            <i class="fas fa-search"></i>
+                        </a>
+                    </li>
+                </ul>
+                <div class="search-element">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
+                    <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                    <div class="search-backdrop"></div>
+                    <div class="search-result">
+                        <div class="search-header">
+                            Histories
                         </div>
-                    </form>
+                        <div class="search-item">
+                            <a href="#">How to hack NASA using CSS</a>
+                            <a href="#" class="search-close"><i class="fas fa-times"></i></a>
+                        </div>
+                        <div class="search-item">
+                            <a href="#">
+                                <div class="search-icon bg-primary text-white mr-3">
+                                    <i class="fas fa-laptop"></i>
+                                </div>
+                                Create a new Homepage Design
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown messages-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-envelope-o"></i>
-                                <span class="label label-success">4</span>
+            </form>
+            <ul class="navbar-nav navbar-right">
+                <li class="dropdown dropdown-list-toggle">
+                    <a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep">
+                        <i class="far fa-envelope"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                        <div class="dropdown-header">Messages
+                            <div class="float-right">
+                                <a href="#">Mark All As Read</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-list-content dropdown-list-message">
+                            <a href="#" class="dropdown-item dropdown-item-unread">
+                                <div class="dropdown-item-avatar">
+                                    <img alt="image" :src="'stisla/img/avatar/avatar-1.png'" class="rounded-circle">
+                                    <div class="is-online"></div>
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    <b>Kusnaedi</b>
+                                    <p>Hello, Bro!</p>
+                                    <div class="time">10 Hours Ago</div>
+                                </div>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 4 messages</li>
-                                <li>
-                                    <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <div class="pull-left">
-                                                    <img src="https://via.placeholder.com/160" class="img-circle"
-                                                         alt="User Image">
-                                                </div>
-                                                <h4>
-                                                    Support Team
-                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="footer"><a href="#">See All Messages</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown notifications-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-bell-o"></i>
-                                <span class="label label-warning">10</span>
+                        </div>
+                        <div class="dropdown-footer text-center">
+                            <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </li>
+                <li class="dropdown dropdown-list-toggle">
+                    <a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep">
+                        <i class="far fa-bell"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                        <div class="dropdown-header">Notifications
+                            <div class="float-right">
+                                <a href="#">Mark All As Read</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-list-content dropdown-list-icons">
+                            <a href="#" class="dropdown-item dropdown-item-unread">
+                                <div class="dropdown-item-icon bg-primary text-white">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="dropdown-item-desc">
+                                    Template update is available now!
+                                    <div class="time text-primary">2 Min Ago</div>
+                                </div>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 10 notifications</li>
-                                <li>
-                                    <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="footer"><a href="#">View all</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown tasks-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-flag-o"></i>
-                                <span class="label label-danger">9</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 9 tasks</li>
-                                <li>
-                                    <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <h3>
-                                                    Design some buttons
-                                                    <small class="pull-right">20%</small>
-                                                </h3>
-                                                <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-aqua" style="width: 20%"
-                                                         role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                         aria-valuemax="100">
-                                                        <span class="sr-only">20% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="footer">
-                                    <a href="#">View all tasks</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="https://via.placeholder.com/160" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Alexander Pierce</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="user-header">
-                                    <img src="https://via.placeholder.com/160" class="img-circle" alt="User Image">
-                                    <p>Alexander Pierce - Web Developer <small>Member since Nov. 2012</small></p>
-                                </li>
-                                <li class="user-body">
-                                    <div class="row">
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Followers</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Sales</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Friends</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
-                                    <div class="pull-right">
-                                        <a href="javascript:void(0)" @click="logout" class="btn btn-default btn-flat">Sign
-                                            out</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+                        </div>
+                        <div class="dropdown-footer text-center">
+                            <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                        <img alt="image" :src="'stisla/img/avatar/avatar-1.png'" class="rounded-circle mr-1">
+                        <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-title">Logged in 5 min ago</div>
+                        <a href="features-profile.html" class="dropdown-item has-icon">
+                            <i class="far fa-user"></i> Profile
+                        </a>
+                        <a href="features-activities.html" class="dropdown-item has-icon">
+                            <i class="fas fa-bolt"></i> Activities
+                        </a>
+                        <a href="features-settings.html" class="dropdown-item has-icon">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="javascript:void(0)" @click="logout" class="dropdown-item has-icon text-danger">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
         </nav>
-    </header>
+        <div class="main-sidebar">
+            <aside id="sidebar-wrapper">
+                <div class="sidebar-brand">
+                    <router-link to="/">Loundry</router-link>
+                </div>
+                <div class="sidebar-brand sidebar-brand-sm">
+                    <router-link to="/">LD</router-link>
+                </div>
+                <ul class="sidebar-menu">
+                    <li>
+                        <router-link to="/" class="nav-link">
+                            <i class="fas fa-laptop"></i>
+                            <span>Dashboard</span>
+                         </router-link>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link has-dropdown">
+                            <i class="fas fa-truck"></i>
+                            <span>Manajemen Kurir</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <router-link class="nav-link" :to="{ name: 'couriers.data' }">
+                                    Daftar Kurir
+                                </router-link>
+                            </li>
+                            <li><a class="nav-link" href="#">Tambah Data</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link has-dropdown">
+                            <i class="fas fa-store-alt"></i>
+                            <span>Outlet</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <router-link class="nav-link" :to="{ name: 'outlets.data' }">
+                                    Outlet
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link class="nav-link" :to="{ name: 'outlets.add' }">
+                                    Tambah Data
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </aside>
+        </div>
+    </div>
 </template>
 
 <script>

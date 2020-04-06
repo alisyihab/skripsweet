@@ -13,7 +13,9 @@
         <div class="form-group" :class="{ 'has-error': errors.password }">
             <label>Password</label>
             <input type="password" class="form-control" v-model="courier.password">
-            <p class="text-warning">Leave blank if you don't want to change password</p>
+            <p class="text-warning" v-show="$route.name === 'couriers.edit'">
+                Leave blank if you don't want to change password
+            </p>
             <p class="text-danger" v-if="errors.password">{{ errors.password[0] }}</p>
         </div>
         <div class="form-group" :class="{ 'has-error': errors.outlet_id }">
@@ -30,7 +32,9 @@
             <div id="preview">
                 <img v-if="url" :src="url"/>
             </div>
-            <p class="text-warning">Leave blank if you don't want to change photo</p>
+            <p class="text-warning" v-show="$route.name === 'couriers.edit'">
+                Leave blank if you don't want to change photo
+            </p>
             <p class="text-danger" v-if="errors.photo">{{ errors.photo[0] }}</p>
         </div>
     </div>

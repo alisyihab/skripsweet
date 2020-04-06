@@ -2,17 +2,18 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h4>Tambah Data Kurir</h4>
+                <h4>Edit Data Kurir</h4>
             </div>
             <div class="card-body">
-                <courier-form ref="formCourier"></courier-form>
+                <courier-form ref="courierForm"></courier-form>
                 <div class="form-group">
                     <router-link :to="{ name: 'couriers.data' }" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-alt-circle-left"></i>
                         Kembali
                     </router-link>
                     <button class="btn btn-outline-primary" @click.prevent="submit">
-                        <i class="fa fa-save"></i> Tambah Baru
+                        <i class="fa fa-save"></i>
+                        Update Data
                     </button>
                 </div>
             </div>
@@ -21,14 +22,13 @@
 </template>
 
 <script>
-    import { mapActions, mapState, mapMutations } from  'vuex'
+    import { mapActions, mapState } from 'vuex'
     import FormCourier from './Form.vue'
-
     export default {
-        name: "AddCourier",
+        name: "EditCourier",
         methods: {
             submit() {
-                this.$refs.formCourier.submit()
+                this.$refs.courierForm.submit()
             }
         },
         components: {
@@ -36,7 +36,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

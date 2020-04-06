@@ -2556,6 +2556,56 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/couriers/Edit.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/couriers/Edit.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _Form_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form.vue */ "./resources/js/pages/couriers/Form.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "EditCourier",
+  methods: {
+    submit: function submit() {
+      this.$refs.courierForm.submit();
+    }
+  },
+  components: {
+    'courier-form': _Form_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/couriers/Form.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/couriers/Form.vue?vue&type=script&lang=js& ***!
@@ -2707,6 +2757,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             outlet_id: ''
           };
 
+          _this2.$swal.fire('Success!', 'Data Berhasil Diubah!.', 'success');
+
           _this2.$router.push({
             name: 'couriers.data'
           });
@@ -2727,6 +2779,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -2967,6 +3020,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -51399,7 +51453,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("h4", [_vm._v("Add New Courier")])
+      _c("h4", [_vm._v("Tambah Data Kurir")])
     ])
   }
 ]
@@ -51594,6 +51648,88 @@ var staticRenderFns = [
       _c("button", { staticClass: "btn btn-primary" }, [
         _c("i", { staticClass: "fas fa-search" })
       ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/couriers/Edit.vue?vue&type=template&id=fadf7acc&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/couriers/Edit.vue?vue&type=template&id=fadf7acc& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "col-md-12" }, [
+    _c("div", { staticClass: "card" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "card-body" },
+        [
+          _c("courier-form", { ref: "courierForm" }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-outline-secondary",
+                  attrs: { to: { name: "couriers.data" } }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-arrow-alt-circle-left" }),
+                  _vm._v("\n                    Kembali\n                ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.submit($event)
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-save" }),
+                  _vm._v("\n                    Update Data\n                ")
+                ]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", [_vm._v("Edit Data Kurir")])
     ])
   }
 ]
@@ -51889,8 +52025,11 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.$route.name !== "couriers.add",
-                    expression: "$route.name !== 'couriers.add' "
+                    value:
+                      _vm.$route.name !== "couriers.add" &&
+                      _vm.$route.name !== "couriers.edit",
+                    expression:
+                      "$route.name !== 'couriers.add' && $route.name !== 'couriers.edit' "
                   }
                 ],
                 staticClass: "btn btn-primary",
@@ -52338,7 +52477,7 @@ var render = function() {
                     name: "show",
                     rawName: "v-show",
                     value: _vm.$route.name !== "outlets.data",
-                    expression: "$route.name !== 'outlets.data' "
+                    expression: "$route.name !== 'outlets.data'"
                   }
                 ],
                 staticClass: "btn btn-icon",
@@ -52363,8 +52502,11 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.$route.name !== "outlets.add",
-                    expression: "$route.name !== 'outlets.add' "
+                    value:
+                      _vm.$route.name !== "outlets.add" &&
+                      _vm.$route.name !== "outlets.edit",
+                    expression:
+                      "$route.name !== 'outlets.add' && $route.name !== 'outlets.edit'"
                   }
                 ],
                 staticClass: "btn btn-primary",
@@ -69318,6 +69460,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/couriers/Edit.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/pages/couriers/Edit.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Edit_vue_vue_type_template_id_fadf7acc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Edit.vue?vue&type=template&id=fadf7acc& */ "./resources/js/pages/couriers/Edit.vue?vue&type=template&id=fadf7acc&");
+/* harmony import */ var _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Edit.vue?vue&type=script&lang=js& */ "./resources/js/pages/couriers/Edit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Edit_vue_vue_type_template_id_fadf7acc___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Edit_vue_vue_type_template_id_fadf7acc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/couriers/Edit.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/couriers/Edit.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/pages/couriers/Edit.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Edit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/couriers/Edit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/couriers/Edit.vue?vue&type=template&id=fadf7acc&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/pages/couriers/Edit.vue?vue&type=template&id=fadf7acc& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_fadf7acc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Edit.vue?vue&type=template&id=fadf7acc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/couriers/Edit.vue?vue&type=template&id=fadf7acc&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_fadf7acc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_fadf7acc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/pages/couriers/Form.vue":
 /*!**********************************************!*\
   !*** ./resources/js/pages/couriers/Form.vue ***!
@@ -69841,6 +70052,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_couriers_Index__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/couriers/Index */ "./resources/js/pages/couriers/Index.vue");
 /* harmony import */ var _pages_couriers_Courier__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/couriers/Courier */ "./resources/js/pages/couriers/Courier.vue");
 /* harmony import */ var _pages_couriers_Add__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/couriers/Add */ "./resources/js/pages/couriers/Add.vue");
+/* harmony import */ var _pages_couriers_Edit__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/couriers/Edit */ "./resources/js/pages/couriers/Edit.vue");
+
 
 
 
@@ -69903,7 +70116,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       name: 'couriers.data',
       component: _pages_couriers_Courier__WEBPACK_IMPORTED_MODULE_10__["default"],
       meta: {
-        title: 'Manage Couriers'
+        title: 'Manage Kurir'
       }
     }, {
       path: 'add',
@@ -69911,6 +70124,13 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
       component: _pages_couriers_Add__WEBPACK_IMPORTED_MODULE_11__["default"],
       meta: {
         title: 'Tambah Kurir'
+      }
+    }, {
+      path: 'edit/:id',
+      name: 'couriers.edit',
+      component: _pages_couriers_Edit__WEBPACK_IMPORTED_MODULE_12__["default"],
+      meta: {
+        title: 'Edit Kurir'
       }
     }]
   }]

@@ -1,17 +1,18 @@
 <template>
     <div class="main-content">
-        <section class="section">
+       <section class="section">
             <div class="section-header">
                 <div class="section-header-back">
                     <router-link :to="{ name: 'outlets.data' }" class="btn btn-icon"
-                                 v-show="$route.name !== 'outlets.data' ">
+                                 v-show="$route.name !== 'outlets.data'">
                         <i class="fas fa-arrow-left"></i>
                     </router-link>
                 </div>
                 <h1>{{ $route.meta.title }}</h1>
                 <div class="section-header-button">
                     <router-link :to="{ name: 'outlets.add' }"
-                                 class="btn btn-primary" v-show="$route.name !== 'outlets.add' ">
+                                 class="btn btn-primary"
+                                 v-show="$route.name !== 'outlets.add' && $route.name !== 'outlets.edit'">
                         Tambah Data
                     </router-link>
                 </div>

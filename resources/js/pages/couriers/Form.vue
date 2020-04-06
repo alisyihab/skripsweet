@@ -100,12 +100,12 @@ export default {
             this.url = URL.createObjectURL(this.courier.photo)
         },
         submit() {
-            let form = new FormData()
-            form.append('name', this.courier.name)
-            form.append('email', this.courier.email)
-            form.append('password', this.courier.password)
-            form.append('outlet_id', this.courier.outlet_id)
-            form.append('photo', this.courier.photo)
+            let form = new FormData();
+            form.append('name', this.courier.name);
+            form.append('email', this.courier.email);
+            form.append('password', this.courier.password);
+            form.append('outlet_id', this.courier.outlet_id);
+            form.append('photo', this.courier.photo);
 
             if (this.$route.name === 'couriers.add') {
                 this.submitCourier(form).then(() => {
@@ -124,7 +124,7 @@ export default {
                     this.$router.push({ name: 'couriers.data' })
                 })
             } else if (this.$route.name === 'couriers.edit') {
-                this.SET_ID_UPDATE(this.$route.params.id)
+                this.SET_ID_UPDATE(this.$route.params.id);
                 this.updateCourier(form).then(() => {
                     this.courier = {
                         name: '',
@@ -133,6 +133,11 @@ export default {
                         photo: '',
                         outlet_id: ''
                     };
+                     this.$swal.fire(
+                        'Success!',
+                        'Data Berhasil Diubah!.',
+                        'success'
+                    );
                     this.$router.push({ name: 'couriers.data' })
                 })
             }

@@ -11,7 +11,8 @@
                 <h1>{{ $route.meta.title }}</h1>
                 <div class="section-header-button">
                     <router-link :to="{ name: 'couriers.add' }"
-                                 class="btn btn-primary" v-show="$route.name !== 'couriers.add' ">
+                                 class="btn btn-primary"
+                                 v-show="$route.name !== 'couriers.add' && $route.name !== 'couriers.edit' ">
                         Tambah Data
                     </router-link>
                 </div>

@@ -3,12 +3,15 @@ import Router from 'vue-router'
 import Home from './pages/Home.vue'
 import Login from './pages/Login.vue'
 import store from './store.js'
+
 import IndexOutlet from './pages/outlets/Index.vue'
 import DataOutlet from './pages/outlets/Outlet.vue'
 import AddOutlet from './pages/outlets/Add.vue'
 import EditOutlet from './pages/outlets/Edit.vue'
+
 import IndexCourier from './pages/couriers/Index'
 import DataCourier from './pages/couriers/Courier'
+import AddCourier from './pages/couriers/Add'
 
 Vue.use(Router);
 
@@ -60,6 +63,12 @@ const router = new Router({
                     name: 'couriers.data',
                     component: DataCourier,
                     meta: { title: 'Manage Couriers' }
+                },
+                {
+                    path: 'add',
+                    name: 'couriers.add',
+                    component: AddCourier,
+                    meta: { title: 'Tambah Kurir' }
                 },
             ]
         }

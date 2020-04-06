@@ -143,7 +143,11 @@
                                     Daftar Kurir
                                 </router-link>
                             </li>
-                            <li><a class="nav-link" href="#">Tambah Data</a></li>
+                            <li>
+                                <router-link class="nav-link" :to="{ name: 'couriers.add' } ">
+                                    Tambah Data
+                                </router-link>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

@@ -168,6 +168,24 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link has-dropdown">
+                            <i class="fas fa-cube"></i>
+                            <span>Laundry Paket</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <router-link class="nav-link" :to="{ name: 'products.data' }">
+                                    Laundry Produk
+                                </router-link>
+                            </li>
+                            <li>
+                                <router-link class="nav-link" :to="{ name: 'products.add' }">
+                                    Tambah Data
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </aside>
         </div>

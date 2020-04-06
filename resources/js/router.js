@@ -94,6 +94,12 @@ const router = new Router({
                     name: 'products.data',
                     component: DataProduct,
                     meta: {title: 'Manage Produk Laundry'}
+                },
+                {
+                    path: 'add',
+                    name: 'products.add',
+                    component: AddProduct,
+                    meta: { title: 'Tambah Produk Laundry'}
                 }
             ]
         }

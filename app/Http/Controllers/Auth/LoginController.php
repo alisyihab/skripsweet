@@ -45,6 +45,11 @@ class LoginController extends Controller
         $this->validate($request, [
             'email' => 'required|email|exists:users,email',
             'password' => 'required'
+        ], [
+            'email.required' => 'Tidak Boleh kosong!',
+            'email.exists' => 'Email tidak terdaftar!',
+            'email.email' => 'Format email tidak valid!',
+            'password.required' => 'Tidak Boleh kosong!'
         ]);
 
         $auth = $request->except(['remember_me']);

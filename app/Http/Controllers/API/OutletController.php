@@ -35,6 +35,14 @@ class OutletController extends Controller
             'name' => 'required|string|max:100',
             'address' => 'required|string',
             'phone' => 'required|max:13'
+        ], [
+            'code.required' => 'Field tidak boleh kosong!',
+            'code.unique' => 'Code sudah terdaftar',
+            'name.required' => 'Field tidak boleh kosong',
+            'name.max' => 'Max karakter tidak boleh lebih dari 100 karakter',
+            'address.required' => 'Field tidak boleh kosong',
+            'phone.required' => 'Field tidak boleh kosong',
+            'phone.max' => 'No telp tidak boleh lebih dari 13 karakter'
         ]);
 
         Outlet::create($request->all());
@@ -67,6 +75,14 @@ class OutletController extends Controller
             'name' => 'required|string|max:100',
             'address' => 'required|string',
             'phone' => 'required|max:13'
+        ], [
+            'code.required' => 'Field tidak boleh kosong!',
+            'code.unique' => 'Code sudah terdaftar',
+            'name.required' => 'Field tidak boleh kosong',
+            'name.max' => 'Max karakter tidak boleh lebih dari 100 karakter',
+            'address.required' => 'Field tidak boleh kosong',
+            'phone.required' => 'Field tidak boleh kosong',
+            'phone.max' => 'No telp tidak boleh lebih dari 13 karakter'
         ]);
 
         $outlet = Outlet::whereCode($id)->first();

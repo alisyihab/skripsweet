@@ -43,6 +43,17 @@ class UserController extends Controller
             'password' => 'required|min:6|string',
             'outlet_id' => 'required|exists:outlets,id',
             'photo' => 'required|image|max:5120'
+        ], [
+            'name.required' => 'Field tidak boleh Kosong!',
+            'name.max' => 'Huruf tidak boleh lebih dari 150 karakter!',
+            'email.required' => 'Field tidak boleh kosong!',
+            'email.email' => 'Format email tidak valid. co : ali.syihab@mail.com',
+            'email.unique' => 'Email sudah terdaftar!',
+            'password.required' => 'Field tidak boleh kosong!',
+            'password.min' => 'Password min 6 karakter',
+            'outlet_id.required' => 'Field tidak boleh kosong!',
+            'photo.required' => 'Field tidak boleh kosong',
+            'photo.max' => 'Max upload tidak boleh lebih dari 5MB !'
         ]);
 
         DB::beginTransaction();
@@ -109,6 +120,15 @@ class UserController extends Controller
             'password' => 'nullable|min:6|string',
             'outlet_id' => 'required|exists:outlets,id',
             'photo' => 'nullable|image'
+        ], [
+            'name.required' => 'Field tidak boleh Kosong!',
+            'name.max' => 'Huruf tidak boleh lebih dari 150 karakter!',
+            'email.required' => 'Field tidak boleh kosong!',
+            'email.email' => 'Format email tidak valid. co : ali.syihab@mail.com',
+            'password.min' => 'Password minimal 6 karakter',
+            'outlet_id.required' => 'Field tidak boleh kosong!',
+            'photo.required' => 'Field tidak boleh kosong',
+            'photo.max' => 'Max upload tidak boleh lebih dari 5MB !'
         ]);
 
         try {

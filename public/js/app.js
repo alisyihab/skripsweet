@@ -2545,6 +2545,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         confirmButtonText: 'Iya, Lanjutkan!'
       }).then(function (result) {
         if (result.value) {
+          _this.$swal.fire('Deleted!', 'Data Berhasil Dihapus.', 'success');
+
           _this.removeCourier(id);
         }
       });
@@ -51465,6 +51467,7 @@ var render = function() {
               striped: "",
               hover: "",
               bordered: "",
+              responsive: "",
               items: _vm.couriers.data,
               fields: _vm.fields,
               "show-empty": ""
@@ -52461,6 +52464,7 @@ var render = function() {
               striped: "",
               hover: "",
               bordered: "",
+              responsive: "",
               items: _vm.outlets.data,
               fields: _vm.fields,
               "show-empty": ""

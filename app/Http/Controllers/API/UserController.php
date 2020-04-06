@@ -5,11 +5,13 @@ namespace App\Http\Controllers\API;
 use App\Http\Resources\UserCollection;
 use App\User;
 use App\Http\Controllers\Controller;
+
 use Dotenv\Parser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use File;
 
 class UserController extends Controller
 {
@@ -74,5 +76,21 @@ class UserController extends Controller
                'data' => $e->getMessage()
             ], 200);
         }
+    }
+
+    /**
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function destroy($id)
+    {
+        $user =  User::find($id);
+        File::delete(storage_path('app/public/couriers/' . $user->photo));
+        $user->delete();
+
+        return response()->json([
+           'status' => 'success'
+        ]);
     }
 }

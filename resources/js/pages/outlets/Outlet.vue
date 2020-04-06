@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="card-body p-0">
-                <b-table striped hover bordered :items="outlets.data" :fields="fields" show-empty>
+                <b-table striped hover bordered responsive :items="outlets.data" :fields="fields" show-empty>
                     <template v-slot:cell(status)="row">
                         <span class="badge badge-success" v-if="row.item.status == 1">Active</span>
                         <span class="badge badge-secondary" v-else>Inactive</span>

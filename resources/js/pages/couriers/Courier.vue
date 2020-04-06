@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="card-body p-0">
-                <b-table striped hover bordered :items="couriers.data" :fields="fields" show-empty>
+                <b-table striped hover bordered responsive :items="couriers.data" :fields="fields" show-empty>
                     <template v-slot:cell(photo)="row">
                         <img :src="'/storage/couriers/' + row.item.photo" :width="80" :height="50" :alt="row.item.name">
                     </template>
@@ -111,6 +111,11 @@
                     confirmButtonText: 'Iya, Lanjutkan!'
                 }).then((result) => {
                     if (result.value) {
+                        this.$swal.fire(
+                            'Deleted!',
+                            'Data Berhasil Dihapus.',
+                            'success'
+                        );
                         this.removeCourier(id)
                     }
                 })

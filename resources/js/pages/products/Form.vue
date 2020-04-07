@@ -17,7 +17,17 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group" :class="{ 'has-error': errors.laundry_type }">
-                    <label>Jenis Jasa <sup><a @click="showForm = true" href="javascript:void(0)" v-if="!showForm">Add New</a></sup></label>
+                    <label>
+                        Jenis Jasa
+                        <sup>
+                            <a @click="showForm = true"
+                               href="javascript:void(0)"
+                               v-if="!showForm"
+                               v-show="$route.name === 'products.add'">
+                                Add New
+                            </a>
+                        </sup>
+                    </label>
                     <select v-model="product.laundry_type" class="form-control">
                         <option value="">Pilih</option>
                         <option v-for="(row, index) in laundry_types" :key="index" :value="row.id">{{ row.name }}</option>
@@ -82,7 +92,7 @@ export default {
         })
     },
     methods: {
-        ...mapActions('product', ['getLaundryType', 'addLaundryType', 'addProductLaundry', 'editProduct', 'updateCourier']), //ME-LOAD SEMUA FUNGSI YANG ADA DI MODULE PRODUCT
+        ...mapActions('product', ['getLaundryType', 'addLaundryType', 'addProductLaundry', 'editProduct', 'updateCourier']),
 
         addNewLaundryType() {
             this.addLaundryType({ name_laundry_type: this.laundry_type }).then(() => {

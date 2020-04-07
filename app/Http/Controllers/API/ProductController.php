@@ -102,4 +102,56 @@ class ProductController extends Controller
             ]);
         }
     }
+
+    /**
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function edit($id)
+    {
+        $laundry = LaundryPrice::find($id);
+
+        return response()->json([
+           'status' => 'success',
+            'data' => $laundry
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function update(Request $request, $id)
+    {
+        $laundry = LaundryPrice::find($id);
+
+        $laundry->update([
+            'name' => $request->name,
+            'unit_types' => $request->unit_types,
+            'laundry_type_id' => $request->laundry_type,
+            'price' => $request->price,
+        ]);
+
+        return response()->json([
+           'status' => 'success'
+        ]);
+    }
+
+    /**
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function destroy($id)
+    {
+        $laundry = LaundryPrice::find($id);
+        $laundry->delete();
+
+        return response()->json([
+           'status' => 'success'
+        ]);
+    }
 }

@@ -17,6 +17,7 @@ import EditCourier from './pages/couriers/Edit'
 import IndexProduct from './pages/products/Index.vue'
 import DataProduct from './pages/products/Product.vue'
 import AddProduct from './pages/products/Add.vue'
+import EditProduct from './pages/products/Edit.vue'
 
 Vue.use(Router);
 
@@ -100,6 +101,12 @@ const router = new Router({
                     name: 'products.add',
                     component: AddProduct,
                     meta: { title: 'Tambah Produk Laundry'}
+                },
+                {
+                    path: 'edit/:id',
+                    name: 'products.edit',
+                    component: EditProduct,
+                    meta: { title: 'Edit Produk Laundry' }
                 }
             ]
         }

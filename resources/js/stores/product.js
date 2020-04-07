@@ -84,11 +84,11 @@ const actions = {
                 })
         })
     },
-    removeProduct({commit}, payload) {
+    removeProduct({dispatch}, payload) {
         return new Promise((resolve, reject) => {
             $axios.delete(`/product/${payload}`)
                 .then((response) => {
-                    resolve(response.data)
+                    dispatch('getProducts').then(() => resolve())
                 })
         })
     }

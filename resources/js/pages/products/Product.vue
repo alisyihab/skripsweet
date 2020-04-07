@@ -22,8 +22,11 @@
                     <template v-slot:cell(user_id)="row">
                         {{ row.item.user.name }}
                     </template>
+                    <template v-slot:cell(price)="row">
+                        {{ row.item.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true })  }}
+                    </template>
                     <template v-slot:cell(actions)="row">
-                        <router-link :to="{ name: 'products .edit', params: {id: row.item.id} }" class="btn btn-warning btn-sm">
+                        <router-link :to="{ name: 'products.edit', params: {id: row.item.id} }" class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i>
                         </router-link>
                         <button class="btn btn-danger btn-sm" @click="deleteProduct(row.item.id)">
@@ -60,6 +63,10 @@
 
 <script>
     import {mapActions, mapState} from "vuex";
+    import Vue from 'vue'
+    import Vue2Filters from 'vue2-filters'
+
+    Vue.use(Vue2Filters);
 
     export default {
         name: "DataCourier",
@@ -69,11 +76,11 @@
         data() {
             return {
                 fields: [
-                    { key: 'name', label: 'Nama Item' },
-                    { key: 'unit_types', label: 'Tipe' },
-                    { key: 'laundry_type', label: 'Jenis jasa' },
-                    { key: 'price', label: 'Harga' },
-                    { key: 'user_id', label: 'Admin' },
+                    { key: 'name', label: 'Nama Item', sortable: true },
+                    { key: 'unit_types', label: 'Tipe', sortable: true },
+                    { key: 'laundry_type', label: 'Jenis jasa', sortable: true },
+                    { key: 'price', label: 'Harga', sortable: true },
+                    { key: 'user_id', label: 'Admin', sortable: true },
                     { key: 'actions', label: 'Aksi' }
                 ],
                 search: ''
@@ -122,6 +129,9 @@
                     }
                 })
             }
+        },
+        components: {
+            mixins: [Vue2Filters.mixin],
         }
     }
 </script>

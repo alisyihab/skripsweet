@@ -30,7 +30,7 @@
             <label>Foto</label>
             <input type="file" class="form-control" accept="image/*" @change="uploadImage($event)" id="file-input">
             <div id="preview">
-                <img v-if="url" :src="url"/>
+                <img class="img-responsive" v-if="url" :src="url"/>
             </div>
             <p class="text-warning" v-show="$route.name === 'couriers.edit'">
                 Leave blank if you don't want to change photo
@@ -50,7 +50,14 @@
     }
 
     #preview img {
-        max-width: 400px;
+        max-width: 400p;
+    }
+
+    @media only screen and (max-width: 768px) {
+        /* For mobile phones: */
+        #preview img {
+            width: 70%;
+        }
     }
 </style>
 

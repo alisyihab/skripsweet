@@ -50,7 +50,10 @@
 
         <div class="form-group" :class="{ 'has-error': errors.price }">
             <label>Harga</label>
-            <input type="number" class="form-control" v-model="product.price">
+            <money class="form-control"
+                   type="tel"
+                   v-model.lazy="product.price"
+                   v-bind="money" />
             <p class="text-danger" v-if="errors.price">{{ errors.price[0] }}</p>
         </div>
     </div>
@@ -58,6 +61,8 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import {Money} from 'v-money'
+
 export default {
     name: 'FormCourier',
     created() {
@@ -82,7 +87,15 @@ export default {
                 laundry_type: ''
             },
             laundry_type: '',
-            showForm: false
+            showForm: false,
+            money: {
+                decimal: ',',
+                thousands: '.',
+                prefix: 'IDR ',
+                suffix: '',
+                precision: 0,
+                masked: false /* doesn't work with directive */
+            }
         }
     },
     computed: {
@@ -141,6 +154,7 @@ export default {
                 })
             }
         }
-    }
+    },
+    components: {Money}
 }
 </script>

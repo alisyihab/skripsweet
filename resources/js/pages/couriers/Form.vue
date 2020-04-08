@@ -50,7 +50,7 @@
     }
 
     #preview img {
-        max-width: 400p;
+        max-width: 400px;
     }
 
     @media only screen and (max-width: 768px) {

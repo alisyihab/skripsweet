@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use File;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -26,6 +27,15 @@ class UserController extends Controller
         }
         $users = $users->paginate(10);
         return new UserCollection($users);
+    }
+
+    /**
+     * @return UserCollection
+     */
+    public function userLists()
+    {
+        $user = User::where('role', '!=', 3)->get();
+        return new UserCollection($user);
     }
 
     /**
@@ -65,7 +75,7 @@ class UserController extends Controller
                 $file->storeAs('public/couriers', $name);
             }
 
-            User::create([
+            $user = User::create([
                'name' => $request->name,
                 'email' => $request->email,
                 'password' => $request->password,
@@ -74,6 +84,7 @@ class UserController extends Controller
                 'outlet_id' => $request->outlet_id,
                 'role' => 3,
             ]);
+            $user->assignRole('courier');
             DB::commit();
 
             return response()->json([
@@ -173,6 +184,36 @@ class UserController extends Controller
 
         return response()->json([
            'status' => 'success'
+        ]);
+    }
+
+    /**
+     * @return UserCollection
+     */
+    public function userList()
+    {
+        $user = User::where('role', '!=', 3)->get();
+
+        return new UserCollection($user);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function getUserLogin()
+    {
+        $user = request()->user();
+        $permissions = [];
+        foreach (Permission::all() as $permission) {
+            if (request()->user()->can($permission->name)) {
+                $permissions[] = $permission->name;
+            }
+        }
+        $user['permission'] = $permissions;
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $user
         ]);
     }
 }

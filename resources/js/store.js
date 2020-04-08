@@ -5,6 +5,7 @@ import auth from './stores/auth.js'
 import outlet from './stores/outlet.js'
 import courier from "./stores/courier"
 import product from "./stores/product";
+import user from "./stores/user";
 
 Vue.use(Vuex);
 
@@ -13,7 +14,8 @@ const store = new Vuex.Store({
         auth,
         outlet,
         courier,
-        product
+        product,
+        user
     },
     state: {
         token: localStorage.getItem('token'),

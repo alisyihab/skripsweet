@@ -1,20 +1,13 @@
 <template>
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h4>Data Kurir</h4>
-                <div class="card-header-action">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" v-model="search">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <router-link :to="{ name: 'couriers.add' }" class="btn btn-primary btn-sm btn-flat">Tambah</router-link>
+                <div class="pull-right">
+                    <input type="text" class="form-control" placeholder="Cari..." v-model="search">
                 </div>
             </div>
-            <div class="card-body p-0">
+            <div class="panel-body">
                 <b-table striped hover bordered responsive :items="couriers.data" :fields="fields" show-empty>
                     <template v-slot:cell(photo)="row">
                         <img :src="'/storage/couriers/' + row.item.photo" :width="80" :height="50" :alt="row.item.name">
@@ -24,17 +17,17 @@
                     </template>
                     <template v-slot:cell(actions)="row">
                         <router-link :to="{ name: 'couriers.edit', params: {id: row.item.id} }" class="btn btn-warning btn-sm">
-                            <i class="fas fa-edit"></i>
+                            <i class="fa fa-edit"></i>
                         </router-link>
                         <button class="btn btn-danger btn-sm" @click="deleteCourier(row.item.id)">
-                            <i class="fas fa-trash"></i>
+                            <i class="fa fa-trash"></i>
                         </button>
                     </template>
                 </b-table>
 
                 <div class="row">
                     <div class="col-md-6">
-                        <p v-if="couriers.data" style="padding-left: 20px;">
+                        <p v-if="couriers.data">
                             <i class="fa fa-bars"></i>
                             {{ couriers.data.length }} item dari {{ couriers.meta.total }}
                             total data
@@ -47,7 +40,7 @@
                                     :total-rows="couriers.meta.total"
                                     :per-page="couriers.meta.per_page"
                                     aria-controls="couriers"
-                                    v-if="couriers.data && couriers.data.length > 0" align="right">
+                                    v-if="couriers.data && couriers.data.length > 0">
                             </b-pagination>
                         </div>
                     </div>

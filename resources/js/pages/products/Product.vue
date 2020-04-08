@@ -1,20 +1,13 @@
 <template>
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h4>Data Tipe Laundry</h4>
-                <div class="card-header-action">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" v-model="search">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <router-link :to="{ name: 'products.add' }" class="btn btn-primary btn-sm btn-flat">Tambah</router-link>
+                <div class="pull-right">
+                    <input type="text" class="form-control" placeholder="Cari..." v-model="search">
                 </div>
             </div>
-            <div class="card-body p-0">
+            <div class="panel-body">
                 <b-table striped hover bordered responsive :items="products.data" :fields="fields" show-empty>
                     <template v-slot:cell(laundry_type)="row">
                         {{ row.item.type.name }}
@@ -27,10 +20,10 @@
                     </template>
                     <template v-slot:cell(actions)="row">
                         <router-link :to="{ name: 'products.edit', params: {id: row.item.id} }" class="btn btn-warning btn-sm">
-                            <i class="fas fa-edit"></i>
+                            <i class="fa fa-pencil"></i>
                         </router-link>
                         <button class="btn btn-danger btn-sm" @click="deleteProduct(row.item.id)">
-                            <i class="fas fa-trash"></i>
+                            <i class="fa fa-trash"></i>
                         </button>
                     </template>
                 </b-table>

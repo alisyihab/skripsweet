@@ -1,8 +1,11 @@
 <template>
-    <div class="main-wrapper">
-        <app-header v-if="isAuth"/>
+    <div class="wrapper">
+        <app-header v-if="isAuth" />
+
+        <div class="content-wrapper">
             <router-view></router-view>
-        <app-footer v-if="isAuth"/>
+        </div>
+        <app-footer v-if="isAuth" />
     </div>
 </template>
 <script>

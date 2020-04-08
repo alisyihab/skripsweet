@@ -1924,6 +1924,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -51117,11 +51120,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "main-wrapper" },
+    { staticClass: "wrapper" },
     [
       _vm.isAuth ? _c("app-header") : _vm._e(),
       _vm._v(" "),
-      _c("router-view"),
+      _c("div", { staticClass: "content-wrapper" }, [_c("router-view")], 1),
       _vm._v(" "),
       _vm.isAuth ? _c("app-footer") : _vm._e()
     ],
@@ -51209,7 +51212,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "pull-right hidden-xs" }, [
       _c("b", [_vm._v("Build")]),
       _vm._v(" with "),
-      _c("i", { staticClass: "fa fa-heart" }),
+      _c("i", { staticClass: "fa fa-heart", staticStyle: { color: "red" } }),
       _vm._v(" "),
       _c("a", { attrs: { href: "https://instagram.com", target: "_blank" } }, [
         _vm._v("alibelucky")

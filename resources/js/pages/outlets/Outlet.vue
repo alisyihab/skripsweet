@@ -34,13 +34,13 @@
                     </div>
                     <div class="col-md-6">
                         <div class="pull-right">
-                            <b-pagination
+                            <b-pagination-nav
                                     v-model="page"
                                     :total-rows="outlets.meta.total"
                                     :per-page="outlets.meta.per_page"
                                     aria-controls="outlets"
                                     v-if="outlets.data && outlets.data.length > 0" align="right">
-                            </b-pagination>
+                            </b-pagination-nav>
                         </div>
                     </div>
                 </div>

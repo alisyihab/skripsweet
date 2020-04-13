@@ -6,6 +6,8 @@ import outlet from './stores/outlet.js'
 import courier from "./stores/courier"
 import product from "./stores/product";
 import user from "./stores/user";
+import expenses from "./stores/expenses";
+import notification from "./stores/notification";
 
 Vue.use(Vuex);
 
@@ -15,7 +17,9 @@ const store = new Vuex.Store({
         outlet,
         courier,
         product,
-        user
+        user,
+        expenses,
+        notification
     },
     state: {
         token: localStorage.getItem('token'),
@@ -23,7 +27,7 @@ const store = new Vuex.Store({
     },
     getters: {
         isAuth: state => {
-            return state.token != "null" && state.token != null
+            return state.token !== "null" && state.token != null
         }
     },
     mutations: {

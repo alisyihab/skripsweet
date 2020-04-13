@@ -30,5 +30,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('set-role-user', 'API\RolePermissionController@setRoleUser')->name('user.set_role');
     Route::get('user-authenticated', 'API\UserController@getUserLogin')->name('user.authenticated');
     Route::get('user-lists', 'API\UserController@userLists')->name('user.index');
-
+    Route::resource('expenses', 'API\ExpensesController')->except(['create', 'show']);
+    Route::resource('notification', 'API\NotificationController')->except(['create', 'destroy']);
 });

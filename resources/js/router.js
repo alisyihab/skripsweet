@@ -22,6 +22,10 @@ import EditProduct from './pages/products/Edit.vue'
 import SetPermission from "./pages/setting/roles/SetPermission.vue";
 import Setting from "./pages/setting/Index.vue"
 
+import IndexExpenses from "./pages/expenses/Index"
+import DataExpenses from "./pages/expenses/Expenses"
+import CreateExpenses from "./pages/expenses/Add"
+
 Vue.use(Router);
 
 const router = new Router({
@@ -124,6 +128,25 @@ const router = new Router({
                     component: SetPermission,
                     meta: { title: 'Set Hak Akses' }
                 },
+            ]
+        },
+        {
+            path: '/expanses',
+            component: IndexExpenses,
+            meta: { requiresAuth: true },
+            children: [
+                {
+                    path: '',
+                    name: 'expenses.data',
+                    component: DataExpenses,
+                    meta: {title: 'Manage Biaya'}
+                },
+                {
+                    path: 'add',
+                    name: 'expenses.create',
+                    component: CreateExpenses,
+                    meta: {title: 'Tambah Data Biaya'}
+                }
             ]
         },
     ]

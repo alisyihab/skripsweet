@@ -27,7 +27,9 @@
                         </div>
                     </div>
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat" @click.prevent="postLogin">Login</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat" @click.prevent="postLogin">
+                            Login
+                        </button>
                     </div>
                 </div>
 
@@ -38,42 +40,42 @@
 </template>
 
 <script>
-   import { mapActions, mapMutations, mapGetters, mapState } from 'vuex';
+    import {mapActions, mapMutations, mapGetters, mapState} from 'vuex';
 
-   export default {
-       data() {
-           return {
-               data: {
-                   email: '',
-                   password: '',
-                   remember_me: false
-               }
-           }
-       },
-       created() {
-           if (this.isAuth) {
-               this.$router.push({name: 'home'})
-           }
-       },
-       computed: {
-           ...mapGetters(['isAuth']),
-           ...mapState(['errors'])
-       },
-       methods: {
-           ...mapActions('auth', ['submit']),
-           ...mapActions('user', ['getUserLogin']),
-           ...mapMutations(['CLEAR_ERRORS']),
-           postLogin() {
-               this.submit(this.data).then(() => {
-                   if (this.isAuth) {
-                       this.CLEAR_ERRORS();
-                       this.$router.push({name: 'home'})
-                   }
-               })
-           }
-       },
-       destroyed() {
-           this.getUserLogin()
-       }
-   }
+    export default {
+        data() {
+            return {
+                data: {
+                    email: '',
+                    password: '',
+                    remember_me: false
+                }
+            }
+        },
+        created() {
+            if (this.isAuth) {
+                this.$router.push({name: 'home'})
+            }
+        },
+        computed: {
+            ...mapGetters(['isAuth']),
+            ...mapState(['errors'])
+        },
+        methods: {
+            ...mapActions('auth', ['submit']),
+            ...mapActions('user', ['getUserLogin']),
+            ...mapMutations(['CLEAR_ERRORS']),
+            postLogin() {
+                this.submit(this.data).then(() => {
+                    if (this.isAuth) {
+                        this.CLEAR_ERRORS();
+                        this.$router.push({name: 'home'})
+                    }
+                })
+            }
+        },
+        destroyed() {
+            this.getUserLogin()
+        }
+    }
 </script>

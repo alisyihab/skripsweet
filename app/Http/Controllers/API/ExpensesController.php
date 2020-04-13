@@ -7,6 +7,7 @@ use App\Notifications\ExpensesNotification;
 use App\User;
 use App\Http\Resources\ExpenseCollection;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -34,6 +35,7 @@ class ExpensesController extends Controller
 
     /**
      * @param Request $request
+     * @return JsonResponse
      * @throws ValidationException
      */
     public function store(Request $request)
@@ -51,9 +53,50 @@ class ExpensesController extends Controller
             'status' => $status
         ]);
 
-        $expenses = Expense::create([$request->all()]);
-        $users = User::whereIn('role', [0, 2])->get();
+        $expenses = Expense::create($request->all());
 
-        Notification::send($users, new ExpensesNotification($expenses, $users));
+        $users = User::whereIn('role', [0, 2])->get();
+        Notification::send($users, new ExpensesNotification($expenses, $user));
+
+        return response()->json(['status' => 'success']);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
+    public function accept(Request $request)
+    {
+        $this->validate($request, [
+           'id' => 'required|exists|expenses,id'
+        ]);
+
+        $expenses = Expense::with(['user' => 1]);
+        Notification::send($expenses->user, new ExpensesNotification($expenses, $expenses->user));
+
+        return response()->json(['status' => 'success']);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
+    public function cancleRequest(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required|exists:expenses,id',
+            'reason' => 'required|string'
+        ]);
+
+        $expenses = Expense::with(['user'])->find($request->id);
+        $expenses->update([
+            'status' => 2,
+            'reason' => $request->reason
+        ]);
+        Notification::send($expenses->user, new ExpensesNotification($expenses, $expenses->user));
+
+        return response()->json(['status' => 'success']);
     }
 }

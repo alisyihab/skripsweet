@@ -28,6 +28,9 @@ import CreateExpenses from "./pages/expenses/Add"
 import ViewExpenses from  "./pages/expenses/View"
 import EditExpenses from "./pages/expenses/Edit"
 
+import IndexCustomer from './pages/customers/Index'
+import DataCustomer from './pages/customers/Customer'
+
 Vue.use(Router);
 
 const router = new Router({
@@ -160,6 +163,19 @@ const router = new Router({
                     name: 'expenses.view',
                     component: ViewExpenses,
                     meta: {title: 'View Expenses'}
+                },
+            ]
+        },
+        {
+            path: '/customers',
+            component: IndexCustomer,
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: '',
+                    name: 'customers.data',
+                    component: DataCustomer,
+                    meta: {title: 'Manage Customers'}
                 },
             ]
         },

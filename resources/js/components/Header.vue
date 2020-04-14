@@ -17,6 +17,9 @@
                                 Home <span class="sr-only">(current)</span>
                             </router-link>
                         </li>
+                        <li>
+                            <router-link :to="{ name: 'customers.data' }">Customer</router-link>
+                        </li>
                         <li v-if="$can('read outlets')">
                             <router-link :to="{ name: 'outlets.data' }">
                                 Outlets

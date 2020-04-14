@@ -99,4 +99,44 @@ class ExpensesController extends Controller
 
         return response()->json(['status' => 'success']);
     }
+
+    /**
+     * @param $id
+     * @return JsonResponse
+     */
+    public function edit($id)
+    {
+        $expenses = Expense::with(['user'])->find($id);
+        return response()->json(['status' => 'success', 'data' => $expenses]);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     * @throws ValidationException
+     */
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'description' => 'required|string|max:150',
+            'price' => 'required|integer',
+            'note' => 'nullable|string'
+        ]);
+        $expenses = Expense::find($id);
+        $expenses->update($request->except('id'));
+        return response()->json(['status' => 'success']);
+    }
+
+    /**
+     * @param $id
+     * @return JsonResponse
+     */
+    public function destroy($id)
+    {
+        $expenses = Expense::find($id);
+        $expenses->delete();
+
+        return response()->json(['status' => 'success']);
+    }
 }

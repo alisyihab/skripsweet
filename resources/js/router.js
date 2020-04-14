@@ -25,6 +25,8 @@ import Setting from "./pages/setting/Index.vue"
 import IndexExpenses from "./pages/expenses/Index"
 import DataExpenses from "./pages/expenses/Expenses"
 import CreateExpenses from "./pages/expenses/Add"
+import ViewExpenses from  "./pages/expenses/View"
+import EditExpenses from "./pages/expenses/Edit"
 
 Vue.use(Router);
 
@@ -146,7 +148,19 @@ const router = new Router({
                     name: 'expenses.create',
                     component: CreateExpenses,
                     meta: {title: 'Tambah Data Biaya'}
-                }
+                },
+                {
+                    path: 'edit/:id',
+                    name: 'expenses.edit',
+                    component: EditExpenses,
+                    meta: {title: 'Edit Expenses'}
+                },
+                {
+                    path: 'view/:id',
+                    name: 'expenses.view',
+                    component: ViewExpenses,
+                    meta: {title: 'View Expenses'}
+                },
             ]
         },
     ]

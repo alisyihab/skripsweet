@@ -9,18 +9,18 @@
             </div>
             <div class="panel-body">
                 <b-table striped hover bordered :items="expenses.data" :fields="fields" show-empty>
-                    <template slot="status" slot-scope="row">
-                        <span class="label label-success" v-if="row.item.status === 1">Diterima</span>
-                        <span class="label label-warning" v-else-if="row.item.status === 0">Diproses</span>
+                    <template v-slot:cell(status)="row">
+                        <span class="label label-success" v-if="row.item.status == 1">Diterima</span>
+                        <span class="label label-warning" v-else-if="row.item.status == 0">Diproses</span>
                         <span class="label label-default" v-else>Ditolak</span>
                     </template>
-                    <template slot="user" slot-scope="row">
+                    <template v-slot:cell(user)="row">
                         {{ row.item.user.name }}
                     </template>
-                    <template slot="reason" slot-scope="row">
-                        {{ row.item.reason === '' ? '-':row.item.reason }}
+                    <template v-slot:cell(reason)="row">
+                        {{ row.item.reason == '' ? '-':row.item.reason }}
                     </template>
-                    <template slot="actions" slot-scope="row">
+                    <template v-slot:cell(actions)="row">
                         <router-link :to="{ name: 'expenses.edit', params: {id: row.item.id} }" class="btn btn-warning btn-sm" v-if="row.item.status == 0"><i class="fa fa-pencil"></i></router-link>
                         <router-link :to="{ name: 'expenses.view', params: {id: row.item.id} }" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></router-link>
                         <button class="btn btn-danger btn-sm" @click="deleteExpenses(row.item.id)" v-if="row.item.status == 0"><i class="fa fa-trash"></i></button>

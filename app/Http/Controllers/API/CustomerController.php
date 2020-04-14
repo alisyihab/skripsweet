@@ -18,4 +18,34 @@ class CustomerController extends Controller
 
         return new CustomerCollection($customers->paginate(10));
     }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'nik' => 'required|string|unique:customers,nik',
+            'name' => 'required|string|max:150',
+            'address' => 'required|string',
+            'phone' => 'required|string|max:13'
+        ], [
+            'nik.required' => 'Field tidak boleh kosong!',
+            'nik.unique' => 'Nik Sudah digunakan!',
+            'name.required' => 'Field tidak boleh kosong!',
+            'name.max' => 'Nama tidak boleh lebih dari 150 karakter',
+            'address.required' => 'Field tidak boleh kosong!',
+            'phone.required' => 'Field tidak boleh kosong!',
+            'phone.max' => 'No HP tidak boleh lebih dari 13 karakter'
+        ]);
+
+        $user = $request->user();
+        $request->request->add([
+            'point' => 0,
+            'deposit' => 0
+        ]);
+        if ($user->role == 3) {
+            $request->request->add(['courier_id' => $user->id]);
+        }
+        $customer = Customer::create($request->all());
+
+        return response()->json(['status' => 'success', 'data' => $customer]);
+    }
 }

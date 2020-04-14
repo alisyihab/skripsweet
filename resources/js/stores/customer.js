@@ -58,6 +58,32 @@ const actions = {
             })
         })
     },
+    editCustomer({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.get(`/customer/${payload}/edit`)
+            .then((response) => {
+                commit('ASSIGN_FORM', response.data.data);
+                resolve(response.data)
+            })
+        })
+    },
+    updateCustomer({ state, commit }, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.put(`/customer/${payload}`, state.customer)
+            .then((response) => {
+                commit('CLEAR_FORM');
+                resolve(response.data)
+            })
+        })
+    },
+    removeCustomer({ dispatch }, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.delete(`/customer/${payload}`)
+            .then((response) => {
+                dispatch('getCustomers').then(() => resolve())
+            })
+        })
+    }
 };
 
 export default {

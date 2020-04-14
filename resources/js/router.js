@@ -31,6 +31,7 @@ import EditExpenses from "./pages/expenses/Edit"
 import IndexCustomer from './pages/customers/Index'
 import DataCustomer from './pages/customers/Customer'
 import AddCustomer from './pages/customers/Add'
+import EditCustomer from './pages/customers/Edit'
 
 Vue.use(Router);
 
@@ -183,7 +184,13 @@ const router = new Router({
                     name: 'customers.add',
                     component: AddCustomer,
                     meta: {title: 'Tambah Customer'}
-                }
+                },
+                {
+                    path: 'edit/:id',
+                    name: 'customers.edit',
+                    component: EditCustomer,
+                    meta: { title: 'Edit Customer' }
+                },
             ]
         },
     ]

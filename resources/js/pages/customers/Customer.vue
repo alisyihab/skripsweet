@@ -107,7 +107,12 @@
                     confirmButtonText: 'Iya, Lanjutkan!'
                 }).then((result) => {
                     if (result.value) {
-                        this.removeCustomer(id)
+                        this.$swal.fire(
+                            'Success!',
+                            'Data Berhasil Dihapus!',
+                            'success'
+                        );
+                        this.removeCustomer(id);
                     }
                 })
             }

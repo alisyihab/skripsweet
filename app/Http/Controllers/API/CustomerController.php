@@ -48,4 +48,42 @@ class CustomerController extends Controller
 
         return response()->json(['status' => 'success', 'data' => $customer]);
     }
+
+    public function edit($id)
+    {
+        $customer = Customer::find($id);
+
+        return response()->json([
+           'status' => 'success',
+           'data' => $customer
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required|string|max:150',
+            'address' => 'required|string',
+            'phone' => 'required|string|max:13'
+        ], [
+            'name.required' => 'Field tidak boleh kosong!',
+            'name.max' => 'Nama tidak boleh lebih dari 150 karakter',
+            'address.required' => 'Field tidak boleh kosong!',
+            'phone.required' => 'Field tidak boleh kosong!',
+            'phone.max' => 'No HP tidak boleh lebih dari 13 karakter'
+        ]);
+
+        $customer = Customer::find($id);
+        $customer->update([$request->all()]);
+
+        return response()->json(['status' => 'success']);
+    }
+
+    public function destroy($id)
+    {
+        $customer = Customer::find($id);
+        $customer->delete();
+
+        return response()->json(['status' => 'success']);
+    }
 }

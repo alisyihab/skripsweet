@@ -16,15 +16,19 @@
                         {{ row.item.user.name }}
                     </template>
                     <template v-slot:cell(price)="row">
-                        {{ row.item.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true })  }}
+                        {{ row.item.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
                     </template>
                     <template v-slot:cell(actions)="row">
-                        <router-link :to="{ name: 'products.edit', params: {id: row.item.id} }" class="btn btn-warning btn-sm">
+                        <router-link :to="{ name: 'products.edit', params: {id: row.item.id} }"
+                                     class="btn btn-warning btn-sm">
                             <i class="fa fa-pencil"></i>
                         </router-link>
                         <button class="btn btn-danger btn-sm" @click="deleteProduct(row.item.id)">
                             <i class="fa fa-trash"></i>
                         </button>
+                    </template>
+                    <template v-slot:cell(service)="row">
+                        {{ row.item.service }} {{ row.item.service_type }}
                     </template>
                 </b-table>
 
@@ -69,12 +73,13 @@
         data() {
             return {
                 fields: [
-                    { key: 'name', label: 'Nama Item', sortable: true },
-                    { key: 'unit_types', label: 'Tipe', sortable: true },
-                    { key: 'laundry_type', label: 'Jenis jasa', sortable: true },
-                    { key: 'price', label: 'Harga', sortable: true },
-                    { key: 'user_id', label: 'Admin', sortable: true },
-                    { key: 'actions', label: 'Aksi' }
+                    {key: 'name', label: 'Nama Item', sortable: true},
+                    {key: 'unit_types', label: 'Tipe', sortable: true},
+                    {key: 'laundry_type', label: 'Jenis jasa', sortable: true},
+                    {key: 'price', label: 'Harga', sortable: true},
+                    {key: 'user_id', label: 'Admin', sortable: true},
+                    {key: 'service', label: 'Lama Pengerjaan', sortable: true},
+                    {key: 'actions', label: 'Aksi'}
                 ],
                 search: ''
             }

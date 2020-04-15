@@ -56,6 +56,26 @@
                    v-bind="money" />
             <p class="text-danger" v-if="errors.price">{{ errors.price[0] }}</p>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group" :class="{'has-error': errors.service}">
+                    <label>Lama Pengerjaan</label>
+                    <input type="number" class="form-control" v-model="product.service">
+                    <p class="text-danger" v-if="errors.service">{{ errors.service[0] }}</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" :class="{'has-error': errors.service_type}">
+                    <label>Satuan</label>
+                    <select class="form-control" v-model="product.service_type">
+                        <option value="">Pilih</option>
+                        <option value="Hari">Hari</option>
+                        <option value="Jam">Jam</option>
+                    </select>
+                    <p class="text-danger" v-if="errors.service_type">{{ errors.service_type[0] }}</p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -73,7 +93,9 @@ export default {
                     name: res.data.name,
                     unit_types: res.data.unit_types,
                     price: res.data.price,
-                    laundry_type: res.data.laundry_type_id
+                    laundry_type: res.data.laundry_type_id,
+                    service: res.data.service,
+                    service_type: res.data.service_type
                 }
             })
         }
@@ -84,7 +106,9 @@ export default {
                 name: '',
                 unit_types: '',
                 price: '',
-                laundry_type: ''
+                laundry_type: '',
+                service: '',
+                service_type: ''
             },
             laundry_type: '',
             showForm: false,
@@ -120,6 +144,16 @@ export default {
                 })
             })
         },
+        clearForm() {
+          this.product = {
+              name: '',
+              unit_types: '',
+              price: '',
+              laundry_type: '',
+              service: '',
+              service_type: ''
+          }
+        },
         submit() {
             if (this.$route.name === 'products.add') {
                 this.addProductLaundry(this.product).then(() => {
@@ -134,6 +168,7 @@ export default {
                         'Data Berhasil Disimpan.',
                         'success'
                     );
+                    this.clearForm();
                     this.$router.push({ name: 'products.data' })
                 })
             } else if (this.$route.name === 'products.edit') {
@@ -150,6 +185,7 @@ export default {
                         'Data Berhasil Diubah!.',
                         'success'
                     );
+                    this.clearForm();
                     this.$router.push({ name: 'products.data' })
                 })
             }

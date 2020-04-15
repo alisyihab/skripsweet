@@ -78,12 +78,16 @@ class ProductController extends Controller
             'unit_types' => 'required',
             'price' => 'required|integer',
             'laundry_type' => 'required',
+            'service' => 'required|integer',
+            'service_type' => 'required'
         ], [
             'name.required' => 'Field tidak boleh kosong',
             'name.max' => 'Tidak boleh melebihi 100 karakter',
             'price.required' => 'Field tidak boleh kosong',
             'laundry_type.required' => 'Field tidak boleh kosong',
-            'unit_types.required' => 'Field tidak boleh kosong'
+            'unit_types.required' => 'Field tidak boleh kosong',
+            'service.required' => 'Field tidak boleh kosong',
+            'service_type' => 'Field tidak boleh kosong'
         ]);
 
         try {
@@ -93,6 +97,8 @@ class ProductController extends Controller
                 'laundry_type_id' => $request->laundry_type,
                 'price' => $request->price,
                 'user_id' => auth()->user()->id,
+                'service' => $request->service,
+                'service_type' => $request->service_type
             ]);
             return response()->json(['status' => 'success']);
         } catch (\Exception $e) {
@@ -123,16 +129,35 @@ class ProductController extends Controller
      * @param $id
      *
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function update(Request $request, $id)
     {
-        $laundry = LaundryPrice::find($id);
+        $this->validate($request, [
+            'name' => 'required|string|max:100',
+            'unit_types' => 'required',
+            'price' => 'required|integer',
+            'laundry_type' => 'required',
+            'service' => 'required|integer',
+            'service_type' => 'required'
+        ], [
+            'name.required' => 'Field tidak boleh kosong',
+            'name.max' => 'Tidak boleh melebihi 100 karakter',
+            'price.required' => 'Field tidak boleh kosong',
+            'laundry_type.required' => 'Field tidak boleh kosong',
+            'unit_types.required' => 'Field tidak boleh kosong',
+            'service.required' => 'Field tidak boleh kosong',
+            'service_type' => 'Field tidak boleh kosong'
+        ]);
 
+        $laundry = LaundryPrice::find($id);
         $laundry->update([
             'name' => $request->name,
             'unit_types' => $request->unit_types,
             'laundry_type_id' => $request->laundry_type,
             'price' => $request->price,
+            'service' => $request->service,
+            'service_type' => $request->service_type
         ]);
 
         return response()->json([

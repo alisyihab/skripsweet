@@ -18,7 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('courier_id');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('amout');
+            $table->unsignedBigInteger('amount');
             $table->unsignedBigInteger('start_date');
             $table->unsignedBigInteger('end_date');
             $table->boolean('status')->default(false);

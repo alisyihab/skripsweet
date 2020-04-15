@@ -2,7 +2,9 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group" :class="{ 'has-error': errors.customer_id }">
-                <label for="">Customer</label>
+                <label>
+                    Customer <sup><a href="javascript:void(0)" @click="newCustomer">New Customer</a></sup>
+                </label>
                 <v-select :options="customers.data"
                     v-model="transactions.customer_id"
                     @search="onSearch"
@@ -47,6 +49,12 @@
                     <td>{{ transactions.customer_id.point }}</td>
                 </tr>
             </table>
+        </div>
+        <div class="col-md-6" v-if="isForm">
+            <h4>Tambah Pelanggan Baru</h4>
+            <form-customer/>
+            <button class="btn btn-secondary btn-sm" @click="cancleCustomer">Batalkan</button>
+            <button class="btn btn-primary btn-sm" @click="addCustomer">Simpan</button>
         </div>
         <div class="col-md-12">
             <hr>
@@ -110,6 +118,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css'
 import _ from 'lodash'
+import FormCustomer from '../customers/Form'
 
 export default {
     name: 'FormTransaction',
@@ -139,6 +148,7 @@ export default {
     },
     methods: {
         ...mapActions('transaction', ['getCustomers', 'getProducts', 'createTransaction']),
+        ...mapActions('customer', ['submitCustomer']),
         onSearch(search, loading) {
             this.getCustomers({
                 search: search,
@@ -160,7 +170,7 @@ export default {
             }
         },
         calculate(index) {
-            let data = this.transactions.detail[index]
+            let data = this.transactions.detail[index];
             if (data.laundry_price != null) {
                 data.price = data.laundry_price.price
                 if (data.laundry_price.unit_type == 'Kilogram') {
@@ -173,10 +183,23 @@ export default {
         submit() {
             this.isSuccess = false;
             this.createTransaction(this.transactions).then(() => this.isSuccess = true)
+        },
+        newCustomer() {
+          this.isForm = true
+        },
+        cancleCustomer() {
+            this.isForm = false
+        },
+        addCustomer() {
+            this.submitCustomer().then((res) => {
+                this.transactions.customer_id = res.data;
+                this.isForm = false
+            })
         }
     },
     components: {
-        vSelect
+        vSelect,
+        'form-customer': FormCustomer
     }
 }
 </script>

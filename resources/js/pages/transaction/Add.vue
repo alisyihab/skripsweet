@@ -7,6 +7,9 @@
             <div class="panel-body">
                 <transaction-form ref="form"></transaction-form>
                 <div class="form-group">
+                    <button class="btn btn-danger btn-sm btn-flat" @click.prevent="clearForm">
+                        Clear Form
+                    </button>
                     <button class="btn btn-primary btn-sm btn-flat" @click.prevent="submit">
                         <i class="fa fa-save"></i> Buat Transaksi
                     </button>
@@ -23,6 +26,9 @@
         methods: {
             submit() {
                 this.$refs.form.submit()
+            },
+            clearForm() {
+                this.$refs.form.resetForm()
             }
         },
         components: {

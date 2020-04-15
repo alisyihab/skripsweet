@@ -40,6 +40,11 @@
                                 Expenses
                             </router-link>
                         </li>
+                        <li>
+                            <router-link :to="{ name: 'transactions.add' }">
+                                Transaction
+                            </router-link>
+                        </li>
                         <li class="dropdown" v-if="authenticated.role == 0">
                             <a href="javascript:void(0)"
                                class="dropdown-toggle"

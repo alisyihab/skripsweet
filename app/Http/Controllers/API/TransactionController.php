@@ -25,11 +25,11 @@ class TransactionController extends Controller
 
         $transaction = Transaction::with(['user', 'detail', 'customer'])
             ->orderBy('created_at', 'DESC')
-            ->whereHas('customer', function($q) use($search) {
+            ->whereHas('customer', function ($q) use ($search) {
                 $q->where('name', 'LIKE', '%' . $search . '%');
             });
 
-        if (in_array(request()->status, [0,1])) {
+        if (in_array(request()->status, [0, 1])) {
             $transaction = $transaction->where('status', request()->status);
         }
 
@@ -126,16 +126,21 @@ class TransactionController extends Controller
     public function completeItem(Request $request)
     {
         $this->validate($request, [
-           'id' => 'required|exists,detail_transaction,id'
+            'id' => 'required|exists,detail_transaction,id'
         ]);
 
         $transaction = DetailTransaction::with(['transaction.customer'])->find($request->id);
-        $transaction->update(['status' => 1 ]);
+        $transaction->update(['status' => 1]);
         $transaction->transaction->customer()->update(['point' => $transaction->transaction->customer->point + 1]);
 
         return response()->json(['status' => 'success']);
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
     public function makePayment(Request $request)
     {
         $this->validate($request, [
@@ -145,29 +150,34 @@ class TransactionController extends Controller
 
         DB::beginTransaction();
         try {
-            $transaction = Transaction::find($request->transaction_id);
+            $transaction = Transaction::with(['customer'])->find($request->transaction_id);
+
             $customer_change = 0;
-            if ($request->customer_change) {
-                $customer_change = $request->amount - $transaction->amount;
-                $transaction->customer()->update(['deposit' => $transaction->customer->deposit + $customer_change]);
+            if ($request->via_deposit) {
+                if ($transaction->customer->deposit < $request->amount) {
+                    return response()->json(['status' => 'error', 'data' => 'Deposit Kurang!']);
+                }
+
+                $transaction->customer()->update(['deposit' => $transaction->customer->deposit - $request->amount]);
+
+            } else {
+                if ($request->customer_change) {
+                    $customer_change = $request->amount - $transaction->amount;
+                    $transaction->customer()->update(['deposit' => $transaction->customer->deposit + $customer_change]);
+                }
             }
 
             Payment::create([
                 'transaction_id' => $transaction->id,
                 'amount' => $request->amount,
                 'customer_change' => $customer_change,
-                'type' => false
+                'type' => $request->via_deposit
             ]);
-
             $transaction->update(['status' => 1]);
             DB::commit();
-
             return response()->json(['status' => 'success']);
-        }catch (\Exception $e) {
-            return response()->json([
-                'status' => 'failed',
-                'data' => $e->getMessage()
-            ]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'failed', 'data' => $e->getMessage()]);
         }
     }
 }

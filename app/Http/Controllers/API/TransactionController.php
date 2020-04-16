@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\DetailTransaction;
+use App\Http\Resources\TransactionCollection;
 use App\Payment;
 use App\Transaction;
 use Carbon\Carbon;
@@ -14,6 +15,33 @@ use Illuminate\Validation\ValidationException;
 
 class TransactionController extends Controller
 {
+    /**
+     * @return TransactionCollection
+     */
+    public function index()
+    {
+        $search = request()->q;
+        $user = request()->user();
+
+        $transaction = Transaction::with(['user', 'detail', 'customer'])
+            ->orderBy('created_at', 'DESC')
+            ->whereHas('customer', function($q) use($search) {
+                $q->where('name', 'LIKE', '%' . $search . '%');
+            });
+
+        if (in_array(request()->status, [0,1])) {
+            $transaction = $transaction->where('status', request()->status);
+        }
+
+        if ($user->role != 0) {
+            $transaction = $transaction->where('user_id', $user->id);
+        }
+
+        $transaction = $transaction->paginate(10);
+
+        return new TransactionCollection($transaction);
+    }
+
     /**
      * @param Request $request
      * @return JsonResponse

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Transaction extends Model
 {
     protected $guarded = [];
+    protected $appends = ['status_label'];
 
     /**
      * @return HasMany
@@ -28,10 +29,29 @@ class Transaction extends Model
     }
 
     /**
+     * @return BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * @return HasOne
      */
     public function payment()
     {
         return $this->hasOne(Payment::class);
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusLabelAttribute()
+    {
+        if ($this->status == 1) {
+            return '<span class="label label-success">Selesai</span>';
+        }
+        return '<span class="label label-primary">Proses</span>';
     }
 }

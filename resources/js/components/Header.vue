@@ -40,10 +40,17 @@
                                 Expenses
                             </router-link>
                         </li>
-                        <li>
-                            <router-link :to="{ name: 'transactions.add' }">
-                                Transaction
-                            </router-link>
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="true">Transactions <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <router-link :to="{ name: 'transactions.list' }">List Transaksi</router-link>
+                                </li>
+                                <li>
+                                    <router-link :to="{ name: 'transactions.add' }">Buat Transaksi</router-link>
+                                </li>
+                            </ul>
                         </li>
                         <li class="dropdown" v-if="authenticated.role == 0">
                             <a href="javascript:void(0)"

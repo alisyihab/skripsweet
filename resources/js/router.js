@@ -35,6 +35,7 @@ import EditCustomer from './pages/customers/Edit'
 
 import IndexTransaction from './pages/transaction/Index'
 import AddTransaction from './pages/transaction/Add'
+import ViewTransaction from './pages/transaction/View'
 
 Vue.use(Router);
 
@@ -206,6 +207,12 @@ const router = new Router({
                     name: 'transactions.add',
                     component: AddTransaction,
                     meta: {title: 'Buat Transaksi'}
+                },
+                {
+                    path: 'view/:id',
+                    name: 'transactions.view',
+                    component: ViewTransaction,
+                    meta: {title: 'View Transaction'}
                 }
             ]
         }

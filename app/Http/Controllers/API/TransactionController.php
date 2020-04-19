@@ -51,7 +51,9 @@ class TransactionController extends Controller
     {
         $this->validate($request, [
             'customer_id' => 'required',
-            'detail' => 'required'
+            'detail' => 'required',
+        ], [
+            'customer_id.required' => 'Field tidak boleh kosong!'
         ]);
 
         DB::beginTransaction();
@@ -68,7 +70,7 @@ class TransactionController extends Controller
                 if (!is_null($row['laundry_price'])) {
                     $subtotal = $row['laundry_price']['price'] * $row['qty'];
                     if ($row['laundry_price']['unit_types'] == 'Kilogram') {
-                        $subtotal = $row['laundry_price']['price'] * ($row['qty']);
+                        $subtotal = $row['laundry_price']['price'] * ($row['qty']) / 1000;
                     }
 
                     $start_date = Carbon::now();
@@ -121,17 +123,16 @@ class TransactionController extends Controller
     /**
      * @param Request $request
      * @return JsonResponse
-     * @throws ValidationException
      */
     public function completeItem(Request $request)
     {
-        $this->validate($request, [
-            'id' => 'required|exists,detail_transaction,id'
-        ]);
 
         $transaction = DetailTransaction::with(['transaction.customer'])->find($request->id);
         $transaction->update(['status' => 1]);
-        $transaction->transaction->customer()->update(['point' => $transaction->transaction->customer->point + 1]);
+        $transaction->transaction->customer()
+            ->update([
+                'point' => $transaction->transaction->customer->point + 1
+            ]);
 
         return response()->json(['status' => 'success']);
     }
@@ -145,7 +146,7 @@ class TransactionController extends Controller
     {
         $this->validate($request, [
             'transaction_id' => 'required|exists:transactions,id',
-            'amount' => 'required|integer'
+            'amount' => 'required|integer',
         ]);
 
         DB::beginTransaction();
@@ -158,15 +159,19 @@ class TransactionController extends Controller
                     return response()->json(['status' => 'error', 'data' => 'Deposit Kurang!']);
                 }
 
-                $transaction->customer()->update(['deposit' => $transaction->customer->deposit - $request->amount]);
+                $transaction->customer()->update([
+                    'deposit' => $transaction->customer->deposit - $request->amount
+                ]);
 
             } else {
                 if ($request->customer_change) {
                     $customer_change = $request->amount - $transaction->amount;
-                    $transaction->customer()->update(['deposit' => $transaction->customer->deposit + $customer_change]);
+                    $transaction->customer()->update([
+                        'deposit' => $transaction->customer->deposit + $customer_change
+                    ]);
                 }
             }
-
+            $customer_change = $request->amount - $transaction->amount;
             Payment::create([
                 'transaction_id' => $transaction->id,
                 'amount' => $request->amount,

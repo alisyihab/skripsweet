@@ -8,18 +8,17 @@
                         <hr>
                         <div class="form-group">
                             <label>Tagihan</label>
-                            <input type="tel"
-                                   v-money="money"
-                                   :value="transaction.amount"
+                            <input type="text"
+                                   :value="transaction.amount | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true })"
                                    class="form-control"
-                                   readonly>
+                                   readonly />
                         </div>
                         <div class="form-group">
                             <label>Jumlah Bayar</label>
-                            <money type="tel"
-                                   class="form-control"
-                                   v-bind="money"
-                                   v-model.lazy="amount" />
+                            <money type="tel" 
+                                class="form-control" 
+                                v-model.lazy="amount"
+                                v-bind="money"/>
                         </div>
                         <div class="form-group"
                              v-if="transaction.customer && transaction.customer.deposit >= transaction.amount">
@@ -75,7 +74,6 @@
                         </table>
                     </div>
                     <div class="col-md-6" v-if="transaction.payment">
-                        <!-- MENAMPILKAN RIWAYAT PEMBAYARAN ORDERAN TERSEBUT -->
                         <h4>Riwayat Pemabayaran</h4>
                         <hr>
                         <table>
@@ -118,7 +116,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  	<!-- LOOPING DETAIL TRANSAKSI -->
                                     <tr v-for="(row, index) in transaction.detail" :key="index">
                                         <td>
                                             <strong>{{ row.product.name }}</strong>
@@ -126,7 +123,7 @@
                                         </td>
                                         <td>{{ row.service_time }}</td>
                                         <td>
-                                            {{ row.qty }} ({{ row.product.unit_types }})
+                                            {{ row.qty }} ({{ row.product.unit_types == 'Kilogram' ? 'gram':'Potong'}})
                                         </td>
                                         <td>
                                             {{ row.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
@@ -156,6 +153,7 @@
     import Vue2Filters from 'vue2-filters'
     import Vue from 'vue'
     import {Money} from 'v-money'
+
 
     Vue.use(Vue2Filters);
 
@@ -217,9 +215,9 @@
                         this.payment_success = true
                         setTimeout(() => {
                             this.loading = false
-                            this.amount = null,
-                                this.customer_change = false,
-                                this.payment_message = null
+                            this.amount = null
+                            this.customer_change = false
+                            this.payment_message = null
                             this.via_deposit = false
                         }, 500)
                         this.detailTransaction(this.$route.params.id)
@@ -245,11 +243,11 @@
                         })
                     }
                 })
-            }
+            },
         },
         components: {
             mixins: [Vue2Filters.mixin],
             Money
-        }
+        },
     }
 </script>

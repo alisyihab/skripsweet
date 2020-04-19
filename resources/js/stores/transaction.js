@@ -54,9 +54,14 @@ const actions = {
     createTransaction({commit}, payload) {
         return new Promise((resolve, reject) => {
             $axios.post(`/transaction`, payload)
-                .then((response) => {
-                    resolve(response.data)
-                })
+            .then((response) => {
+                resolve(response.data)
+            })
+            .catch((error) => {
+                if (error.response.status == 422) {
+                    commit('SET_ERRORS', error.response.data.errors, { root: true })
+                }
+            })
         })
     },
     detailTransaction({commit}, payload) {
@@ -68,7 +73,7 @@ const actions = {
             })
         })
     },
-    compliteItem({ commit }, payload) {
+    completeItem({commit}, payload) {
         return new Promise((resolve, reject) => {
             $axios.post(`/transaction/complete-item`, payload)
             .then((response) => {

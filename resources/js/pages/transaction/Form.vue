@@ -3,7 +3,7 @@
         <div class="col-md-6">
             <div class="form-group" :class="{ 'has-error': errors.customer_id }">
                 <label>
-                    Customer<sup><a href="javascript:void(0)" @click="newCustomer">New Customer</a></sup>
+                    Pelanggan<sup><a href="javascript:void(0)" @click="newCustomer">Tambah Pelanggan</a></sup>
                 </label>
                 <v-select :options="customers.data"
                           v-model="transactions.customer_id"
@@ -51,9 +51,10 @@
             </table>
         </div>
         <div class="col-md-6" v-if="isForm">
-            <h4>Add New Customer</h4>
+            <h4>Tambah Pelanggan Baru</h4>
             <form-customer/>
-            <button class="btn btn-primary btn-s" @click="addCustomer">Save</button>
+            <button class="btn btn-danger btn-s" @click="cancelCustomer">Batalkan</button>
+            <button class="btn btn-primary btn-s" @click="addCustomer">Simpan</button>
         </div>
         <div class="col-md-12">
             <hr>
@@ -92,14 +93,20 @@
                         </td>
                         <td>
                             <div class="input-group">
-                                <input type="number" v-model="row.qty" class="form-control" @blur="calculate(index)">
+                                <input type="number"
+                                       v-model="row.qty"
+                                       class="form-control"
+                                       @blur="calculate(index)"
+                                       minlength="2"
+                                       required>
                                 <span class="input-group-addon">
-                                    {{ row.laundry_price != null && row.laundry_price.unit_type == 'Kilogram' ? 'gram':'pcs' }}
+                                    {{ row.laundry_price != null && row.laundry_price.unit_types == 'Kilogram' ? 'gram':'pcs' }}
                                 </span>
                             </div>
 
                         </td>
-                        <td>{{ row.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}</td>
+                        <td>
+                            {{ row.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}</td>
                         <td>{{ row.subtotal | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}</td>
                         <td>
                             <button class="btn btn-danger btn-flat" @click="removeProduct(index)">Hapus</button>
@@ -114,7 +121,8 @@
                 Transaksi Berhasil, Total Tagihan:
                 {{ total | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
                 <strong>
-                    <router-link :to="{ name: 'transactions.view', params: {id: transaction_id} }">Lihat Detail
+                    <router-link :to="{ name: 'transactions.view', params: {id: transaction_id} }">
+                        Lihat Detail
                     </router-link>
                 </strong>
             </div>
@@ -194,7 +202,7 @@
                 let data = this.transactions.detail[index]
                 if (data.laundry_price != null) {
                     data.price = data.laundry_price.price
-                    if (data.laundry_price.unit_type == 'Kilogram') {
+                    if (data.laundry_price.unit_types == 'Kilogram') {
                         data.subtotal = (parseInt(data.laundry_price.price) * (parseInt(data.qty) / parseInt(1000))).toFixed(2)
                     } else {
                         data.subtotal = parseInt(data.laundry_price.price) * parseInt(data.qty)
@@ -222,6 +230,9 @@
                     this.transactions.customer_id = res.data
                     this.isForm = false
                 })
+            },
+            cancelCustomer() {
+                this.isForm = false
             },
             resetForm() {
                 this.transactions = {

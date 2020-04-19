@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-12">
+    <div class="col-md-12" id="printMe">
         <div class="panel">
             <div class="panel-body">
                 <div class="row">
@@ -137,6 +137,9 @@
                                                     @click="isDone(row.id)">
                                                 <i class="fa fa-paper-plane-o"></i>
                                             </button>
+                                            <button @click="print" class="btn btn-info btn-sm">
+                                                <i class="fa fa-print"></i>Print
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -153,8 +156,22 @@
     import Vue2Filters from 'vue2-filters'
     import Vue from 'vue'
     import {Money} from 'v-money'
+    import VueHtmlToPaper from 'vue-html-to-paper';
 
+    const options = {
+        name: '_blank',
+        specs: [
+            'fullscreen=yes',
+            'titlebar=yes',
+            'scrollbars=yes'
+        ],
+        styles: [
+            'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+            'https://unpkg.com/kidlat-css/css/kidlat.css'
+        ]
+    }
 
+    Vue.use(VueHtmlToPaper, options);
     Vue.use(Vue2Filters);
 
     export default {
@@ -244,6 +261,9 @@
                     }
                 })
             },
+            print() {
+                this.$htmlToPaper('printMe');
+            }
         },
         components: {
             mixins: [Vue2Filters.mixin],
@@ -251,3 +271,11 @@
         },
     }
 </script>
+
+<style>
+    @media print {
+        @page {
+            size: 58mm;
+        }
+    }
+</style>

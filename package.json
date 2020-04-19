@@ -32,6 +32,7 @@
         "moment": "^2.24.0",
         "v-money": "^0.8.1",
         "vue-chartjs": "^3.5.0",
+        "vue-html-to-paper": "^1.3.1",
         "vue-router": "^3.1.6",
         "vue-sweetalert2": "^3.0.3",
         "vue-the-mask": "^0.11.1",

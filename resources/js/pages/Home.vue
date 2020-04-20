@@ -20,7 +20,7 @@
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label for="">Bulan</label>
+                                        <label>Bulan</label>
                                         <select v-model="month" class="form-control">
                                             <option value="01">Januari</option>
                                             <option value="02">Februari</option>
@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label for="">Tahun</label>
+                                        <label>Tahun</label>
                                         <select v-model="year" class="form-control">
                                             <option v-for="(y, i) in years" :key="i" :value="y">{{ y }}</option>
                                         </select>
@@ -52,8 +52,12 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <line-chart v-if="transactions.length > 0" :data="transaction_data" :options="chartOptions"
-                                        :labels="labels"/>
+                            <line-chart
+                                    v-if="transactions.length > 0"
+                                    :data="transaction_data"
+                                    :options="chartOptions"
+                                    :labels="labels">
+                            </line-chart>
                         </div>
                     </div>
                 </div>
@@ -61,6 +65,7 @@
         </section>
     </div>
 </template>
+
 <script>
     import moment from 'moment'
     import _ from 'lodash'
@@ -78,7 +83,43 @@
             return {
                 chartOptions: {
                     responsive: true,
-                    maintainAspectRatio: false
+                    maintainAspectRatio: false,
+                    scales: {
+                        xAxes: [{
+                            ticks: {}
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                userCallback: function (value, index, values) {
+                                    value = value.toString();
+                                    value = value.split(/(?=(?:...)*$)/);
+                                    value = value.join('.');
+                                    return 'Rp.' + value;
+                                }
+                            }
+                        }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (item, data) {
+                                let label = data.datasets[item.datasetIndex].label || '';
+                                let yLabel = item.yLabel;
+                                let content = '';
+
+                                if (data.datasets.length > 1) {
+                                    content += label;
+                                }
+
+                                yLabel = yLabel.toString();
+                                yLabel = yLabel.split(/(?=(?:...)*$)/);
+                                yLabel = yLabel.join('.');
+                                content += label + ' ';
+                                content += 'Rp. ' + yLabel;
+                                return content;
+                            }
+                        }
+                    }
                 },
                 month: moment().format('MM'),
                 year: moment().format('Y')
@@ -108,7 +149,7 @@
             },
             labels() {
                 return _.map(this.transactions, function (o) {
-                    return moment(o.date).format('ddd')
+                    return moment(o.date).format('Do MMMM YYYY')
                 });
             },
             transaction_data() {

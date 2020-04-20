@@ -31,7 +31,7 @@ class DashboardController extends Controller
                 'total' => $total ? $total->total:0
             ];
         }
-
+        
         return $data;
     }
 }

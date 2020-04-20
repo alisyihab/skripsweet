@@ -11,7 +11,7 @@
             <div class="panel-body">
                 <b-table striped hover bordered :items="customers.data" :fields="fields" show-empty>
                     <template v-slot:cell(deposit)="row">
-                        Rp {{ row.item.deposit }}
+                        {{ row.item.deposit | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
                     </template>
                     <template v-slot:cell(courier_id)="row">
                         {{ row.item.courier ? row.item.courier.name:'-' }}
@@ -52,6 +52,7 @@
 
 <script>
     import {mapActions, mapState} from 'vuex'
+    import Vue2Filters from 'vue2-filters'
 
     export default {
         name: 'DataCustomer',
@@ -116,6 +117,9 @@
                     }
                 })
             }
+        },
+        components: {
+            mixins: [Vue2Filters.mixin]
         }
     }
 </script>

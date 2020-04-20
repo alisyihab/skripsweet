@@ -106,7 +106,9 @@
 
                         </td>
                         <td>
-                            {{ row.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}</td>
+                            {{ row.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }} /
+                            {{ row.laundry_price != null && row.laundry_price.unit_types == 'Kilogram' ? 'Kg':'Pcs' }}
+                        </td>
                         <td>{{ row.subtotal | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}</td>
                         <td>
                             <button class="btn btn-danger btn-flat" @click="removeProduct(index)">Hapus</button>

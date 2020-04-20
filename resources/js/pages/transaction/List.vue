@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <b-table striped hover bordered responsive :items="transactions.data" :fields="fields" show-empty>\
+                <b-table striped hover bordered responsive :items="transactions.data" :fields="fields" show-empty>
                     <template v-slot:cell(index)="data">
                          <p class="text-center">{{ data.index + 1 }}</p>
                     </template>

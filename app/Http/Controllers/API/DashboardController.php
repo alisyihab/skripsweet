@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exports\TransactionExport;
 use App\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Excel;
 
 class DashboardController extends Controller
 {
+    /**
+     * @return array
+     */
     public function chart()
     {
         $filter = request()->year . '-' .request()->month;
@@ -33,5 +38,23 @@ class DashboardController extends Controller
         }
         
         return $data;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
+    public function exportData(Request $request)
+    {
+        $transaction = $this->chart();
+        $total = $this->chart();
+        return Excel::download(
+            new TransactionExport(
+                $transaction, request()->month,
+                request()->year,
+                $total
+            ), 'transaction.xlsx'
+        );
     }
 }

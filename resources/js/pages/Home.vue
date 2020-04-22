@@ -162,6 +162,9 @@
             ...mapActions('dashboard', ['getChartData']),
             exportData() {
                 window.open(`/api/export?api_token=${this.token}&month=${this.month}&year=${this.year}`)
+            },
+            exportData() {
+                window.open(`/api/export?api_token=${this.token}&month=${this.month}&year=${this.year}`)
             }
         },
         components: {'line-chart': LineChart},

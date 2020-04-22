@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-12" id="printMe">
+    <div class="col-md-12">
         <div class="panel">
             <div class="panel-body">
                 <div class="row">
@@ -15,8 +15,8 @@
                         </div>
                         <div class="form-group">
                             <label>Jumlah Bayar</label>
-                            <money type="tel" 
-                                class="form-control" 
+                            <money type="tel"
+                                class="form-control"
                                 v-model.lazy="amount"
                                 v-bind="money"/>
                         </div>
@@ -73,31 +73,74 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="col-md-6" v-if="transaction.payment">
-                        <h4>Riwayat Pemabayaran</h4>
+                    <div class="col-md-6" v-if="transaction.payment" id="printMe">
+                        <h4>Riwayat Pembayaran</h4>
                         <hr>
-                        <table>
-                            <tr>
-                                <th width="30%">Jumlah Pembayaran </th>
-                                <td width="5%">:</td>
-                                <td>
-                                    {{ transaction.payment.amount | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                        <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>qty</th>
+                                    <th>Harga</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(row, index) in transaction.detail" :key="index">
+                                    <td><strong>{{ row.product.name }}</strong></td>
+                                    <td>{{ row.qty }} ({{ row.product.unit_types == 'Kilogram' ? 'gram':'Potong'}})</td>
+                                    <td>
+                                         {{ row.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                                        / {{ row.product.unit_types }}
+                                    </td>
+                                    <td>
+                                        {{ row.subtotal | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        <hr>
+                        <table class="table" style="widht:50%; border:none;">
+                             <tr>
+                                <th>Total Belanja </th>
+                                <td>:</td>
+                                <td class="text-left">
+                                    {{ transaction.amount | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
                                 </td>
                             </tr>
                             <tr>
-                                <th>Kembalian </th>
+                                <th>Total Pembayaran </th>
                                 <td>:</td>
                                 <td>
-                                    {{ transaction.payment.customer_change | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                                    <div class="text-left">
+                                        {{ transaction.payment.amount | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <th>Metode Pembayaran </th>
                                 <td>:</td>
-                                <td>{{ transaction.payment.type_label }}</td>
+                                <td class="text-left">{{ transaction.payment.type_label }}</td>
+                            </tr>
+                            <hr>
+                            <tr>
+                                <th>Kembalian</th>
+                                <td>:</td>
+                                <td class="text-left">
+                                    {{ transaction.payment.customer_change | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true })}}
+                                </td>
                             </tr>
                         </table>
                     </div>
+
+                    <div class="pull-right" style="padding-top:50px; padding-right:50px">
+                        <button @click="print" class="btn btn-info btn-sm">
+                            <i class="fa fa-print"></i>Print
+                        </button>
+                    </div>
+
                     <div class="col-md-12" style="padding-top: 20px">
                         <div class="alert alert-success" v-if="payment_success">Pembayaran Berhasil</div>
 
@@ -112,7 +155,7 @@
                                         <th>Berat/Satuan</th>
                                         <th>Harga</th>
                                         <th>Subtotal</th>
-                                        <th>Actions</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -127,7 +170,8 @@
                                         </td>
                                         <td>
                                             {{ row.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
-                                            / {{ row.product.unit_types }}</td>
+                                            / {{ row.product.unit_types }}
+                                        </td>
                                         <td>
                                             {{ row.subtotal | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
                                         </td>
@@ -136,9 +180,6 @@
                                                     v-if="transaction.status == 1  && row.status == 0"
                                                     @click="isDone(row.id)">
                                                 <i class="fa fa-paper-plane-o"></i>
-                                            </button>
-                                            <button @click="print" class="btn btn-info btn-sm">
-                                                <i class="fa fa-print"></i>Print
                                             </button>
                                         </td>
                                     </tr>

@@ -11,6 +11,7 @@ import notification from "./stores/notification";
 import customer from "./stores/customer";
 import transaction from "./stores/transaction";
 import dashboard from "./stores/dashboard";
+import person from "./stores/person"
 
 Vue.use(Vuex);
 
@@ -25,7 +26,8 @@ const store = new Vuex.Store({
         notification,
         customer,
         transaction,
-        dashboard
+        dashboard,
+        person
     },
     state: {
         token: localStorage.getItem('token'),

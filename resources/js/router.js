@@ -25,7 +25,7 @@ import Setting from "./pages/setting/Index.vue"
 import IndexExpenses from "./pages/expenses/Index"
 import DataExpenses from "./pages/expenses/Expenses"
 import CreateExpenses from "./pages/expenses/Add"
-import ViewExpenses from  "./pages/expenses/View"
+import ViewExpenses from "./pages/expenses/View"
 import EditExpenses from "./pages/expenses/Edit"
 
 import IndexCustomer from './pages/customers/Index'
@@ -37,6 +37,9 @@ import IndexTransaction from './pages/transaction/Index'
 import AddTransaction from './pages/transaction/Add'
 import ViewTransaction from './pages/transaction/View'
 import ListTransaction from './pages/transaction/List'
+
+import IndexUsers from './pages/users/Index'
+import DataPersons from './pages/users/Users'
 
 Vue.use(Router);
 
@@ -63,7 +66,7 @@ const router = new Router({
                     path: '',
                     name: 'outlets.data',
                     component: DataOutlet,
-                    meta: { title: 'Manage Outlets'}
+                    meta: { title: 'Manage Outlets' }
                 },
                 {
                     path: 'add',
@@ -113,13 +116,13 @@ const router = new Router({
                     path: '',
                     name: 'products.data',
                     component: DataProduct,
-                    meta: {title: 'Manage Produk Laundry'}
+                    meta: { title: 'Manage Produk Laundry' }
                 },
                 {
                     path: 'add',
                     name: 'products.add',
                     component: AddProduct,
-                    meta: { title: 'Tambah Produk Laundry'}
+                    meta: { title: 'Tambah Produk Laundry' }
                 },
                 {
                     path: 'edit/:id',
@@ -151,44 +154,44 @@ const router = new Router({
                     path: '',
                     name: 'expenses.data',
                     component: DataExpenses,
-                    meta: {title: 'Manage Biaya'}
+                    meta: { title: 'Manage Biaya' }
                 },
                 {
                     path: 'add',
                     name: 'expenses.create',
                     component: CreateExpenses,
-                    meta: {title: 'Tambah Data Biaya'}
+                    meta: { title: 'Tambah Data Biaya' }
                 },
                 {
                     path: 'edit/:id',
                     name: 'expenses.edit',
                     component: EditExpenses,
-                    meta: {title: 'Edit Expenses'}
+                    meta: { title: 'Edit Expenses' }
                 },
                 {
                     path: 'view/:id',
                     name: 'expenses.view',
                     component: ViewExpenses,
-                    meta: {title: 'View Expenses'}
+                    meta: { title: 'View Expenses' }
                 },
             ]
         },
         {
             path: '/customers',
             component: IndexCustomer,
-            meta: {requiresAuth: true},
+            meta: { requiresAuth: true },
             children: [
                 {
                     path: '',
                     name: 'customers.data',
                     component: DataCustomer,
-                    meta: {title: 'Manage Customers'}
+                    meta: { title: 'Manage Customers' }
                 },
                 {
                     path: 'add',
                     name: 'customers.add',
                     component: AddCustomer,
-                    meta: {title: 'Tambah Customer'}
+                    meta: { title: 'Tambah Customer' }
                 },
                 {
                     path: 'edit/:id',
@@ -207,13 +210,13 @@ const router = new Router({
                     path: 'create',
                     name: 'transactions.add',
                     component: AddTransaction,
-                    meta: {title: 'Buat Transaksi'}
+                    meta: { title: 'Buat Transaksi' }
                 },
                 {
                     path: 'view/:id',
                     name: 'transactions.view',
                     component: ViewTransaction,
-                    meta: {title: 'View Transaction'}
+                    meta: { title: 'View Transaction' }
                 },
                 {
                     path: 'list',
@@ -222,7 +225,20 @@ const router = new Router({
                     meta: { title: 'List Transaction' }
                 },
             ]
-        }
+        },
+        {
+            path: '/users',
+            component: IndexUsers,
+            meta: { requiresAuth: true },
+            children: [
+                {
+                    path: '',
+                    name: 'persons.data',
+                    component: DataPersons,
+                    meta: { title: 'Daftar Pengguna' }
+                }
+            ]
+        },
     ]
 });
 

@@ -20,7 +20,7 @@
                         <li>
                             <router-link :to="{ name: 'customers.data' }">Customer</router-link>
                         </li>
-                        <li v-if="$can('read outlets')">
+                        <!-- <li v-if="$can('read outlets')">
                             <router-link :to="{ name: 'outlets.data' }">
                                 Outlets
                             </router-link>
@@ -29,7 +29,7 @@
                             <router-link :to="{ name: 'couriers.data' }">
                                 Couriers
                             </router-link>
-                        </li>
+                        </li> -->
                         <li v-if="$can('read products')">
                             <router-link :to="{ name: 'products.data' }">
                                 Products
@@ -51,6 +51,9 @@
                                     <router-link :to="{ name: 'transactions.add' }">Buat Transaksi</router-link>
                                 </li>
                             </ul>
+                        </li>
+                        <li v-if="authenticated.role == 0">
+                            <router-link :to="{name: 'persons.data'}">Manage Users</router-link>
                         </li>
                         <li class="dropdown" v-if="authenticated.role == 0">
                             <a href="javascript:void(0)"

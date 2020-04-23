@@ -19,7 +19,7 @@ Route::post('/login', 'Auth\LoginController@login');
 Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('/outlets', 'API\OutletController')->except(['show']);
     Route::resource('/couriers', 'API\UserController')->except(['create', 'show', 'update']);
-    Route::resource('/users', 'API\UsersController')->except(['create', 'show', 'update']);
+    Route::resource('/users', 'API\UsersController')->except(['create', 'show']);
     Route::post('/couriers/{id}', 'API\UserController@update')->name('couriers.update');
     Route::resource('product', 'API\ProductController')->except(['create', 'show']);
     Route::get('/product/laundry-type', 'API\ProductController@getLaundryType');
@@ -41,4 +41,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('transaction/payment', 'API\TransactionController@makePayment');
     Route::get('chart', 'API\DashboardController@chart');
     Route::get('export', 'API\DashboardController@exportData');
+    Route::get('data', 'API\DashboardController@data');
 });

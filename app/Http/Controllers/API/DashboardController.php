@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Customer;
 use App\Exports\TransactionExport;
 use App\Transaction;
 use Carbon\Carbon;
@@ -36,7 +37,7 @@ class DashboardController extends Controller
                 'total' => $total ? $total->total:0
             ];
         }
-        
+
         return $data;
     }
 
@@ -56,5 +57,18 @@ class DashboardController extends Controller
                 $total
             ), 'transaction.xlsx'
         );
+    }
+
+    public function data()
+    {
+        $total_cus = Customer::count();
+        $tot_income = Transaction::sum('amount');
+        $tot_orders = Transaction::count();
+
+        return response()->json([
+            'customer' => $total_cus,
+            'income' => $tot_income,
+            'orders' => $tot_orders
+        ]);
     }
 }

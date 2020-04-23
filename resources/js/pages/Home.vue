@@ -11,7 +11,55 @@
                 <li><a href="#">Dashboard</a></li>
             </ol>
         </section>
+        <section class="content">
+            <div class="row">
+        <div class="col-lg-4 col-xs-12">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>{{ totData.orders }}</h3>
 
+              <p>Total Order</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-bag"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-4 col-xs-12">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>{{ totData.income }}<sup style="font-size: 20px"></sup></h3>
+
+              <p>Pendapatan</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-4 col-xs-12">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>{{ totData.customer }}</h3>
+
+              <p>Total Pelanggan</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+        </section>
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
@@ -71,6 +119,7 @@
     import _ from 'lodash'
     import LineChart from '../components/LineChart.vue'
     import {mapActions, mapState} from 'vuex'
+    import $axios from "../api";
 
     export default {
         created() {
@@ -81,6 +130,7 @@
         },
         data() {
             return {
+                totData: [],
                 chartOptions: {
                     responsive: true,
                     maintainAspectRatio: false,
@@ -143,6 +193,9 @@
             ...mapState('dashboard', {
                 transactions: state => state.transactions
             }),
+            ...mapState('user', {
+                authenticated: state => state.authenticated
+            }),
             ...mapState(['token']),
             years() {
                 return _.range(2010, moment().add(1, 'years').format('Y'))
@@ -167,6 +220,15 @@
                 window.open(`/api/export?api_token=${this.token}&month=${this.month}&year=${this.year}`)
             }
         },
-        components: {'line-chart': LineChart},
+        components: {
+            'line-chart': LineChart
+        },
+        mounted() {
+            $axios.get(`data`).then(response => {
+                this.totData = response.data;
+            }).catch(error => {
+                console.log(error)
+            })
+        }
     }
 </script>

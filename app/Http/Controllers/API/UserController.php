@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Resources\UserCollection;
-use App\User;
 use App\Http\Controllers\Controller;
-
-use Dotenv\Parser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
-use File;
 use Spatie\Permission\Models\Permission;
+use Dotenv\Parser;
+use File;
+use App\User;
 
 class UserController extends Controller
 {
@@ -120,7 +119,7 @@ class UserController extends Controller
      * @param $id
      *
      * @return JsonResponse
-     * 
+     *
      * @throws ValidationException
      */
     public function update(Request $request, $id)

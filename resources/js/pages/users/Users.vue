@@ -12,8 +12,9 @@
                     <template v-slot:cell(role)="row">
                         <span class="label label-success" v-if="row.item.role == 0">Super Admin</span>
                         <span class="label label-primary" v-else-if="row.item.role == 1">Admin</span>
-                        <span class="label label-default" v-else-if="row.item.role == 2">Keuangan</span>
-                        <span class="label label-default" v-else>Kurir</span>
+                        <span class="label label-info" v-else-if="row.item.role == 2">Keuangan</span>
+                        <span class="label label-default" v-else-if="row.item.role == 3">Kurir</span>
+                        <span class="label label-default" v-else>Belum di set</span>
                     </template>
                     <template v-slot:cell(actions)="row">
                         <router-link :to="{ name: 'persons.edit', params: {id: row.item.id} }"

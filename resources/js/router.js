@@ -40,6 +40,7 @@ import ListTransaction from './pages/transaction/List'
 
 import IndexUsers from './pages/users/Index'
 import DataPersons from './pages/users/Users'
+import AddPerson from './pages/users/Add'
 
 Vue.use(Router);
 
@@ -236,6 +237,12 @@ const router = new Router({
                     name: 'persons.data',
                     component: DataPersons,
                     meta: { title: 'Daftar Pengguna' }
+                },
+                {
+                    path: '/add',
+                    name: 'persons.add',
+                    component: AddPerson,
+                    meta: { title: 'Tambah Pengguna' }
                 }
             ]
         },

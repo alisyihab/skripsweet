@@ -24,7 +24,10 @@
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <router-link :to="{ name: 'transactions.list' }" class="small-box-footer">
+                More info
+                <i class="fa fa-arrow-circle-right"></i>
+            </router-link>
           </div>
         </div>
         <!-- ./col -->
@@ -32,9 +35,9 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>{{ totData.income }}<sup style="font-size: 20px"></sup></h3>
+              <h3>{{ totData.income | currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) }}<sup style="font-size: 20px"></sup></h3>
 
-              <p>Pendapatan</p>
+              <p>Total Pendapatan</p>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
@@ -54,7 +57,10 @@
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <router-link :to="{ name: 'customers.data' }" class="small-box-footer">
+                More info
+                <i class="fa fa-arrow-circle-right"></i>
+            </router-link>
           </div>
         </div>
         <!-- ./col -->
@@ -120,6 +126,7 @@
     import LineChart from '../components/LineChart.vue'
     import {mapActions, mapState} from 'vuex'
     import $axios from "../api";
+    import Vue2Filters from 'vue2-filters'
 
     export default {
         created() {
@@ -221,7 +228,8 @@
             }
         },
         components: {
-            'line-chart': LineChart
+            'line-chart': LineChart,
+             mixins: [Vue2Filters.mixin]
         },
         mounted() {
             $axios.get(`data`).then(response => {

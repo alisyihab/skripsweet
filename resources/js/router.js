@@ -1,46 +1,47 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './pages/Home.vue'
-import Login from './pages/Login.vue'
-import store from './store.js'
+import Vue from "vue";
+import Router from "vue-router";
+import Home from "./pages/Home.vue";
+import Login from "./pages/Login.vue";
+import store from "./store.js";
 
-import IndexOutlet from './pages/outlets/Index.vue'
-import DataOutlet from './pages/outlets/Outlet.vue'
-import AddOutlet from './pages/outlets/Add.vue'
-import EditOutlet from './pages/outlets/Edit.vue'
+import IndexOutlet from "./pages/outlets/Index";
+import DataOutlet from "./pages/outlets/Outlet";
+import AddOutlet from "./pages/outlets/Add";
+import EditOutlet from "./pages/outlets/Edit";
 
-import IndexCourier from './pages/couriers/Index'
-import DataCourier from './pages/couriers/Courier'
-import AddCourier from './pages/couriers/Add'
-import EditCourier from './pages/couriers/Edit'
+import IndexCourier from "./pages/couriers/Index";
+import DataCourier from "./pages/couriers/Courier";
+import AddCourier from "./pages/couriers/Add";
+import EditCourier from "./pages/couriers/Edit";
 
-import IndexProduct from './pages/products/Index.vue'
-import DataProduct from './pages/products/Product.vue'
-import AddProduct from './pages/products/Add.vue'
-import EditProduct from './pages/products/Edit.vue'
+import IndexProduct from './pages/products/Index'
+import DataProduct from './pages/products/Product'
+import AddProduct from "./pages/products/Add";
+import EditProduct from "./pages/products/Edit";
 
 import SetPermission from "./pages/setting/roles/SetPermission.vue";
-import Setting from "./pages/setting/Index.vue"
+import Setting from "./pages/setting/Index.vue";
 
-import IndexExpenses from "./pages/expenses/Index"
-import DataExpenses from "./pages/expenses/Expenses"
-import CreateExpenses from "./pages/expenses/Add"
-import ViewExpenses from "./pages/expenses/View"
-import EditExpenses from "./pages/expenses/Edit"
+import IndexExpenses from "./pages/expenses/Index";
+import DataExpenses from "./pages/expenses/Expenses";
+import CreateExpenses from "./pages/expenses/Add";
+import ViewExpenses from "./pages/expenses/View";
+import EditExpenses from "./pages/expenses/Edit";
+import ExportExpanses from "./pages/expenses/Export";
 
-import IndexCustomer from './pages/customers/Index'
-import DataCustomer from './pages/customers/Customer'
-import AddCustomer from './pages/customers/Add'
-import EditCustomer from './pages/customers/Edit'
+import IndexCustomer from "./pages/customers/Index";
+import DataCustomer from "./pages/customers/Customer";
+import AddCustomer from "./pages/customers/Add";
+import EditCustomer from "./pages/customers/Edit";
 
-import IndexTransaction from './pages/transaction/Index'
-import AddTransaction from './pages/transaction/Add'
-import ViewTransaction from './pages/transaction/View'
-import ListTransaction from './pages/transaction/List'
+import IndexTransaction from "./pages/transaction/Index";
+import AddTransaction from "./pages/transaction/Add";
+import ViewTransaction from "./pages/transaction/View";
+import ListTransaction from "./pages/transaction/List";
 
-import IndexUsers from './pages/users/Index'
-import DataPersons from './pages/users/Users'
-import AddPerson from './pages/users/Add'
+import IndexUsers from "./pages/users/Index";
+import DataPersons from "./pages/users/Users";
+import AddPerson from "./pages/users/Add";
 
 Vue.use(Router);
 
@@ -48,7 +49,7 @@ const router = new Router({
     mode: 'history',
     routes: [
         {
-            path: '/',
+            path: '/dashboard',
             name: 'home',
             component: Home,
             meta: { requiresAuth: true }
@@ -155,7 +156,7 @@ const router = new Router({
                     path: '',
                     name: 'expenses.data',
                     component: DataExpenses,
-                    meta: { title: 'Manage Biaya' }
+                    meta: { title: 'Permintaan Biaya' }
                 },
                 {
                     path: 'add',
@@ -173,8 +174,14 @@ const router = new Router({
                     path: 'view/:id',
                     name: 'expenses.view',
                     component: ViewExpenses,
-                    meta: { title: 'View Expenses' }
+                    meta: { title: 'Lihat Permintaan' }
                 },
+                {
+                    path: 'export',
+                    name: 'expanses.export',
+                    component: ExportExpanses,
+                    meta: { title: 'Export Laporan' }
+                }
             ]
         },
         {

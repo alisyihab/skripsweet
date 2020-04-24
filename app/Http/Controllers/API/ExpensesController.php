@@ -68,13 +68,10 @@ class ExpensesController extends Controller
      */
     public function accept(Request $request)
     {
-        $this->validate($request, [
-           'id' => 'required|exists|expenses,id'
-        ]);
-
-        $expenses = Expense::with(['user' => 1]);
+        $this->validate($request, ['id' => 'required|exists:expenses,id']);
+        $expenses = Expense::with(['user'])->find($request->id);
+        $expenses->update(['status' => 1]);
         Notification::send($expenses->user, new ExpensesNotification($expenses, $expenses->user));
-
         return response()->json(['status' => 'success']);
     }
 
@@ -138,5 +135,14 @@ class ExpensesController extends Controller
         $expenses->delete();
 
         return response()->json(['status' => 'success']);
+    }
+
+    public function exportData()
+    {
+        $totAmount = Expense::where('status', 2)->sum('price');
+
+        return response()->json([
+            'data' => $totAmount
+        ]);
     }
 }

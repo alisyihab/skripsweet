@@ -21,9 +21,18 @@
                         {{ row.item.reason == '' ? '-':row.item.reason }}
                     </template>
                     <template v-slot:cell(actions)="row">
-                        <router-link :to="{ name: 'expenses.edit', params: {id: row.item.id} }" class="btn btn-warning btn-sm" v-if="row.item.status == 0"><i class="fa fa-pencil"></i></router-link>
-                        <router-link :to="{ name: 'expenses.view', params: {id: row.item.id} }" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></router-link>
-                        <button class="btn btn-danger btn-sm" @click="deleteExpenses(row.item.id)" v-if="row.item.status == 0"><i class="fa fa-trash"></i></button>
+                        <router-link :to="{ name: 'expenses.edit', params: {id: row.item.id} }"
+                            class="btn btn-warning btn-sm" v-if="row.item.status == 0">
+                            <i class="fa fa-pencil"></i>
+                        </router-link>
+                        <router-link :to="{ name: 'expenses.view', params: {id: row.item.id} }"
+                            class="btn btn-info btn-sm">
+                            <i class="fa fa-eye"></i>
+                        </router-link>
+                        <button class="btn btn-danger btn-sm" @click="deleteExpenses(row.item.id)"
+                            v-if="row.item.status == 0">
+                            <i class="fa fa-trash"></i>
+                        </button>
                     </template>
                 </b-table>
 
@@ -62,7 +71,7 @@ export default {
                 { key: 'description', label: 'Permintaan' },
                 { key: 'price', label: 'Biaya' },
                 { key: 'note', label: 'Catatan' },
-                { key: 'user', label: 'Kurir/Admin' },
+                { key: 'user', label: 'Admin' },
                 { key: 'status', label: 'Status' },
                 { key: 'reason', label: 'Alasan' },
                 { key: 'actions', label: 'Aksi' }
@@ -104,6 +113,11 @@ export default {
                 confirmButtonText: 'Iya, Lanjutkan!'
             }).then((result) => {
                 if (result.value) {
+                    this.$swal.fire(
+                        'Success!',
+                        'Data Berhasil Dihapus.',
+                        'success'
+                    );
                     this.removeExpenses(id)
                 }
             })

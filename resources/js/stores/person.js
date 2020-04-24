@@ -24,7 +24,8 @@ const mutations = {
     state.persons = {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      role: ''
     }
   }
 };

@@ -31,20 +31,22 @@ class UsersController extends Controller
         $this->validate($request, [
             'name' => 'required|max:150',
             'email' => 'required|unique:users,email',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+            'role' => 'required'
         ] , [
             'name.required' => 'Field tidak boleh kosong!',
             'email.required' => 'Field tidak boleh kosong!',
             'email.unique' => 'Email telah terdaftar di database!',
             'password.required' => 'Field tidak boleh kosong!',
-            'password.min' => 'Password Min 6 karakter!'
+            'password.min' => 'Password Min 6 karakter!',
+            'role.required' => 'Field tidak boleh kosong'
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
-            'role' => 1
+            'role' => $request->role
         ]);
 
         return response()->json(['status' => 'success'], 200);

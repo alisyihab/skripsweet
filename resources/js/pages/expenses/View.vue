@@ -35,10 +35,12 @@
                         <dd>- {{ reason }}</dd>
                         <hr>
                     </div>
-                    <div class="pull-right" v-if="status == 0 || (status == 0 && !formReason)">
-                        <button class="btn btn-danger btn-sm" @click="formReason = true">Tolak</button>
-                        <button class="btn btn-primary btn-sm" @click="accept">Terima</button>
-                    </div>
+                    <span v-if="authenticated.role == 0 || authenticated.role == 2">
+                        <div class="pull-right" v-if="status == 0 || (status == 0 && !formReason)">
+                            <button class="btn btn-danger btn-sm" @click="formReason = true">Tolak</button>
+                            <button class="btn btn-primary btn-sm" @click="accept">Terima</button>
+                        </div>
+                    </span>
                 </template>
 
                 <div v-if="formReason">
@@ -56,7 +58,7 @@
     </div>
 </template>
 <script>
-    import {mapActions} from 'vuex';
+    import {mapActions, mapState} from 'vuex';
 
     export default {
         name: 'ViewEpenses',
@@ -83,6 +85,11 @@
                 inputReason: ''
             }
         },
+        computed: {
+            ...mapState('user', {
+                authenticated: state => state.authenticated
+            }),
+        },
         methods: {
             ...mapActions('expenses', ['editExpenses', 'acceptExpenses', 'cancelExpenses']),
             accept() {
@@ -96,6 +103,11 @@
                     confirmButtonText: 'Iya, Lanjutkan!'
                 }).then((result) => {
                     if (result.value) {
+                            this.$swal.fire(
+                            'Success!',
+                            'Data Permintaan Disimpan.',
+                            'success'
+                        );
                         this.acceptExpenses(this.$route.params.id).then(() => this.$router.push({name: 'expenses.data'}))
                     }
                 })

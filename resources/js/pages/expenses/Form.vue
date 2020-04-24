@@ -51,9 +51,23 @@
             submit() {
                 if (this.$route.name === 'expenses.edit') {
                     let data = Object.assign({id: this.$route.params.id}, this.expenses)
-                    this.updateExpenses(data).then(() => this.$router.push({name: 'expenses.data'}))
+                    this.updateExpenses(data).then(() => {
+                        this.$swal.fire(
+                        'Success!',
+                        'Data Berhasil Diubah!.',
+                        'success'
+                    );
+                        this.$router.push({name: 'expenses.data'})
+                    })
                 } else {
-                    this.submitExpense(this.expenses).then(() => this.$router.push({name: 'expenses.data'}))
+                    this.submitExpense(this.expenses).then(() => {
+                        this.$swal.fire(
+                        'Success!',
+                        'Data Berhasil Disimpan.',
+                        'success'
+                        );
+                        this.$router.push({name: 'expenses.data'})
+                    })
                 }
             }
         },

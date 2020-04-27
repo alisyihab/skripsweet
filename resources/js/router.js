@@ -49,6 +49,10 @@ const router = new Router({
     mode: 'history',
     routes: [
         {
+            path: '/',
+            redirect: '/login'
+        },
+        {
             path: '/dashboard',
             name: 'home',
             component: Home,

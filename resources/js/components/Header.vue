@@ -3,7 +3,7 @@
         <nav class="navbar navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-                    <router-link to="/" class="navbar-brand">Laundry</router-link>
+                    <router-link to="/dashboard" class="navbar-brand">Laundry</router-link>
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                             data-target="#navbar-collapse">
                         <i class="fa fa-bars"></i>
@@ -13,12 +13,12 @@
                 <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            <router-link to="/">
+                            <router-link to="/dashboard">
                                 Home <span class="sr-only">(current)</span>
                             </router-link>
                         </li>
-                        <li>
-                            <router-link :to="{ name: 'customers.data' }">Customer</router-link>
+                        <li v-if="authenticated.role != 2">
+                            <router-link :to="{ name: 'customers.data' }">Pelanggan</router-link>
                         </li>
                         <!-- <li v-if="$can('read outlets')">
                             <router-link :to="{ name: 'outlets.data' }">
@@ -32,23 +32,33 @@
                         </li> -->
                         <li v-if="$can('read products')">
                             <router-link :to="{ name: 'products.data' }">
-                                Products
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link :to="{ name: 'expenses.data' }">
-                                Expenses
+                                Produk
                             </router-link>
                         </li>
                         <li class="dropdown">
                             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"
-                               aria-expanded="true">Transactions <span class="caret"></span></a>
+                               aria-expanded="true">Keuangan <span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <router-link :to="{ name: 'transactions.list' }">List Transaksi</router-link>
+                                   <router-link :to="{ name: 'expenses.data' }">
+                                        Daftar Permintaan
+                                    </router-link>
                                 </li>
                                 <li>
+                                    <router-link :to="{ name: 'expenses.create' }">Buat Permohonan</router-link>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" v-if="authenticated.role != 2">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="true">Transaksi <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
                                     <router-link :to="{ name: 'transactions.add' }">Buat Transaksi</router-link>
+                                </li>
+                                <li>
+                                    <router-link :to="{ name: 'transactions.list' }">List Transaksi</router-link>
                                 </li>
                             </ul>
                         </li>

@@ -176,12 +176,6 @@ const router = new Router({
                     component: ViewExpenses,
                     meta: { title: 'Lihat Permintaan' }
                 },
-                {
-                    path: 'export',
-                    name: 'expanses.export',
-                    component: ExportExpanses,
-                    meta: { title: 'Export Laporan' }
-                }
             ]
         },
         {

@@ -136,7 +136,7 @@
                     </div>
 
                     <div class="pull-right" style="padding-top:50px; padding-right:50px">
-                        <button @click="print" class="btn btn-info btn-sm">
+                        <button @click="print" class="btn btn-info btn-sm" v-if="transaction.payment">
                             <i class="fa fa-print"></i>Print
                         </button>
                     </div>

@@ -136,13 +136,4 @@ class ExpensesController extends Controller
 
         return response()->json(['status' => 'success']);
     }
-
-    public function exportData()
-    {
-        $totAmount = Expense::where('status', 2)->sum('price');
-
-        return response()->json([
-            'data' => $totAmount
-        ]);
-    }
 }

@@ -1,30 +1,29 @@
 <script>
-    import { Line } from 'vue-chartjs'
+    import { Bar } from 'vue-chartjs'
 
     export default {
-        extends: Line,
+        extends: Bar,
         props: ['data', 'options', 'labels'],
         mounted() {
-            this.lineRenderChart()
+            this.barRenderChart()
         },
         watch: {
             data: {
                 handler() {
                     this._data._chart.destroy();
-                    this.lineRenderChart();
+                    this.barRenderChart();
                 },
                 deep: true
             }
         },
         methods: {
-            lineRenderChart() {
+            barRenderChart() {
                 this.renderChart({
                     labels: this.labels,
                     datasets: [{
-                        label: 'Data Transaksi',
+                        label: 'Data Pengeluaran',
                         data: this.data,
-                        backgroundColor: '#367fa9',
-                        borderWidth: 1
+                        backgroundColor: '#f87979',
                     }]
                 }, this.options)
             }

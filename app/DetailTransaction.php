@@ -25,10 +25,10 @@ class DetailTransaction extends Model
     public function getStatusLabelAttribute()
     {
         if ($this->status == 1) {
-            return '<span class="label label-success">Selesai</span>';
+            return '<span class="badge badge-success">Selesai</span>';
         }
 
-        return '<span class="label label-default">Proses</span>';
+        return '<span class="badge badge-primary">Proses</span>';
     }
 
     /**

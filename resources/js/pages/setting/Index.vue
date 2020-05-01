@@ -1,26 +1,25 @@
 <template>
-    <div class="container">
-        <section class="content-header">
-            <h1>
-                Settings Page
-            </h1>
-            <breadcrumb></breadcrumb>
+    <div class="main-content">
+        <section class="section">
+            <div class="section-header">
+                <h1>{{ $route.meta.title }}</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item">
+                        <router-link :to="{ name: 'home' }"><i class="fa fa-dashboard"></i> Home</router-link>
+                    </div>
+                    <div class="breadcrumb-item active">{{ $route.meta.title }}</div>
+                </div>
+            </div>
         </section>
 
-        <section class="content">
-            <div class="row">
-                <router-view></router-view>
-            </div>
+        <section class="section-body">
+            <router-view></router-view>
         </section>
     </div>
 </template>
 
 <script>
-    import Breadcrumb from '../../components/Breadcrumb.vue'
     export default {
         name: 'IndexSetting',
-        components: {
-            'breadcrumb': Breadcrumb
-        }
     }
 </script>

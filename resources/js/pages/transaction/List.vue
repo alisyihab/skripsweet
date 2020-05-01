@@ -1,26 +1,26 @@
 <template>
     <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <router-link :to="{ name: 'transactions.add' }" class="btn btn-primary btn-sm btn-flat">
-                    Buat Transaksi
-                </router-link>
-                <div class="pull-right">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <select v-model="filter_status" class="form-control">
-                                <option value="2">All</option>
-                                <option value="1">Selesai</option>
-                                <option value="0">Proses</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Cari..." v-model="search">
+        <div class="card">
+           <div class="card-header">
+                 <h4>Daftar Transaksi</h4>
+            </div>
+            <div class="card-body">
+                <div class="float-left">
+                    <select v-model="filter_status" class="form-control selectric">
+                        <option value="2">All</option>
+                        <option value="1">Selesai</option>
+                        <option value="0">Proses</option>
+                    </select>
+                </div>
+                <div class="float-right">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Cari..." v-model="search">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel-body">
+                <div class="clearfix mb-3"></div>
                 <b-table striped hover bordered responsive :items="transactions.data" :fields="fields" show-empty>
                     <template v-slot:cell(index)="data">
                          <p class="text-center">{{ data.index + 1 }}</p>
@@ -37,7 +37,7 @@
                         <p>{{ row.item.detail.length }} Item</p>
                     </template>
                     <template v-slot:cell(amount)="row">
-                        {{ row.item.amount | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                        {{ row.item.amount | currency('Rp. ', '2', { spaceBetweenAmountAndSymbol: true }) }}
                     </template>
                     <template v-slot:cell(created_at)="row">
                         {{ row.item.created_at | formatDate }}
@@ -56,8 +56,11 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <p v-if="transactions.data"><i class="fa fa-bars"></i> {{ transactions.data.length }} item dari
-                            {{ transactions.meta.total }} total data</p>
+                        <p v-if="transactions.data" style="padding-left: 20px;">
+                            <i class="fa fa-bars"></i>
+                            {{ transactions.data.length }} item dari {{ transactions.meta.total }}
+                            total data
+                        </p>
                     </div>
                     <div class="col-md-6">
                         <div class="pull-right">
@@ -65,8 +68,9 @@
                                     v-model="page"
                                     :total-rows="transactions.meta.total"
                                     :per-page="transactions.meta.per_page"
-                                    aria-controls="transactions"
-                                    v-if="transactions.data && transactions.data.length > 0">
+                                    aria-controls="couriers"
+                                    v-if="transactions.data && transactions.data.length > 0"
+                                    align="right">
                             </b-pagination-nav>
                         </div>
                     </div>

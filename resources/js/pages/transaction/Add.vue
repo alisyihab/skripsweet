@@ -1,23 +1,24 @@
 <template>
     <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Buat Transaksi Baru</h3>
+        <div class="card">
+            <div class="card-header">
+                <h4>Transaksi</h4>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <transaction-form ref="form"></transaction-form>
                 <div class="form-group">
+                    <button class="btn btn-outline-primary btn-sm" @click.prevent="submit">
+                        <i class="fa fa-save"></i> Buat Transaksi
+                    </button>
                     <button class="btn btn-danger btn-sm btn-flat" @click.prevent="clearForm">
                         Clear Form
-                    </button>
-                    <button class="btn btn-primary btn-sm btn-flat" @click.prevent="submit">
-                        <i class="fa fa-save"></i> Buat Transaksi
                     </button>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
 <script>
     import { mapActions, mapState, mapMutations } from 'vuex'
     import FormTransaction from './Form.vue'

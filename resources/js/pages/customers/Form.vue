@@ -1,52 +1,170 @@
 <template>
     <div>
         <div class="form-group" :class="{ 'has-error': errors.nik }">
-            <label>NIK</label>
-            <input type="text" class="form-control" v-model="customer.nik" :readonly="$route.name == 'customers.edit'">
-            <p class="text-danger" v-if="errors.nik">{{ errors.nik[0] }}</p>
+            <label>Nik</label>
+            <input type="number" class="form-control" v-model="customer.nik" :disabled="$route.name == 'customers.edit'">
+            <p class="text-danger" v-if="errors.name">{{ errors.nik[0] }}</p>
         </div>
         <div class="form-group" :class="{ 'has-error': errors.name }">
             <label>Nama Lengkap</label>
             <input type="text" class="form-control" v-model="customer.name">
             <p class="text-danger" v-if="errors.name">{{ errors.name[0] }}</p>
         </div>
-        <div class="form-group" :class="{ 'has-error': errors.address }">
-            <label>Alamat</label>
+        <div class="form-group" :class="{ 'has-error': errors.email }">
+            <label>Email</label>
+            <input type="email" class="form-control" v-model="customer.email" :disabled="$route.name == 'customers.edit'">
+            <p class="text-danger" v-if="errors.email">{{ errors.email[0] }}</p>
+        </div>
+        <div class="form-group" :class="{ 'has-error': errors.password }">
+            <label>Password</label>
+            <input type="password" class="form-control" v-model="customer.password">
+            <p class="text-warning" v-show="$route.name === 'customers.edit'">
+                Leave blank if you don't want to change password
+            </p>
+            <p class="text-danger" v-if="errors.password">{{ errors.password[0] }}</p>
+        </div>
+         <div class="form-group" :class="{ 'has-error': errors.address }">
+            <label for="">Alamat</label>
             <textarea cols="5" rows="5" class="form-control" v-model="customer.address"></textarea>
             <p class="text-danger" v-if="errors.address">{{ errors.address[0] }}</p>
         </div>
         <div class="form-group" :class="{ 'has-error': errors.phone }">
-            <label>No Telp</label>
-            <the-mask
-                    type="tel"
-                    :mask="['####-####-####']"
-                    class="form-control"
-                    v-model="customer.phone" />
+            <label for="">No Telp</label>
+            <input type="text" class="form-control" v-model="customer.phone">
             <p class="text-danger" v-if="errors.phone">{{ errors.phone[0] }}</p>
+        </div>
+        <div class="form-group" :class="{ 'has-error': errors.photo }">
+            <label>Foto</label>
+            <input type="file" class="form-control" accept="image/*" @change="uploadImage($event)" id="file-input">
+            <div id="preview">
+                <img class="img-responsive" v-if="url" :src="url"/>
+            </div>
+            <p class="text-warning" v-show="$route.name === 'customers.edit'">
+                Leave blank if you don't want to change photo
+            </p>
+            <p class="text-danger" v-if="errors.photo">{{ errors.photo[0] }}</p>
         </div>
     </div>
 </template>
 
 <script>
-    import {mapState, mapMutations} from 'vuex'
-    import {TheMask} from 'vue-the-mask'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
-    export default {
-        name: 'FormCustomer',
-        computed: {
-            ...mapState(['errors']),
-            ...mapState('customer', {
-                customer: state => state.customer
+export default {
+    name: 'FormCustomer',
+    created() {
+        if (this.$route.name === 'customers.edit') {
+            this.editCustomer(this.$route.params.id).then((res) => {
+                this.customer = {
+                    nik: res.data.nik,
+                    name: res.data.name,
+                    email: res.data.email,
+                    address: res.data.address,
+                    phone: res.data.phone,
+                    password: '',
+                    photo: '',
+                }
             })
+        }
+    },
+    data() {
+        return {
+            url: null,
+            customer: {
+                nik: '',
+                name: '',
+                email: '',
+                password: '',
+                address: '',
+                phone: '',
+                photo: ''
+            },
+        }
+    },
+    computed: {
+        ...mapState(['errors']),
+    },
+    methods: {
+        ...mapActions('customer', ['submitCustomer', 'editCustomer', 'updateCustomer']),
+        ...mapMutations('customer', ['SET_ID_UPDATE']),
+        onFileChange(event) {
+            const file = event.target.files[0];
+            this.url = URL.createObjectURL(file);
         },
-        methods: {
-            ...mapMutations('customer', ['CLEAR_FORM']),
+        uploadImage(event) {
+            this.customer.photo = event.target.files[0];
+            this.url = URL.createObjectURL(this.customer.photo)
         },
-        destroyed() {
-            this.CLEAR_FORM()
-        },
-        components: {
-            TheMask
+        submit() {
+            let form = new FormData();
+            form.append('nik', this.customer.nik);
+            form.append('name', this.customer.name);
+            form.append('email', this.customer.email);
+            form.append('password', this.customer.password);
+            form.append('address', this.customer.address);
+            form.append('phone', this.customer.phone);
+            form.append('photo', this.customer.photo)
+
+            if (this.$route.name === 'customers.add') {
+                this.submitCustomer(form).then(() => {
+                    this.customer = {
+                        nik: '',
+                        name: '',
+                        email: '',
+                        password: '',
+                        address: '',
+                        phone: '',
+                        photo: ''
+                    };
+                     this.$swal.fire(
+                        'Success!',
+                        'Data Berhasil Disimpan.',
+                        'success'
+                    );
+                    this.$router.push({ name: 'customers.data' })
+                })
+            } else if (this.$route.name === 'customers.edit') {
+                this.SET_ID_UPDATE(this.$route.params.id);
+                this.updateCustomer(form).then(() => {
+                    this.customer = {
+                        nik: '',
+                        name: '',
+                        email: '',
+                        password: '',
+                        address: '',
+                        phone: '',
+                        photo: ''
+                    };
+                     this.$swal.fire(
+                        'Success!',
+                        'Data Berhasil Diubah!.',
+                        'success'
+                    );
+                    this.$router.push({ name: 'customers.data' })
+                })
+            }
         }
     }
+}
 </script>
+
+<style>
+    #preview {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #preview img {
+        max-width: 400px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        /* For mobile phones: */
+        #preview img {
+            width: 70%;
+        }
+    }
+</style>

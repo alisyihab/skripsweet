@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 
 import auth from './stores/auth.js'
 import outlet from './stores/outlet.js'
-import courier from "./stores/courier"
 import product from "./stores/product";
 import user from "./stores/user";
 import expenses from "./stores/expenses";
@@ -19,7 +18,6 @@ const store = new Vuex.Store({
     modules: {
         auth,
         outlet,
-        courier,
         product,
         user,
         expenses,

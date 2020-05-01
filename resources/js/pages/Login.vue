@@ -1,41 +1,84 @@
 <template>
-    <div class="container">
-        <div class="login-box">
-            <div class="login-logo">
-                <router-link :to="{ name: 'home' }"><b>Laundry</b></router-link>
-            </div>
-            <div class="login-box-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+    <div id="app">
+        <section class="section">
+            <div class="d-flex flex-wrap align-items-stretch">
+                <div class="col-lg-4 col-md-6 col-12 order-lg-1 min-vh-100 order-2 bg-white">
+                    <div class="p-4 m-3">
+                        <img :src="'/assets/img/logo.png'" alt="logo" width="100"
+                             class="shadow-light rounded-circle mb-5 mt-2">
+                        <h4 class="text-dark font-weight-normal">Welcome to <span class="font-weight-bold">Laundry</span>
+                        </h4>
+                            <div class="form-group has-feedback" :class="{'has-error': errors.email}">
+                                <label for="email">Email</label>
+                                <input
+                                    id="email"
+                                    type="email"
+                                    v-model="data.email"
+                                    class="form-control"
+                                    name="email"
+                                    tabindex="1"
+                                    required
+                                    autofocus>
+                                 <p class="text-danger" v-if="errors.email">{{ errors.email[0] }}</p>
+                            </div>
 
-                <div class="form-group has-feedback" :class="{'has-error': errors.email}">
-                    <input type="email" class="form-control" placeholder="Email" v-model="data.email">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                    <p class="text-danger" v-if="errors.email">{{ errors.email[0] }}</p>
-                </div>
-                <div class="form-group has-feedback" :class="{'has-error': errors.password}">
-                    <input type="password" class="form-control" placeholder="Password" v-model="data.password">
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                    <p class="text-danger" v-if="errors.password">{{ errors.password[0] }}</p>
-                </div>
-                <div class="alert alert-danger" v-if="errors.invalid">{{ errors.invalid }}</div>
-                <div class="row">
-                    <div class="col-xs-8">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" v-model="data.remember_me"> Remember Me
-                            </label>
+                            <div class="form-group has-feedback" :class="{'has-error': errors.password}">
+                                <div class="d-block">
+                                    <label for="password" class="control-label">Password</label>
+                                </div>
+                                <input
+                                    v-model="data.password"
+                                    id="password"
+                                    type="password"
+                                    class="form-control"
+                                    name="password"
+                                    tabindex="2"
+                                    required
+                                >
+                                <p class="text-danger" v-if="errors.password">{{ errors.password[0] }}</p>
+                            </div>
+                            <div class="alert alert-danger" v-if="errors.invalid">{{ errors.invalid }}</div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox"
+                                        name="remember"
+                                        class="custom-control-input" tabindex="3"
+                                        id="remember-me"
+                                        v-model="data.remember_me">
+                                    <label class="custom-control-label" for="remember-me">Remember Me</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-right">
+                                <button type="submit" class="btn btn-primary btn-lg btn-icon icon-right"
+                                    @click.prevent="postLogin" tabindex="4">
+                                    Login
+                                </button>
+                            </div>
+
+                        <div class="text-center mt-5 text-small">
+                            Copyright &copy; Laundry. Made with 💙 by <a href="https://instagram.com">alibelucky</a>
+                            <div class="mt-2">
+                                <a href="#">Privacy Policy</a>
+                                <div class="bullet"></div>
+                                <a href="#">Terms of Service</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat" @click.prevent="postLogin">
-                            Login
-                        </button>
+                </div>
+                <div class="col-lg-8 col-12 order-lg-2 order-1 min-vh-100 position-relative overlay-gradient-bottom"
+                     :style="{'background-image': 'url(' + require('../../../public/assets/img/drawkit/drawkit-full-stack-man-colour.svg') + ')'}">
+                     <div class="absolute-bottom-left index-2">
+                        <div class="text-light p-5 pb-2">
+                        <div class="mb-5 pb-3">
+                            <h1 class="mb-2 display-4 font-weight-bold" style="color: black">Hello There!</h1>
+                            Created by <a class="text-light bb" target="_blank" href="https://intagram.com/alibelucky">alibelucky</a>
+                        </div>
                     </div>
                 </div>
-
-                <a href="#">I forgot my password</a><br>
+                </div>
             </div>
-        </div>
+        </section>
     </div>
 </template>
 

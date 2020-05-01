@@ -3,21 +3,16 @@
 namespace App\Http\Controllers\API;
 
 use App\DetailTransaction;
-use App\Http\Resources\TransactionCollection;
-use App\Payment;
 use App\Transaction;
-use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Payment;
+use App\Http\Resources\TransactionCollection;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
+use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
-    /**
-     * @return TransactionCollection
-     */
     public function index()
     {
         $search = request()->q;
@@ -42,18 +37,12 @@ class TransactionController extends Controller
         return new TransactionCollection($transaction);
     }
 
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     * @throws ValidationException
-     */
+
     public function store(Request $request)
     {
         $this->validate($request, [
             'customer_id' => 'required',
-            'detail' => 'required',
-        ], [
-            'customer_id.required' => 'Field tidak boleh kosong!'
+            'detail' => 'required'
         ]);
 
         DB::beginTransaction();
@@ -69,8 +58,8 @@ class TransactionController extends Controller
             foreach ($request->detail as $row) {
                 if (!is_null($row['laundry_price'])) {
                     $subtotal = $row['laundry_price']['price'] * $row['qty'];
-                    if ($row['laundry_price']['unit_types'] == 'Kilogram') {
-                        $subtotal = $row['laundry_price']['price'] * ($row['qty']) / 1000;
+                    if ($row['laundry_price']['unit_type'] == 'Kilogram') {
+                        $subtotal = ($row['laundry_price']['price'] * $row['qty']) / 1000;
                     }
 
                     $start_date = Carbon::now();
@@ -83,23 +72,27 @@ class TransactionController extends Controller
                         'transaction_id' => $transaction->id,
                         'laundry_price_id' => $row['laundry_price']['id'],
                         'laundry_type_id' => $row['laundry_price']['laundry_type_id'],
+
                         'start_date' => $start_date->format('Y-m-d H:i:s'),
                         'end_date' => $end_date->format('Y-m-d H:i:s'),
+
                         'qty' => $row['qty'],
                         'price' => $row['laundry_price']['price'],
                         'subtotal' => $subtotal
                     ]);
+
                     $amount += $subtotal;
                 }
             }
-
             $transaction->update(['amount' => $amount]);
             DB::commit();
-            return response()->json(['status' => 'success', 'data' => $transaction]);
 
+            return response()->json([
+                'status' => 'success',
+                'data' => $transaction
+            ]);
         } catch (\Exception $e) {
             DB::rollback();
-
             return response()->json([
                 'status' => 'error',
                 'data' => $e->getMessage()
@@ -107,23 +100,16 @@ class TransactionController extends Controller
         }
     }
 
-    /**
-     * @param $id
-     * @return JsonResponse
-     */
     public function edit($id)
     {
         $transaction = Transaction::with(['customer', 'payment', 'detail', 'detail.product'])->find($id);
+
         return response()->json([
             'status' => 'success',
             'data' => $transaction
         ]);
     }
 
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function completeItem(Request $request)
     {
 
@@ -137,40 +123,33 @@ class TransactionController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     * @throws ValidationException
-     */
     public function makePayment(Request $request)
     {
         $this->validate($request, [
             'transaction_id' => 'required|exists:transactions,id',
-            'amount' => 'required|integer',
+            'amount' => 'required|integer'
         ]);
 
         DB::beginTransaction();
         try {
-            $transaction = Transaction::with(['customer'])->find($request->transaction_id);
+            $transaction = Transaction::find($request->transaction_id);
 
             $customer_change = 0;
+
             if ($request->via_deposit) {
                 if ($transaction->customer->deposit < $request->amount) {
                     return response()->json(['status' => 'error', 'data' => 'Deposit Kurang!']);
                 }
 
-                $transaction->customer()->update([
-                    'deposit' => $transaction->customer->deposit - $request->amount
-                ]);
+                $transaction->customer()->update(['deposit' => $transaction->customer->deposit - $request->amount]);
 
             } else {
                 if ($request->customer_change) {
                     $customer_change = $request->amount - $transaction->amount;
-                    $transaction->customer()->update([
-                        'deposit' => $transaction->customer->deposit + $customer_change
-                    ]);
+                    $transaction->customer()->update(['deposit' => $transaction->customer->deposit + $customer_change]);
                 }
             }
+
             $customer_change = $request->amount - $transaction->amount;
             Payment::create([
                 'transaction_id' => $transaction->id,
@@ -178,8 +157,11 @@ class TransactionController extends Controller
                 'customer_change' => $customer_change,
                 'type' => $request->via_deposit
             ]);
+
             $transaction->update(['status' => 1]);
+
             DB::commit();
+
             return response()->json(['status' => 'success']);
         } catch (\Exception $e) {
             return response()->json(['status' => 'failed', 'data' => $e->getMessage()]);

@@ -1,18 +1,25 @@
 <template>
     <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <router-link :to="{ name: 'expenses.create' }" class="btn btn-primary btn-sm btn-flat">Tambah</router-link>
-                <div class="pull-right">
-                    <input type="text" class="form-control" placeholder="Cari..." v-model="search">
+        <div class="card">
+            <div class="card-header">
+                <h4>Data Permohonan</h4>
+                <div class="card-header-action">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" v-model="search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="panel-body">
-                <b-table striped hover bordered :items="expenses.data" :fields="fields" show-empty>
+            <div class="card-body">
+                <b-table striped hover bordered responsive :items="expenses.data" :fields="fields" show-empty>
                     <template v-slot:cell(status)="row">
-                        <span class="label label-success" v-if="row.item.status == 1">Diterima</span>
-                        <span class="label label-warning" v-else-if="row.item.status == 0">Diproses</span>
-                        <span class="label label-default" v-else>Ditolak</span>
+                        <span class="badge badge-success" v-if="row.item.status == 1">Diterima</span>
+                        <span class="badge badge-warning" v-else-if="row.item.status == 0">Diproses</span>
+                        <span class="badge badge-danger" v-else>Ditolak</span>
                     </template>
                     <template v-slot:cell(user)="row">
                         {{ row.item.user.name }}
@@ -23,7 +30,7 @@
                     <template v-slot:cell(actions)="row">
                         <router-link :to="{ name: 'expenses.edit', params: {id: row.item.id} }"
                             class="btn btn-warning btn-sm" v-if="row.item.status == 0">
-                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-edit"></i>
                         </router-link>
                         <router-link :to="{ name: 'expenses.view', params: {id: row.item.id} }"
                             class="btn btn-info btn-sm">
@@ -38,17 +45,22 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <p v-if="expenses.data"><i class="fa fa-bars"></i> {{ expenses.data.length }} item dari {{ expenses.meta.total }} total data</p>
+                        <p v-if="expenses.data" style="padding-left: 20px;">
+                            <i class="fa fa-bars"></i>
+                            {{ expenses.data.length }} item dari {{ expenses.meta.total }}
+                            total data
+                        </p>
                     </div>
                     <div class="col-md-6">
                         <div class="pull-right">
                             <b-pagination-nav
-                                v-model="page"
-                                :total-rows="expenses.meta.total"
-                                :per-page="expenses.meta.per_page"
-                                aria-controls="expenses"
-                                v-if="expenses.data && expenses.data.length > 0"
-                                ></b-pagination-nav>
+                                    v-model="page"
+                                    :total-rows="expenses.meta.total"
+                                    :per-page="expenses.meta.per_page"
+                                    aria-controls="couriers"
+                                    v-if="expenses.data && expenses.data.length > 0"
+                                    align="right">
+                            </b-pagination-nav>
                         </div>
                     </div>
                 </div>

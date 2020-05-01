@@ -75,7 +75,7 @@ class ProductController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:100',
-            'unit_types' => 'required',
+            'unit_type' => 'required',
             'price' => 'required|integer',
             'laundry_type' => 'required',
             'service' => 'required|integer',
@@ -85,7 +85,7 @@ class ProductController extends Controller
             'name.max' => 'Tidak boleh melebihi 100 karakter',
             'price.required' => 'Field tidak boleh kosong',
             'laundry_type.required' => 'Field tidak boleh kosong',
-            'unit_types.required' => 'Field tidak boleh kosong',
+            'unit_type.required' => 'Field tidak boleh kosong',
             'service.required' => 'Field tidak boleh kosong',
             'service_type' => 'Field tidak boleh kosong'
         ]);
@@ -93,7 +93,7 @@ class ProductController extends Controller
         try {
             LaundryPrice::create([
                 'name' => $request->name,
-                'unit_types' => $request->unit_types,
+                'unit_type' => $request->unit_type,
                 'laundry_type_id' => $request->laundry_type,
                 'price' => $request->price,
                 'user_id' => auth()->user()->id,
@@ -135,7 +135,7 @@ class ProductController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:100',
-            'unit_types' => 'required',
+            'unit_type' => 'required',
             'price' => 'required|integer',
             'laundry_type' => 'required',
             'service' => 'required|integer',
@@ -145,7 +145,7 @@ class ProductController extends Controller
             'name.max' => 'Tidak boleh melebihi 100 karakter',
             'price.required' => 'Field tidak boleh kosong',
             'laundry_type.required' => 'Field tidak boleh kosong',
-            'unit_types.required' => 'Field tidak boleh kosong',
+            'unit_type.required' => 'Field tidak boleh kosong',
             'service.required' => 'Field tidak boleh kosong',
             'service_type' => 'Field tidak boleh kosong'
         ]);
@@ -153,7 +153,7 @@ class ProductController extends Controller
         $laundry = LaundryPrice::find($id);
         $laundry->update([
             'name' => $request->name,
-            'unit_types' => $request->unit_types,
+            'unit_type' => $request->unit_type,
             'laundry_type_id' => $request->laundry_type,
             'price' => $request->price,
             'service' => $request->service,

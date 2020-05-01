@@ -1,16 +1,16 @@
 <template>
     <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Tambah Pengguna</h3>
+        <div class="card">
+            <div class="card-header">
+                <h4>Tambah Pengguna</h4>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <person-form ref="formCourier"></person-form>
                 <div class="form-group">
-                    <router-link :to="{name: 'persons.data'}" class="btn btn-primary btn-sm btn-flat">
+                    <router-link :to="{name: 'persons.data'}" class="btn btn-outline-secondary">
                         <i class="fa fa-arrow-circle-left"></i> Kembali
                     </router-link>
-                    <button class="btn btn-primary btn-sm btn-flat" @click.prevent="submit">
+                    <button class="btn btn-outline-primary" @click.prevent="submit">
                         <i class="fa fa-save"></i> Tambah Data
                     </button>
                 </div>

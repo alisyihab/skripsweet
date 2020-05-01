@@ -5,14 +5,14 @@
             <input type="text" class="form-control" v-model="product.name" placeholder="Kemeja">
             <p class="text-danger" v-if="errors.name">{{ errors.name[0] }}</p>
         </div>
-        <div class="form-group" :class="{ 'has-error': errors.unit_types }">
+        <div class="form-group" :class="{ 'has-error': errors.unit_type }">
             <label>Tipe</label>
-            <select v-model="product.unit_types" class="form-control">
+            <select v-model="product.unit_type" class="form-control">
                 <option value="">Pilih</option>
                 <option value="Kilogram">Kilogram</option>
                 <option value="Potong">Potong</option>
             </select>
-            <p class="text-danger" v-if="errors.unit_types">{{ errors.unit_types[0] }}</p>
+            <p class="text-danger" v-if="errors.unit_type">{{ errors.unit_type[0] }}</p>
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -38,10 +38,17 @@
 
             <div class="col-md-6" v-if="showForm">
                 <div class="form-group" :class="{ 'has-error': errors.name_laundry_type }">
-                    <label>&nbsp;</label>
+                    <label for="">&nbsp;</label>
                     <div class="input-group">
+                        <button class="btn btn-warning btn-sm" @click="cancleAdd">
+                            <i class="fa fa-window-close"></i>
+                        </button>
                         <input type="text" placeholder="Cuci Kering + Setrika" v-model="laundry_type" class="form-control">
-                        <a href="javascript:void(0)" class="input-group-addon btn btn-primary btn-sm" id="basic-addon2" @click="addNewLaundryType">Save</a>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary btn-sm" @click="addNewLaundryType">
+                                Simpan
+                            </button>
+                        </div>
                     </div>
                     <p class="text-danger" v-if="errors.name_laundry_type">{{ errors.name_laundry_type[0] }}</p>
                 </div>
@@ -91,7 +98,7 @@ export default {
             this.editProduct(this.$route.params.id).then((res) => {
                 this.product = {
                     name: res.data.name,
-                    unit_types: res.data.unit_types,
+                    unit_type: res.data.unit_type,
                     price: res.data.price,
                     laundry_type: res.data.laundry_type_id,
                     service: res.data.service,
@@ -104,7 +111,7 @@ export default {
         return {
             product: {
                 name: '',
-                unit_types: '',
+                unit_type: '',
                 price: '',
                 laundry_type: '',
                 service: '',
@@ -115,7 +122,7 @@ export default {
             money: {
                 decimal: ',',
                 thousands: '.',
-                prefix: 'IDR ',
+                prefix: 'Rp. ',
                 suffix: '',
                 precision: 0,
                 masked: false /* doesn't work with directive */
@@ -144,10 +151,13 @@ export default {
                 })
             })
         },
+        cancleAdd() {
+            this.showForm = false
+        },
         clearForm() {
           this.product = {
               name: '',
-              unit_types: '',
+              unit_type: '',
               price: '',
               laundry_type: '',
               service: '',
@@ -159,7 +169,7 @@ export default {
                 this.addProductLaundry(this.product).then(() => {
                     this.product = {
                         name: '',
-                        unit_types: '',
+                        unit_type: '',
                         price: '',
                         laundry_type: ''
                     };
@@ -176,7 +186,7 @@ export default {
                 this.updateCourier(this.product).then(() => {
                     this.product = {
                         name: '',
-                        unit_types: '',
+                        unit_type: '',
                         price: '',
                         laundry_type: ''
                     };

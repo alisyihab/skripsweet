@@ -1,10 +1,10 @@
 <template>
     <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Detail Expenses</h3>
+        <div class="card">
+            <div class="card-header">
+                <h4>Detail Permohonan</h4>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <template>
                     <dt>Permintaan Karyawan</dt>
                     <dd>- {{ description }}</dd>
@@ -18,7 +18,7 @@
                     <dd>- {{ note }}</dd>
                     <hr>
 
-                    <dt>User/Kurir</dt>
+                    <dt>Admin</dt>
                     <dd>- {{ user.name }}</dd>
                     <hr>
 
@@ -103,7 +103,7 @@
                     confirmButtonText: 'Iya, Lanjutkan!'
                 }).then((result) => {
                     if (result.value) {
-                            this.$swal.fire(
+                        this.$swal.fire(
                             'Success!',
                             'Data Permintaan Disimpan.',
                             'success'
@@ -124,6 +124,11 @@
                 }).then((result) => {
                     if (result.value) {
                         this.cancelExpenses({id: this.$route.params.id, reason: this.inputReason}).then(() => {
+                        this.$swal.fire(
+                            'Success!',
+                            'Permintaan berhasil ditolak.',
+                            'success'
+                        );
                             this.formReason = false
                             this.$router.push({name: 'expenses.data'})
                         })

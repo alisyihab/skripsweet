@@ -17,7 +17,7 @@ import Echo from 'laravel-echo'
 import Pusher from 'pusher-js'
 
 new Vue({
-    el: '#dw',
+    el: '#apps',
     router,
     store,
     components: {

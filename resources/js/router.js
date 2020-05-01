@@ -9,11 +9,6 @@ import DataOutlet from "./pages/outlets/Outlet";
 import AddOutlet from "./pages/outlets/Add";
 import EditOutlet from "./pages/outlets/Edit";
 
-import IndexCourier from "./pages/couriers/Index";
-import DataCourier from "./pages/couriers/Courier";
-import AddCourier from "./pages/couriers/Add";
-import EditCourier from "./pages/couriers/Edit";
-
 import IndexProduct from './pages/products/Index'
 import DataProduct from './pages/products/Product'
 import AddProduct from "./pages/products/Add";
@@ -85,31 +80,6 @@ const router = new Router({
                     name: 'outlets.edit',
                     component: EditOutlet,
                     meta: { title: 'Edit Outlet' }
-                }
-            ]
-        },
-        {
-            path: '/couriers',
-            component: IndexCourier,
-            meta: { requiresAuth: true },
-            children: [
-                {
-                    path: '',
-                    name: 'couriers.data',
-                    component: DataCourier,
-                    meta: { title: 'Manage Kurir' }
-                },
-                {
-                    path: 'add',
-                    name: 'couriers.add',
-                    component: AddCourier,
-                    meta: { title: 'Tambah Kurir' }
-                },
-                {
-                    path: 'edit/:id',
-                    name: 'couriers.edit',
-                    component: EditCourier,
-                    meta: { title: 'Edit Kurir' }
                 }
             ]
         },
@@ -191,20 +161,20 @@ const router = new Router({
                     path: '',
                     name: 'customers.data',
                     component: DataCustomer,
-                    meta: { title: 'Manage Customers' }
+                    meta: { title: 'Manage Pelanggan' }
                 },
                 {
                     path: 'add',
                     name: 'customers.add',
                     component: AddCustomer,
-                    meta: { title: 'Tambah Customer' }
+                    meta: { title: 'Buat Pelanggan Baru' }
                 },
                 {
                     path: 'edit/:id',
                     name: 'customers.edit',
                     component: EditCustomer,
                     meta: { title: 'Edit Customer' }
-                },
+                }
             ]
         },
         {
@@ -222,13 +192,13 @@ const router = new Router({
                     path: 'view/:id',
                     name: 'transactions.view',
                     component: ViewTransaction,
-                    meta: { title: 'View Transaction' }
+                    meta: { title: 'Detail Transaksi' }
                 },
                 {
                     path: 'list',
                     name: 'transactions.list',
                     component: ListTransaction,
-                    meta: { title: 'List Transaction' }
+                    meta: { title: 'Daftar Transaksi' }
                 },
             ]
         },

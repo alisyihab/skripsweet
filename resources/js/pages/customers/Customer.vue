@@ -1,24 +1,30 @@
 <template>
-    <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <router-link :to="{ name: 'customers.add' }" class="btn btn-primary btn-sm btn-flat">Tambah
-                </router-link>
-                <div class="pull-right">
-                    <input type="text" class="form-control" placeholder="Cari..." v-model="search">
+     <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Data Pelanggan</h4>
+                <div class="card-header-action">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" v-model="search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="panel-body">
-                <b-table striped hover bordered :items="customers.data" :fields="fields" show-empty>
+            <div class="card-body p-0">
+                <b-table striped hover bordered responsive :items="customers.data" :fields="fields" show-empty>
+                    <template v-slot:cell(photo)="row">
+                        <img :src="'/storage/users/' + row.item.photo" :width="80" :alt="row.item.name">
+                    </template>
                     <template v-slot:cell(deposit)="row">
                         {{ row.item.deposit | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
                     </template>
-                    <template v-slot:cell(courier_id)="row">
-                        {{ row.item.courier ? row.item.courier.name:'-' }}
-                    </template>
                     <template v-slot:cell(actions)="row">
                         <router-link :to="{ name: 'customers.edit', params: {id: row.item.id} }" class="btn btn-warning btn-sm">
-                            <i class="fa fa-pencil"></i>
+                            <i class="fa fa-edit"></i>
                         </router-link>
                         <button class="btn btn-danger btn-sm" @click="deleteCustomer(row.item.id)">
                             <i class="fa fa-trash"></i>
@@ -28,9 +34,10 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <p v-if="customers.data"><i class="fa fa-bars">
-                        </i> {{ customers.data.length }} item dari
-                            {{customers.meta.total }} total data
+                        <p v-if="customers.data" style="padding-left: 20px;">
+                            <i class="fa fa-bars"></i>
+                            {{ customers.data.length }} item dari {{ customers.meta.total }}
+                            total data
                         </p>
                     </div>
                     <div class="col-md-6">
@@ -39,8 +46,9 @@
                                     v-model="page"
                                     :total-rows="customers.meta.total"
                                     :per-page="customers.meta.per_page"
-                                    aria-controls="customers"
-                                    v-if="customers.data && customers.data.length > 0">
+                                    aria-controls="couriers"
+                                    v-if="customers.data && customers.data.length > 0"
+                                    align="right">
                             </b-pagination-nav>
                         </div>
                     </div>
@@ -62,13 +70,14 @@
         data() {
             return {
                 fields: [
+                    {key: 'photo', label: '#'},
                     {key: 'nik', label: 'NIK'},
                     {key: 'name', label: 'Nama Lengkap'},
+                    {key: 'email', label: 'Email'},
                     {key: 'address', label: 'Alamat'},
-                    {key: 'phone', label: 'Telp'},
+                    {key: 'phone', label: 'No Hp'},
                     {key: 'point', label: 'Poin'},
                     {key: 'deposit', label: 'Deposit'},
-                    {key: 'courier_id', label: 'Invited By'},
                     {key: 'actions', label: 'Aksi'}
                 ],
                 search: ''

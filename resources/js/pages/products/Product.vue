@@ -1,13 +1,20 @@
 <template>
     <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <router-link :to="{ name: 'products.add' }" class="btn btn-primary btn-sm btn-flat">Tambah</router-link>
-                <div class="pull-right">
-                    <input type="text" class="form-control" placeholder="Cari..." v-model="search">
+        <div class="card">
+            <div class="card-header">
+                <h4>Data Product</h4>
+                <div class="card-header-action">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" v-model="search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <b-table striped hover bordered responsive :items="products.data" :fields="fields" show-empty>
                     <template v-slot:cell(laundry_type)="row">
                         {{ row.item.type.name }}
@@ -16,12 +23,11 @@
                         {{ row.item.user.name }}
                     </template>
                     <template v-slot:cell(price)="row">
-                        {{ row.item.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                        {{ row.item.price | currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) }}
                     </template>
                     <template v-slot:cell(actions)="row">
-                        <router-link :to="{ name: 'products.edit', params: {id: row.item.id} }"
-                                     class="btn btn-warning btn-sm">
-                            <i class="fa fa-pencil"></i>
+                        <router-link :to="{ name: 'products.edit', params: {id: row.item.id} }" class="btn btn-warning btn-sm">
+                            <i class="fa fa-edit"></i>
                         </router-link>
                         <button class="btn btn-danger btn-sm" @click="deleteProduct(row.item.id)">
                             <i class="fa fa-trash"></i>
@@ -74,7 +80,7 @@
             return {
                 fields: [
                     {key: 'name', label: 'Nama Item', sortable: true},
-                    {key: 'unit_types', label: 'Tipe', sortable: true},
+                    {key: 'unit_type', label: 'Tipe', sortable: true},
                     {key: 'laundry_type', label: 'Jenis jasa', sortable: true},
                     {key: 'price', label: 'Harga', sortable: true},
                     {key: 'user_id', label: 'Admin', sortable: true},

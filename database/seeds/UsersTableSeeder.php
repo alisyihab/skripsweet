@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'Ali Syihab',
             'email' => 'ali.syihab@gmail.com',
             'email_verified_at' => now(),
-            'password' => 'secret',
+            'password' => bcrypt('feelalive'),
             'role' => 0
         ]);
     }

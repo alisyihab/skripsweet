@@ -1,25 +1,31 @@
 <template>
     <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <router-link :to="{ name: 'persons.add' }" class="btn btn-primary btn-sm btn-flat">Tambah</router-link>
-                <div class="pull-right">
-                    <input type="text" class="form-control" placeholder="Cari..." v-model="search">
+        <div class="card">
+            <div class="card-header">
+                <h4>Data Pengguna</h4>
+                <div class="card-header-action">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" v-model="search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <b-table striped hover bordered responsive :items="person.data" :fields="fields" show-empty>
                     <template v-slot:cell(role)="row">
-                        <span class="label label-success" v-if="row.item.role == 0">Super Admin</span>
-                        <span class="label label-primary" v-else-if="row.item.role == 1">Admin</span>
-                        <span class="label label-info" v-else-if="row.item.role == 2">Keuangan</span>
-                        <span class="label label-default" v-else-if="row.item.role == 3">Kurir</span>
-                        <span class="label label-default" v-else>Belum di set</span>
+                        <span class="badge badge-success" v-if="row.item.role == 0">Super Admin</span>
+                        <span class="badge badge-primary" v-else-if="row.item.role == 1">Admin</span>
+                        <span class="badge badge-info" v-else-if="row.item.role == 2">Keuangan</span>
+                        <span class="badge badge-default" v-else>Belum di set</span>
                     </template>
                     <template v-slot:cell(actions)="row">
                         <router-link :to="{ name: 'persons.edit', params: {id: row.item.id} }"
-                            class="btn btn-warning btn-sm">
-                            <i class="fa fa-pencil"></i>
+                            class="btn btn-primary btn-sm">
+                            <i class="fas fa-pen-square"></i>
                         </router-link>
                         <button class="btn btn-danger btn-sm" @click="deletePerson(row.item.id)">
                             <i class="fa fa-trash"></i>
@@ -29,7 +35,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <p v-if="person.data">
+                        <p v-if="person.data" style="padding-left: 20px;">
                             <i class="fa fa-bars"></i>
                             {{ person.data.length }} item dari {{ person.meta.total }}
                             total data
@@ -41,8 +47,9 @@
                                     v-model="page"
                                     :total-rows="person.meta.total"
                                     :per-page="person.meta.per_page"
-                                    aria-controls="person"
-                                    v-if="person.data && person.data.length > 0">
+                                    aria-controls="couriers"
+                                    v-if="person.data && person.data.length > 0"
+                                    align="right">
                             </b-pagination-nav>
                         </div>
                     </div>

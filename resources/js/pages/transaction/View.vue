@@ -1,7 +1,7 @@
 <template>
     <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-md-6" v-if="transaction.status == 0">
                         <h4>Payment</h4>
@@ -89,7 +89,7 @@
                             <tbody>
                                 <tr v-for="(row, index) in transaction.detail" :key="index">
                                     <td><strong>{{ row.product.name }}</strong></td>
-                                    <td>{{ row.qty }} ({{ row.product.unit_types == 'Kilogram' ? 'gram':'Potong'}})</td>
+                                    <td>{{ row.qty }} ({{ row.product.unit_type == 'Kilogram' ? 'gram':'Potong'}})</td>
                                     <td>
                                          {{ row.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
                                         / {{ row.product.unit_types }}
@@ -135,12 +135,6 @@
                         </table>
                     </div>
 
-                    <div class="pull-right" style="padding-top:50px; padding-right:50px">
-                        <button @click="print" class="btn btn-info btn-sm" v-if="transaction.payment">
-                            <i class="fa fa-print"></i>Print
-                        </button>
-                    </div>
-
                     <div class="col-md-12" style="padding-top: 20px">
                         <div class="alert alert-success" v-if="payment_success">Pembayaran Berhasil</div>
 
@@ -161,25 +155,31 @@
                                 <tbody>
                                     <tr v-for="(row, index) in transaction.detail" :key="index">
                                         <td>
-                                            <strong>{{ row.product.name }}</strong>
-                                            <sup v-html="row.status_label"></sup>
+                                            <h6>
+                                                <strong>{{ row.product.name }}</strong>
+                                                <sup v-html="row.status_label"></sup>
+                                            </h6>
                                         </td>
                                         <td>{{ row.service_time }}</td>
                                         <td>
-                                            {{ row.qty }} ({{ row.product.unit_types == 'Kilogram' ? 'gram':'Potong'}})
+                                            {{ row.qty }} ({{ row.product.unit_type == 'Kilogram' ? 'gram':'Potong'}})
                                         </td>
                                         <td>
                                             {{ row.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
-                                            / {{ row.product.unit_types }}
+                                            / {{ row.product.unit_type }}
                                         </td>
                                         <td>
                                             {{ row.subtotal | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
                                         </td>
                                         <td>
-                                            <button class="btn btn-success btn-sm"
-                                                    v-if="transaction.status == 1  && row.status == 0"
-                                                    @click="isDone(row.id)">
-                                                <i class="fa fa-paper-plane-o"></i>
+                                            <button
+                                                class="btn btn-success btn-sm"
+                                                v-if="transaction.status == 1  && row.status == 0"
+                                                @click="isDone(row.id)">
+                                                <i class="fas fa-paper-plane"></i>
+                                            </button>
+                                            <button @click="print" class="btn btn-info btn-sm" v-if="transaction.payment">
+                                                <i class="fa fa-print"></i>Print
                                             </button>
                                         </td>
                                     </tr>
@@ -297,6 +297,11 @@
                 }).then((result) => {
                     if (result.value) {
                         this.completeItem({ id: id }).then(() => {
+                            this.$swal.fire(
+                                'Success!',
+                                'Transaksi selesai.',
+                                'success'
+                            );
                             this.detailTransaction(this.$route.params.id)
                         })
                     }

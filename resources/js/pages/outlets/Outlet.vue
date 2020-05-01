@@ -1,13 +1,20 @@
 <template>
     <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <router-link :to="{ name: 'outlets.add' }" class="btn btn-primary btn-sm btn-flat">Tambah</router-link>
-                <div class="pull-right">
-                    <input type="text" class="form-control" placeholder="Cari..." v-model="search">
+        <div class="card">
+            <div class="card-header">
+                <h4>Data Outlet</h4>
+                <div class="card-header-action">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" v-model="search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <b-table striped hover bordered responsive :items="outlets.data" :fields="fields" show-empty>
                     <template v-slot:cell(status)="row">
                         <span class="label label-success" v-if="row.item.status == 1">Active</span>
@@ -26,7 +33,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <p v-if="outlets.data">
+                        <p v-if="outlets.data" style="padding-left: 20px;">
                             <i class="fa fa-bars"></i>
                             {{ outlets.data.length }} item dari {{ outlets.meta.total }}
                             total data
@@ -38,8 +45,9 @@
                                     v-model="page"
                                     :total-rows="outlets.meta.total"
                                     :per-page="outlets.meta.per_page"
-                                    aria-controls="outlets"
-                                    v-if="outlets.data && outlets.data.length > 0" align="right">
+                                    aria-controls="couriers"
+                                    v-if="outlets.data && outlets.data.length > 0"
+                                    align="right">
                             </b-pagination-nav>
                         </div>
                     </div>

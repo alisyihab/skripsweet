@@ -1,10 +1,10 @@
 <template>
     <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Tambah Data</h3>
+        <div class="card">
+            <div class="card-header">
+                <h4>Tambah Data</h4>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <outlet-form></outlet-form>
                 <div class="form-group">
                     <router-link :to="{name: 'outlets.data'}" class="btn btn-primary btn-sm btn-flat">

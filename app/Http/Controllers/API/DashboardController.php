@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Exports\TransactionExport;
-use App\Customer;
 use App\Transaction;
 use App\Expense;
 use Carbon\Carbon;
@@ -63,13 +62,11 @@ class DashboardController extends Controller
 
     public function data()
     {
-        $total_cus = Customer::count();
         $tot_income = Transaction::where('status', 1)->sum('amount');
         $tot_orders = Transaction::count();
         $tot_expanses = Expense::where('status', 1)->sum('price');
 
         return response()->json([
-            'customer' => $total_cus,
             'income' => $tot_income,
             'orders' => $tot_orders,
             'expanse' => $tot_expanses

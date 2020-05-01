@@ -2,86 +2,129 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Customer;
-use App\Http\Resources\CustomerCollection;
-use Illuminate\Http\Request;
+use App\User;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserCollection;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use File;
 
 class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::with(['courier'])->orderBy('created_at', 'DESC');
+        $customer = User::orderBy('created_at', 'DESC')->customer();
+
         if (request()->q != '') {
-            $customers = $customers->where('name', 'LIKE', '%' . request()->q . '%');
+            $customer = $customer->where('name', 'LIKE', '%' . request()->q . '%');
         }
 
-        return new CustomerCollection($customers->paginate(10));
+        $customer = $customer->paginate(10);
+
+        return new UserCollection($customer);
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nik' => 'required|string|unique:customers,nik',
+            'nik' => 'required|unique:users,nik',
             'name' => 'required|string|max:150',
+            'email' => 'required|string|unique:users,email',
+            'password' => 'required|min:6|string',
             'address' => 'required|string',
-            'phone' => 'required|string|max:13'
-        ], [
-            'nik.required' => 'Field tidak boleh kosong!',
-            'nik.unique' => 'Nik Sudah digunakan!',
-            'name.required' => 'Field tidak boleh kosong!',
-            'name.max' => 'Nama tidak boleh lebih dari 150 karakter',
-            'address.required' => 'Field tidak boleh kosong!',
-            'phone.required' => 'Field tidak boleh kosong!',
-            'phone.max' => 'No HP tidak boleh lebih dari 13 karakter'
+            'phone' => 'required|string|max:13',
+            'photo' => 'required|image|max:5120'
         ]);
 
-        $user = $request->user();
-        $request->request->add([
-            'point' => 0,
-            'deposit' => 0
-        ]);
-        if ($user->role == 3) {
-            $request->request->add(['courier_id' => $user->id]);
+        DB::beginTransaction();
+        try {
+            $name = null;
+            if ($request->hasFile('photo')) {
+                $file = $request->file('photo');
+                $name = $request->email . '-' . time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('public/users', $name);
+            }
+
+            $customer = User::create([
+                'nik' => $request->nik,
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'photo' => $name,
+                'address' => $request->address,
+                'role' => $request->role,
+                'phone' => $request->phone,
+                'point' => 0,
+                'deposit' => 0,
+                'role' => 3,
+            ]);
+
+            $customer->assignRole('customer');
+            DB::commit();
+
+            return response()->json(['status' => 'success'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'error',
+                'data' => $e->getMessage()
+            ], 500);
         }
-        $customer = Customer::create($request->all());
-
-        return response()->json(['status' => 'success', 'data' => $customer]);
     }
 
     public function edit($id)
     {
-        $customer = Customer::find($id);
+        $customer = User::find($id);
 
-        return response()->json([
-           'status' => 'success',
-           'data' => $customer
-        ]);
+        return response()->json(['status' => 'success', 'data' => $customer]);
     }
 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required|string|max:150',
+            'password' => 'nullable|min:6|string',
             'address' => 'required|string',
-            'phone' => 'required|string|max:13'
-        ], [
-            'name.required' => 'Field tidak boleh kosong!',
-            'name.max' => 'Nama tidak boleh lebih dari 150 karakter',
-            'address.required' => 'Field tidak boleh kosong!',
-            'phone.required' => 'Field tidak boleh kosong!',
-            'phone.max' => 'No HP tidak boleh lebih dari 13 karakter'
+            'phone' => 'required|string|max:13',
+            'photo' => 'nullable|image|max:5120'
         ]);
 
-        $customer = Customer::find($id);
-        $customer->update([$request->all()]);
+        try {
+            $customer = User::find($id);
+            $password = $request->password != '' ? bcrypt($request->password):$customer->password;
+            $fileName = $customer->photo;
 
-        return response()->json(['status' => 'success']);
+            if ($request->hasFile('photo')) {
+                $file = $request->file('photo');
+
+                File::delete(storage_path('app/public/users/' . $fileName));
+                $fileName = $request->email . '-' . time() . '.' .$file->getClientOriginalExtension();
+                $file->storeAs('public/users', $fileName);
+            }
+
+            $customer->update([
+                'nik' => $request->nik,
+                'name' => $request->name,
+                'password' => $password,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'photo' => $fileName
+            ]);
+
+            return response()->json(['status' => 'success'], 200);
+            } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'data' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function destroy($id)
     {
-        $customer = Customer::find($id);
+        $customer = User::find($id);
+        File::delete(storage_path('app/public/couriers/' . $customer->photo));
         $customer->delete();
 
         return response()->json(['status' => 'success']);

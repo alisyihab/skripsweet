@@ -1,17 +1,18 @@
 <template>
     <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Edit Product</h3>
+        <div class="card">
+            <div class="card-header">
+                <h4>Edit Produk</h4>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <product-form ref="formProduct"></product-form>
                 <div class="form-group">
-                    <router-link :to="{name: 'products.data'}" class="btn btn-primary btn-sm btn-flat">
-                        <i class="fa fa-arrow-circle-left"></i> Kembali
+                    <router-link :to="{ name: 'products.data' }" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-alt-circle-left"></i>
+                        Kembali
                     </router-link>
-                    <button class="btn btn-primary btn-sm btn-flat" @click.prevent="submit">
-                        <i class="fa fa-save"></i> Update
+                    <button class="btn btn-outline-primary" @click.prevent="submit">
+                        <i class="fa fa-save"></i> Ubah
                     </button>
                 </div>
             </div>

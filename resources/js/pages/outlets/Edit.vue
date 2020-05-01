@@ -1,17 +1,17 @@
 <template>
     <div class="col-md-12">
-        <div class="panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Edit Outlet</h3>
+        <div class="card">
+            <div class="card-header">
+                <h4>Edit Data</h4>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <outlet-form></outlet-form>
                 <div class="form-group">
                     <router-link :to="{name: 'outlets.data'}" class="btn btn-primary btn-sm btn-flat">
                         <i class="fa fa-arrow-circle-left"></i> Kembali
                     </router-link>
                     <button class="btn btn-primary btn-sm btn-flat" @click.prevent="submit">
-                        <i class="fa fa-save"></i> Update
+                        <i class="fa fa-save"></i> Tambah Data
                     </button>
                 </div>
             </div>

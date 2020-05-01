@@ -25,7 +25,7 @@ class Transaction extends Model
      */
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -50,8 +50,8 @@ class Transaction extends Model
     public function getStatusLabelAttribute()
     {
         if ($this->status == 1) {
-            return '<span class="label label-success">Selesai</span>';
+            return '<span class="badge badge-success">Selesai</span>';
         }
-        return '<span class="label label-primary">Proses</span>';
+        return '<span class="badge badge-primary">Proses</span>';
     }
 }

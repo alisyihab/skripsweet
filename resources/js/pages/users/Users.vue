@@ -116,7 +116,12 @@ export default {
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Iya, Lanjutkan!'
             }).then((result) => {
-                if (result.value) {
+            if (result.value) {
+                this.$swal.fire(
+                    'Success!',
+                    'Data Berhasil Dihapus!',
+                    'success'
+                );
                     this.removePerson(id)
                 }
             })

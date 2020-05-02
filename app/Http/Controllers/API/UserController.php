@@ -4,18 +4,18 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Resources\UserCollection;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Permission;
-use Dotenv\Parser;
-use File;
-use App\User;
 
 class UserController extends Controller
 {
 
+    /**
+     * @return UserCollection
+     */
     public function index()
     {
         $persons = User::where('role', '!=', '3')->orderBy('created_at', 'DESC');
@@ -55,6 +55,60 @@ class UserController extends Controller
         ]);
 
         return response()->json(['status' => 'success'], 200);
+    }
+
+    /**
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function edit($id)
+    {
+        $users = User::find($id);
+
+        return response()->json(['status' => 'success', 'data' => $users]);
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     *
+     * @return JsonResponse
+     *
+     * @throws ValidationException
+     */
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:150',
+            'email' => 'required',
+            'password' => '->nullable|min:6',
+            'role' => 'required'
+        ], [
+            'name.required' => 'Field tidak boleh kosong',
+            'email.required' => 'Field tidak boleh kosong',
+            'password.min' => 'Password Min 6 karakter',
+            'role.required' => 'Field tidak boleh kosong'
+        ]);
+
+        $users = User::find($id);
+        $password = $request->password != '' ? bcrypt($request->password):$users->password;
+        $users->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $password,
+            'role' => $request->role
+        ]);
+
+        return response()->json(['status' => 'success']);
+    }
+
+    public function destroy($id)
+    {
+        $users = User::find($id);
+        $users->delete();
+
+        return response()->json(['status' => 'success']);
     }
 
     /**

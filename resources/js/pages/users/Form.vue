@@ -14,6 +14,9 @@
             <label>Passowrd</label>
             <input type="password" class="form-control" v-model="persons.password">
             <p class="text-danger" v-if="errors.password">{{ errors.password[0] }}</p>
+            <p class="text-warning" v-show="$route.name != 'persons.add'">
+                Biarkan kosong bila tidak ingin mengganti passsword
+            </p>
         </div>
         <div class="form-group" :class="{ 'has-error': errors.role }">
             <label>Role</label>

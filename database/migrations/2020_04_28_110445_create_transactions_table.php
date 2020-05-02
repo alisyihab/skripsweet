@@ -27,14 +27,23 @@ class CreateTransactionsTable extends Migration
             $table->foreign('courier_id')
                 ->references('id')
                 ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade')
+                ->change();
             ;
             $table->foreign('customer_id')
                 ->references('id')
                 ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade')
+                ->change();
             ;
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade')
+                ->change();
             ;
         });
     }

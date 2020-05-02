@@ -25,10 +25,16 @@ class CreateLaundryPricesTable extends Migration
             $table->foreign('laundry_type_id')
                 ->references('id')
                 ->on('laundry_types')
+                ->onUpdate('cascade')
+                ->onDelete('cascade')
+                ->change();
             ;
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade')
+                ->change();
             ;
         });
     }

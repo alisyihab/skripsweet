@@ -26,14 +26,23 @@ class CreateDetailTransactionsTable extends Migration
             $table->foreign('transaction_id')
                 ->references('id')
                 ->on('transactions')
+                ->onUpdate('cascade')
+                ->onDelete('cascade')
+                ->change();
             ;
             $table->foreign('laundry_price_id')
                 ->references('id')
                 ->on('laundry_prices')
+                ->onUpdate('cascade')
+                ->onDelete('cascade')
+                ->change();
             ;
             $table->foreign('laundry_type_id')
                 ->references('id')
                 ->on('laundry_types')
+                ->onUpdate('cascade')
+                ->onDelete('cascade')
+                ->change();
             ;
         });
     }

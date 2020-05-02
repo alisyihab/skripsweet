@@ -28,15 +28,21 @@
                         {{ row.item.reason == '' ? '-':row.item.reason }}
                     </template>
                     <template v-slot:cell(actions)="row">
-                        <router-link :to="{ name: 'expenses.edit', params: {id: row.item.id} }"
+                        <router-link
+                            v-b-tooltip.hover.top="'Edit data'"
+                            :to="{ name: 'expenses.edit', params: {id: row.item.id} }"
                             class="btn btn-warning btn-sm" v-if="row.item.status == 0">
                             <i class="fa fa-edit"></i>
                         </router-link>
-                        <router-link :to="{ name: 'expenses.view', params: {id: row.item.id} }"
+                        <router-link
+                            v-b-tooltip.hover.top="'Lihat data'"
+                            :to="{ name: 'expenses.view', params: {id: row.item.id} }"
                             class="btn btn-info btn-sm">
                             <i class="fa fa-eye"></i>
                         </router-link>
-                        <button class="btn btn-danger btn-sm" @click="deleteExpenses(row.item.id)"
+                        <button
+                            v-b-tooltip.hover.top="'Hapus data'"
+                            class="btn btn-danger btn-sm" @click="deleteExpenses(row.item.id)"
                             v-if="row.item.status == 0">
                             <i class="fa fa-trash"></i>
                         </button>

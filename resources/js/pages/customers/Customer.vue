@@ -23,10 +23,16 @@
                         {{ row.item.deposit | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
                     </template>
                     <template v-slot:cell(actions)="row">
-                        <router-link :to="{ name: 'customers.edit', params: {id: row.item.id} }" class="btn btn-warning btn-sm">
+                        <router-link
+                            v-b-tooltip.hover.top="'Edit data'"
+                            :to="{ name: 'customers.edit', params: {id: row.item.id} }"
+                            class="btn btn-warning btn-sm">
                             <i class="fa fa-edit"></i>
                         </router-link>
-                        <button class="btn btn-danger btn-sm" @click="deleteCustomer(row.item.id)">
+                        <button
+                            v-b-tooltip.hover.bottom="'Hapus data'"
+                            class="btn btn-danger btn-sm"
+                            @click="deleteCustomer(row.item.id)">
                             <i class="fa fa-trash"></i>
                         </button>
                     </template>

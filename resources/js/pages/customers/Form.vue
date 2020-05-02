@@ -19,7 +19,7 @@
             <label>Password</label>
             <input type="password" class="form-control" v-model="customer.password">
             <p class="text-warning" v-show="$route.name === 'customers.edit'">
-                Leave blank if you don't want to change password
+                Biarkan kosong bila tidak ingin mengganti password.
             </p>
             <p class="text-danger" v-if="errors.password">{{ errors.password[0] }}</p>
         </div>
@@ -40,7 +40,7 @@
                 <img class="img-responsive" v-if="url" :src="url"/>
             </div>
             <p class="text-warning" v-show="$route.name === 'customers.edit'">
-                Leave blank if you don't want to change photo
+                Biarkan kosong bila tidak ingin mengganti photo.
             </p>
             <p class="text-danger" v-if="errors.photo">{{ errors.photo[0] }}</p>
         </div>

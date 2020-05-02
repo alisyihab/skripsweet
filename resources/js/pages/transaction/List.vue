@@ -47,8 +47,9 @@
                     </template>
                     <template v-slot:cell(actions)="row">
                         <router-link
-                                :to="{ name: 'transactions.view', params: {id: row.item.id} }"
-                                class="btn btn-info btn-sm">
+                            v-b-tooltip.hover.top="'Lihat data'"
+                            :to="{ name: 'transactions.view', params: {id: row.item.id} }"
+                            class="btn btn-info btn-sm">
                             <i class="fa fa-eye"></i>
                         </router-link>
                     </template>

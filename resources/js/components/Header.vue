@@ -45,11 +45,13 @@
             </li>
             <li class="dropdown">
                 <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    <img alt="image" src="https://via.placeholder.com/160" class="rounded-circle mr-1">
+                    <span v-if="authenticated.photo == null">
+                        <img alt="image" src="https://via.placeholder.com/160" class="rounded-circle mr-1">
+                    </span>
                     <div class="d-sm-none d-lg-inline-block">Hi, {{ authenticated.name }}</div>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <router-link :to="{name: 'role.permissions'}" class="dropdown-item has-icon" v-if="authenticated.role == 0">
+                <div class="dropdown-menu dropdown-menu-right" v-if="authenticated.role == 0">
+                    <router-link :to="{name: 'role.permissions'}" class="dropdown-item has-icon">
                         <i class="fas fa-cog"></i> Settings
                     </router-link>
                     <div class="dropdown-divider"></div>

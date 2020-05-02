@@ -23,11 +23,16 @@
                         <span class="badge badge-default" v-else>Belum di set</span>
                     </template>
                     <template v-slot:cell(actions)="row">
-                        <router-link :to="{ name: 'persons.edit', params: {id: row.item.id} }"
+                        <router-link
+                            v-b-tooltip.hover.top="'Edit'"
+                            :to="{ name: 'persons.edit', params: {id: row.item.id} }"
                             class="btn btn-primary btn-sm">
                             <i class="fas fa-pen-square"></i>
                         </router-link>
-                        <button class="btn btn-danger btn-sm" @click="deletePerson(row.item.id)">
+                        <button
+                            v-b-tooltip.hover.top="'Hapus'"
+                            class="btn btn-danger btn-sm"
+                            @click="deletePerson(row.item.id)">
                             <i class="fa fa-trash"></i>
                         </button>
                     </template>

@@ -173,6 +173,7 @@
                                         </td>
                                         <td>
                                             <button
+                                                v-b-tooltip.hover.top="'Selesaikan Transaksi'"
                                                 class="btn btn-success btn-sm"
                                                 v-if="transaction.status == 1  && row.status == 0"
                                                 @click="isDone(row.id)">

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Exports\TransactionExport;
 use App\Transaction;
 use App\Expense;
-use Carbon\Carbon;
+use App\User;
+use App\Http\Controllers\Controller;
+use App\Exports\TransactionExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Excel;
 
 class DashboardController extends Controller
@@ -65,11 +66,13 @@ class DashboardController extends Controller
         $tot_income = Transaction::where('status', 1)->sum('amount');
         $tot_orders = Transaction::count();
         $tot_expanses = Expense::where('status', 1)->sum('price');
+        $tot_cus =  User::where('role', '=', '3')->count();
 
         return response()->json([
             'income' => $tot_income,
             'orders' => $tot_orders,
-            'expanse' => $tot_expanses
+            'expanse' => $tot_expanses,
+            'customer' => $tot_cus
         ]);
     }
 

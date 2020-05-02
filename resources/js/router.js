@@ -1,8 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./pages/Home.vue";
-import Login from "./pages/Login.vue";
-import store from "./store.js";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import store from "./store";
+import Member from "./pages/Customer";
 
 import IndexOutlet from "./pages/outlets/Index";
 import DataOutlet from "./pages/outlets/Outlet";
@@ -22,7 +23,6 @@ import DataExpenses from "./pages/expenses/Expenses";
 import CreateExpenses from "./pages/expenses/Add";
 import ViewExpenses from "./pages/expenses/View";
 import EditExpenses from "./pages/expenses/Edit";
-import ExportExpanses from "./pages/expenses/Export";
 
 import IndexCustomer from "./pages/customers/Index";
 import DataCustomer from "./pages/customers/Customer";
@@ -52,6 +52,12 @@ const router = new Router({
             path: '/dashboard',
             name: 'home',
             component: Home,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/member',
+            name: 'member',
+            component: Member,
             meta: { requiresAuth: true }
         },
         {

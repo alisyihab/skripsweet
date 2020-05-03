@@ -57,4 +57,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('export', 'API\DashboardController@exportData');
     Route::get('data', 'API\DashboardController@data');
     Route::get('expanse', 'API\DashboardController@getExpanse');
+    Route::get('last-trans', 'API\DashboardController@getTransaction');
 });

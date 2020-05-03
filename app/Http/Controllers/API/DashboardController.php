@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Transaction;
 use App\Expense;
 use App\User;
+use App\Http\Resources\TransactionCollection;
 use App\Http\Controllers\Controller;
 use App\Exports\TransactionExport;
 use Illuminate\Http\Request;
@@ -96,5 +97,15 @@ class DashboardController extends Controller
         }
 
         return $data;
+    }
+
+    public function getTransaction()
+    {
+        $transaction = Transaction::with(['user', 'detail', 'customer'])
+            ->orderBy('created_at', 'DESC');
+
+        $transaction = $transaction->take(5)->get();
+
+        return new TransactionCollection($transaction);
     }
 }

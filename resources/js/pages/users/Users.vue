@@ -27,7 +27,7 @@
                             v-b-tooltip.hover.top="'Edit'"
                             :to="{ name: 'persons.edit', params: {id: row.item.id} }"
                             class="btn btn-primary btn-sm">
-                            <i class="fas fa-pen-square"></i>
+                            <i class="fas fa-pencil-alt"></i>
                         </router-link>
                         <button
                             v-b-tooltip.hover.top="'Hapus'"

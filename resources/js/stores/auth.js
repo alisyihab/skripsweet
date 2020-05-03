@@ -1,7 +1,4 @@
 import $axios from '../api.js'
-const state = () => ({});
-
-const mutations = {};
 
 const actions = {
     submit({ commit }, payload) {
@@ -29,7 +26,5 @@ const actions = {
 
 export default {
     namespaced: true,
-    state,
     actions,
-    mutations
 }

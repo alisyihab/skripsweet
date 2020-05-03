@@ -112,6 +112,7 @@
                 this.submit(this.data).then(() => {
                     if (this.isAuth) {
                         this.CLEAR_ERRORS();
+                        location.reload()
                         this.$router.push({name: 'home'})
                     }
                 })

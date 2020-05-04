@@ -101,8 +101,17 @@ class DashboardController extends Controller
 
     public function getTransaction()
     {
+        $user = request()->user();
+
         $transaction = Transaction::with(['user', 'detail', 'customer'])
             ->orderBy('created_at', 'DESC');
+        
+        if ($user->role != 0) {
+            $transaction = $transaction
+                ->where('customer_id', $user->id)
+                ->orWhere('user_id', $user->id)
+            ;
+        }
 
         $transaction = $transaction->take(5)->get();
 

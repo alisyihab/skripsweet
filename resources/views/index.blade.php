@@ -7,6 +7,7 @@
     <title>Laundry</title>
     <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/@fortawesome/fontawesome-free/css/all.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-social/bootstrap-social.css') }}">
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">

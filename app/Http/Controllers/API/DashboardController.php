@@ -106,15 +106,25 @@ class DashboardController extends Controller
         $transaction = Transaction::with(['user', 'detail', 'customer'])
             ->orderBy('created_at', 'DESC');
         
-        if ($user->role != 0) {
+        if ($user->role != 0 && $user->role != 1) {
             $transaction = $transaction
                 ->where('customer_id', $user->id)
-                ->orWhere('user_id', $user->id)
             ;
         }
 
         $transaction = $transaction->take(5)->get();
 
         return new TransactionCollection($transaction);
+    }
+
+    public function countTrans()
+    {
+        $user = request()->user();
+
+        $transaction = Transaction::where('customer_id', $user->id)->count();
+
+        return response()->json([
+            'data' => $transaction
+        ]);
     }
 }

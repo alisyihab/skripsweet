@@ -102,6 +102,7 @@
                         </table>
                         </div>
                         <hr>
+                        <div class="table-responsive">
                         <table class="table" style="widht:50%; border:none;">
                              <tr>
                                 <th>Total Belanja </th>
@@ -133,6 +134,7 @@
                                 </td>
                             </tr>
                         </table>
+                        </div>
                     </div>
 
                     <div class="col-md-12" style="padding-top: 20px">

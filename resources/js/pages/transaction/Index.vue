@@ -11,6 +11,7 @@
                 <div class="section-header-button">
                     <router-link :to="{ name: 'transactions.add' }"
                         class="btn btn-primary"
+                        v-if="$can('create transaction')"
                         v-show="$route.name !== 'transactions.add' && $route.name !== 'transactions.view'">
                         Tambah Data
                     </router-link>

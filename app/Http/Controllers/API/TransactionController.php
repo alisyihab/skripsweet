@@ -28,8 +28,10 @@ class TransactionController extends Controller
             $transaction = $transaction->where('status', request()->status);
         }
 
-        if ($user->role != 0) {
-            $transaction = $transaction->where('user_id', $user->id);
+        if ($user->role != 0 && $user->role != 1) {
+            $transaction = $transaction
+                ->where('customer_id', $user->id)
+            ;
         }
 
         $transaction = $transaction->paginate(10);

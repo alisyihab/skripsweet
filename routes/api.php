@@ -58,4 +58,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('data', 'API\DashboardController@data');
     Route::get('expanse', 'API\DashboardController@getExpanse');
     Route::get('last-trans', 'API\DashboardController@getTransaction');
+
+    // profile Customer
+    Route::get('total_transaction', 'API\DashboardController@countTrans');
 });

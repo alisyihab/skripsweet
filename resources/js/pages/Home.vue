@@ -43,10 +43,10 @@
                         <div class="card-header">
                             <h4>Data Transaksi</h4>
                             <div class="card-header-action">
-                                <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
+                                <a data-collapse="#mycard-collapse1" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                             </div>
                         </div>
-                        <div class="collapse show" id="mycard-collapse" style="">
+                        <div class="collapse show" id="mycard-collapse1" style="">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-5">

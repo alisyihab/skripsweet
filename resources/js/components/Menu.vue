@@ -53,15 +53,12 @@
                     <span>Manage User</span>
                 </router-link>
             </li>
-            <li class="nav-item dropdown" v-if="authenticated.role == 0">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+            <li v-if="authenticated.role == 0"> 
+                <router-link class="nav-link" :to="{name: 'role.permissions'}">
                     <i class="fas fa-cog"></i>
                     <span>Hak Akses</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><router-link class="nav-link" :to="{name: 'role.permissions'}">Role Permission</router-link></li>
-                </ul>
-            </li>
+                </router-link>
+            </li>   
         </ul>
     </aside>
 </template>

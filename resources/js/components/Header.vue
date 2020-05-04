@@ -48,13 +48,15 @@
                     <span v-if="authenticated.photo == null">
                         <img alt="image" src="https://via.placeholder.com/160" class="rounded-circle mr-1">
                     </span>
+                    <img
+                        v-if="authenticated.photo !== null" 
+                        alt="image" 
+                        :src="'/storage/users/' + authenticated.photo"
+                        class="rounded-circle"
+                    >
                     <div class="d-sm-none d-lg-inline-block">Hi, {{ authenticated.name }}</div>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right" v-if="authenticated.role == 0">
-                    <router-link :to="{name: 'role.permissions'}" class="dropdown-item has-icon">
-                        <i class="fas fa-cog"></i> Settings
-                    </router-link>
-                    <div class="dropdown-divider"></div>
+                <div class="dropdown-menu dropdown-menu-right">
                     <a href="javascript:void(0)" @click="logout" class="dropdown-item has-icon text-danger">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>

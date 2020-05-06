@@ -41,7 +41,7 @@ class CustomerController extends Controller
             $name = null;
             if ($request->hasFile('photo')) {
                 $file = $request->file('photo');
-                $name = $request->email . '-' . time() . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . '-' . time() . '.' . $file->getClientOriginalExtension();
                 $file->storeAs('public/users', $name);
             }
 
@@ -52,14 +52,12 @@ class CustomerController extends Controller
                 'password' => bcrypt($request->password),
                 'photo' => $name,
                 'address' => $request->address,
-                'role' => $request->role,
                 'phone' => $request->phone,
                 'point' => 0,
                 'deposit' => 0,
                 'role' => 3,
             ]);
 
-            $customer->assignRole('customer');
             DB::commit();
 
             return response()->json(['status' => 'success'], 200);
@@ -99,7 +97,7 @@ class CustomerController extends Controller
                 $file = $request->file('photo');
 
                 File::delete(storage_path('app/public/users/' . $fileName));
-                $fileName = $request->email . '-' . time() . '.' .$file->getClientOriginalExtension();
+                $fileName = $request->name . '-' . time() . '.' .$file->getClientOriginalExtension();
                 $file->storeAs('public/users', $fileName);
             }
 

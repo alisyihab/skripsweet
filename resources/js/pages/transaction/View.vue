@@ -33,8 +33,7 @@
                             <input type="checkbox" v-model="customer_change" id="customer_change">
                             <label for="customer_change"> Kembalian Jadi Deposit?</label>
                         </div>
-                        <p class="text-danger" v-if="payment_message">{{ payment_message }}</p>
-                        <button class="btn btn-primary btn-sm" :disabled="loading" @click="makePayment">Bayar</button>
+                        <button class="btn btn-primary" :disabled="loading" @click="makePayment">Bayar</button>
                     </div>
                     <div class="col-md-6" v-if="transaction.customer">
                         <h4>Customer Info</h4>
@@ -143,8 +142,6 @@
                     </div>
 
                     <div class="col-md-12" style="padding-top: 20px">
-                        <div class="alert alert-success" v-if="payment_success">Pembayaran Berhasil</div>
-
                         <h4>Detail Transaction</h4>
                         <hr>
                         <div class="table-responsive">
@@ -235,7 +232,6 @@
                 customer_change: false,
                 loading: false,
                 payment_message: null,
-                payment_success: false,
                 via_deposit: false,
                 money: {
                     decimal: ',',
@@ -268,7 +264,12 @@
             ...mapActions('transaction', ['detailTransaction', 'payment', 'completeItem']),
             makePayment() {
                 if (this.amount < this.transaction.amount) {
-                    this.payment_message = 'Pembayaran Kurang Dari Tagihan'
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Pembayaran kurang dari tagihan.',
+                    });
+                    // this.payment_message = 'Pembayaran Kurang Dari Tagihan'
                     return
                 }
                 this.loading = true
@@ -279,7 +280,11 @@
                     via_deposit: this.via_deposit
                 }).then((res) => {
                     if (res.status == 'success') {
-                        this.payment_success = true
+                        this.$swal.fire(
+                            'Success!',
+                            'Pembayaran berhasil.',
+                            'success'
+                        );
                         setTimeout(() => {
                             this.loading = false
                             this.amount = null

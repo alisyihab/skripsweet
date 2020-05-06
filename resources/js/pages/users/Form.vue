@@ -24,7 +24,6 @@
                 <option value="">Pilih</option>
                 <option value="0">Super Admin</option>
                 <option value="1">Admin</option>
-                <option value="2">Keuangan</option>
             </select>
             <p class="text-danger" v-if="errors.role">{{ errors.role[0] }}</p>
         </div>

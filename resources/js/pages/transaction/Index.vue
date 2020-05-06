@@ -28,11 +28,20 @@
         <section class="section-body">
             <router-view></router-view>
         </section>
+
+        <div v-if="!$can('create transaction')">
+            <page404 />
+        </div>
     </div>
 </template>
 
 <script>
+    import Page404 from '../../components/Page404';
+
     export default {
         name: "IndexTransaction",
+        components: {
+            'page404': Page404
+        }
     }
 </script>

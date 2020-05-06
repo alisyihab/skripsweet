@@ -1,4 +1,5 @@
 <template>
+<div>
     <div class="main-content" v-if="$can('read users')">
         <section class="section">
             <div class="section-header">
@@ -26,9 +27,19 @@
             <router-view></router-view>
         </section>
     </div>
+
+    <div class="main-content" v-if="!$can('read users')">
+        <page404 />
+    </div>
+</div>
 </template>
 <script>
+    import Page404 from '../../components/Page404';
+
     export default {
         name: 'IndexUsers',
+        components: {
+            'page404': Page404
+        }
     }
 </script>

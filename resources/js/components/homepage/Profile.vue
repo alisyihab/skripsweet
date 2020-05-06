@@ -79,3 +79,11 @@
         }
     }
 </script>
+
+<style>
+@media only screen and (max-width: 768px) {
+    .profile-widget-item-value {
+        font-size: 12px !important;
+    }
+}
+</style>

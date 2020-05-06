@@ -25,7 +25,7 @@
                     <span>Produk</span>
                 </router-link>
             </li>
-            <li v-if="$can('read expenses')">
+            <li v-if="$can('read expense')">
                 <router-link class="nav-link active" :to="{ name: 'expenses.data' }">
                     <i class="fas fa-dollar-sign"></i>
                     <span>Keuangan</span>
@@ -37,14 +37,22 @@
                     <span>Pelanggan</span>
                 </router-link>
             </li>
-            <li class="nav-item dropdown" v-if="$can('read transaction')">
+            <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Trasaksi</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><router-link class="nav-link" :to="{ name: 'transactions.list' }">List Transaksi</router-link></li>
-                    <li><router-link class="nav-link" :to="{name: 'transactions.add'}">Buat Transaksi</router-link></li>
+                    <li>
+                        <router-link class="nav-link" :to="{ name: 'transactions.list' }">
+                            List Transaksi
+                        </router-link>
+                    </li>
+                    <li v-if="$can('read transaction')">
+                        <router-link class="nav-link" :to="{name: 'transactions.add'}">
+                            Buat Transaksi
+                        </router-link>
+                    </li>
                 </ul>
             </li>
             <li v-if="authenticated.role == 0">

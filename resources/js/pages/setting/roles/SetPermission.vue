@@ -7,7 +7,6 @@
                         <h4>Assign Role to User</h4>
                     </div>
                     <div class="card-body">
-                        <div class="alert alert-success" v-if="alert_role">Role Has Been Added</div>
                         <div class="form-group">
                             <label>Role</label>
                             <select class="form-control" v-model="role_user.role">
@@ -47,7 +46,6 @@
                             <button class="btn btn-primary btn-sm" @click="checkPermission">{{ loading ? 'Loading...':'Check' }}</button>
                         </div>
                         <div class="form-group">
-                            <div class="alert alert-success" v-if="alert_permission">Permission has been assigned</div>
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
                                     <li class="active">
@@ -95,8 +93,6 @@
                 role_selected: '',
                 new_permission: [],
                 loading: false,
-                alert_permission: false,
-                alert_role: false
             }
         },
         created() {
@@ -125,14 +121,15 @@
             ...mapMutations('user', ['CLEAR_ROLE_PERMISSION']),
             setRole() {
                 this.setRoleUser(this.role_user).then(() => {
-                    this.alert_role = true;
-                    setTimeout(() => {
-                        this.role_user = {
-                            role: '',
-                            user_id: ''
-                        };
-                        this.alert_role = false
-                    }, 3000)
+                    this.role_user = {
+                        role: '',
+                        user_id: ''
+                    };
+                    this.$swal.fire(
+                        'Success!',
+                        'Hak role telah diberikan.',
+                        'success'
+                    );
                 })
             },
             addPermission(name) {
@@ -156,7 +153,11 @@
                     permissions: this.new_permission
                 }).then((res) => {
                     if (res.status === 'success') {
-                        this.alert_permission = true;
+                        this.$swal.fire(
+                            'Success!',
+                            'Hak akses telah diberikan.',
+                            'success'
+                        );
                         setTimeout(() => {
                             this.role_selected = '';
                             this.new_permission = [];

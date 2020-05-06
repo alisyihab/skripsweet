@@ -36,6 +36,8 @@ class RolePermissionController extends Controller
     {
         $this->validate($request, [
             'role_id' => 'required|exists:roles,id'
+        ], [
+            'role_id.required' => 'Field tidak boleh kosong'
         ]);
 
         $role = Role::find($request->role_id);
@@ -48,6 +50,9 @@ class RolePermissionController extends Controller
         $this->validate($request, [
             'user_id' => 'required|exists:users,id',
             'role' => 'required'
+        ], [
+            'user_id.required' => 'Field tidak boleh kosong.',
+            'role.required' => 'Field tidak boleh kosong' 
         ]);
 
         $user = User::find($request->user_id);

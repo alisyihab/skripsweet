@@ -1,5 +1,5 @@
 <template>
-    <div class="main-content">
+    <div class="main-content" v-if="$can('read users')">
         <section class="section">
             <div class="section-header">
                 <div class="section-header-back">

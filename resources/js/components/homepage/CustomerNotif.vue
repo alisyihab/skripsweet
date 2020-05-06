@@ -19,9 +19,9 @@
                         </div>
                         <div class="dropdown-item-desc">
                             <b>{{ row.data.sender_name }}</b>
-                            <p  v-show="authenticated.role = 3"
-                                v-html="row.data.transaction.status_label" 
-                            />
+                            <p  v-show="authenticated.role = 3">
+                                Kamu telah melakukan transaksi.
+                            </p>
                             <div class="time">{{ row.created_at | formatDate }}</div>
                         </div>
                     </a>

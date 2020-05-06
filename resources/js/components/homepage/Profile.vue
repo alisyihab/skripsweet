@@ -17,7 +17,9 @@
                     </div>
                     <div class="profile-widget-item">
                         <div class="profile-widget-item-label">Deposit</div>
-                        <div class="profile-widget-item-value">{{ authenticated.deposit }}</div>
+                        <div class="profile-widget-item-value">
+                            {{ authenticated.deposit | currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                        </div>
                     </div>
                 </div>
             </div>

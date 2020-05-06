@@ -25,19 +25,19 @@
                     <span>Produk</span>
                 </router-link>
             </li>
-            <li>
+            <li v-if="$can('read expenses')">
                 <router-link class="nav-link active" :to="{ name: 'expenses.data' }">
                     <i class="fas fa-dollar-sign"></i>
                     <span>Keuangan</span>
                 </router-link>
             </li>
-            <li>
+            <li v-if="$can('read customer')">
                 <router-link class="nav-link active" :to="{ name: 'customers.data' }">
                     <i class="fas fa-users"></i>
                     <span>Pelanggan</span>
                 </router-link>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" v-if="$can('read transaction')">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Trasaksi</span>

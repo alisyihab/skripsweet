@@ -10,7 +10,7 @@
                         <div class="form-group">
                             <label>Tagihan</label>
                             <input type="text"
-                                   :value="transaction.amount | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true })"
+                                   :value="transaction.amount | currency('Rp', '2', { spaceBetweenAmountAndSymbol: true })"
                                    class="form-control"
                                    readonly />
                         </div>
@@ -236,7 +236,7 @@
                 money: {
                     decimal: ',',
                     thousands: '.',
-                    prefix: 'IDR ',
+                    prefix: 'Rp. ',
                     suffix: '',
                     precision: 0,
                     masked: false /* doesn't work with directive */

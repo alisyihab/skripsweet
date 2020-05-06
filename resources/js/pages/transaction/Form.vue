@@ -77,19 +77,21 @@
                     <tbody>
                         <tr v-for="(row, index) in transactions.detail" :key="index">
                             <td>
-                                <v-select :options="products.data"
-                                    v-model="row.laundry_price"
-                                    @search="onSearchProduct"
-                                    label="name"
-                                    placeholder="Masukkan Kata Kunci"
-                                    :filterable="false">
-                                    <template slot="no-options">
-                                        Masukkan Kata Kunci
-                                    </template>
-                                    <template slot="option" slot-scope="option">
-                                        {{ option.name }}
-                                    </template>
-                                </v-select>
+                                <div class="form-group">
+                                    <v-select :options="products.data"
+                                        v-model="row.laundry_price"
+                                        @search="onSearchProduct"
+                                        label="name"
+                                        placeholder="Masukkan Kata Kunci"
+                                        :filterable="false">
+                                        <template slot="no-options">
+                                            Masukkan Kata Kunci
+                                        </template>
+                                        <template slot="option" slot-scope="option">
+                                            {{ option.name }}
+                                        </template>
+                                    </v-select>
+                                </div>
                             </td>
                             <td>
                                 <div class="input-group">

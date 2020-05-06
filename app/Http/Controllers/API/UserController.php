@@ -126,12 +126,15 @@ class UserController extends Controller
     public function getUserLogin()
     {
         $user = request()->user();
+
         $permissions = [];
+        
         foreach (Permission::all() as $permission) {
             if (request()->user()->can($permission->name)) {
                 $permissions[] = $permission->name;
             }
         }
+        
         $user['permission'] = $permissions;
 
         return response()->json([

@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-12">
+    <div class="col-md-12" v-if="$can('create transaction')">
         <div class="card">
             <div class="card-header">
                 <h4>Transaksi</h4>

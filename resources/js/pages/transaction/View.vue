@@ -3,7 +3,8 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6" v-if="transaction.status == 0">
+                    <div class="col-md-6" 
+                        v-if="transaction.status == 0">
                         <h4>Payment</h4>
                         <hr>
                         <div class="form-group">
@@ -38,40 +39,44 @@
                     <div class="col-md-6" v-if="transaction.customer">
                         <h4>Customer Info</h4>
                         <hr>
-                        <table>
-                            <tr>
-                                <th width="30%">NIK </th>
-                                <td width="5%">:</td>
-                                <td>{{ transaction.customer.nik }}</td>
-                            </tr>
-                            <tr>
-                                <th>Nama</th>
-                                <td>:</td>
-                                <td>{{ transaction.customer.name }}</td>
-                            </tr>
-                            <tr>
-                                <th>No Telp </th>
-                                <td>:</td>
-                                <td>{{ transaction.customer.phone }}</td>
-                            </tr>
-                            <tr>
-                                <th>Alamat </th>
-                                <td>:</td>
-                                <td>{{ transaction.customer.address }}</td>
-                            </tr>
-                            <tr>
-                                <th>Deposit </th>
-                                <td>:</td>
-                                <td>
-                                    {{ transaction.customer.deposit | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Point </th>
-                                <td>:</td>
-                                <td>{{ transaction.customer.point }}</td>
-                            </tr>
-                        </table>
+                        <div class="profile-widget pt-4">
+                        <div class="profile-widget-header">
+                            <img alt="image" 
+                                :src="'/storage/users/' + transaction.customer.photo"
+                                class="rounded-circle profile-widget-picture"
+                            />
+                            <div class="profile-widget-items">
+                                <div class="profile-widget-item">
+                                    <div class="profile-widget-item-label">Deposit</div>
+                                    <div class="profile-widget-item-value">
+                                        {{ transaction.customer.deposit | 
+                                            currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) 
+                                        }}
+                                    </div>
+                                </div>
+                                <div class="profile-widget-item">
+                                    <div class="profile-widget-item-label">Point</div>
+                                    <div class="profile-widget-item-value">{{ transaction.customer.point }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-widget-description pb-0">
+                            <div class="profile-widget-name">
+                                    {{ transaction.customer.name }}
+                                <div class="text-muted d-inline font-weight-normal">
+                                <div class="slash"></div>
+                                    {{ transaction.customer.nik }}
+                                </div>
+                            </div>
+                            <hr>
+                            <p>
+                                <b>Alamat Rumah : </b> {{ transaction.customer.address }} 
+                            </p>
+                            <p>
+                                <b>No Telpone:</b> {{ transaction.customer.phone }}
+                            </p>
+                        </div>
+                    </div>
                     </div>
                     <div class="col-md-6" v-if="transaction.payment" id="printMe">
                         <h4>Riwayat Pembayaran</h4>
@@ -89,10 +94,10 @@
                             <tbody>
                                 <tr v-for="(row, index) in transaction.detail" :key="index">
                                     <td><strong>{{ row.product.name }}</strong></td>
-                                    <td>{{ row.qty }} ({{ row.product.unit_type == 'Kilogram' ? 'gram':'Potong'}})</td>
+                                    <td>{{ row.qty }} ({{ row.product.unit_type == 'Kilogram' ? 'gram':'Pcs'}})</td>
                                     <td>
                                          {{ row.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
-                                        / {{ row.product.unit_types }}
+                                        / {{ row.product.unit_type }}
                                     </td>
                                     <td>
                                         {{ row.subtotal | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
@@ -175,6 +180,7 @@
                                         </td>
                                         <td>
                                             <button
+                                                v-show="$can('create transaction')"
                                                 v-b-tooltip.hover.top="'Selesaikan Transaksi'"
                                                 class="btn btn-success btn-sm"
                                                 v-if="transaction.status == 1  && row.status == 0"

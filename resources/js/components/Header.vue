@@ -12,7 +12,7 @@
             </ul>
         </form>
         <ul class="navbar-nav navbar-right">
-            <li class="dropdown dropdown-list-toggle">
+            <li class="dropdown dropdown-list-toggle" v-if="$can('read products')">
                 <a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep">
                     <i class="far fa-bell"></i>
                     <sup>{{ notifications.length }}</sup>
@@ -43,6 +43,10 @@
                     </div>
                 </div>
             </li>
+
+            <!-- Customer notif -->
+            <notif />
+
             <li class="dropdown">
                 <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                     <span v-if="authenticated.photo == null">
@@ -70,6 +74,8 @@
 <script>
     import {mapActions, mapState} from "vuex";
     import moment from 'moment'
+
+    import CustomerNotif from './homepage/CustomerNotif';
 
     export default {
         computed: {
@@ -102,6 +108,9 @@
                     this.$router.push('/login')
                 })
             }
+        },
+        components: {
+            'notif': CustomerNotif,
         }
     }
 </script>

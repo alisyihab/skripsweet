@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\API;
 
-use App\DetailTransaction;
-use App\Transaction;
-use App\Payment;
 use App\Http\Resources\TransactionCollection;
 use App\Http\Controllers\Controller;
+use App\DetailTransaction;
+use App\Notifications\TransactionNotification;
+use App\Payment;
+use App\Transaction;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Notification;
 
 class TransactionController extends Controller
 {
@@ -44,7 +47,9 @@ class TransactionController extends Controller
     {
         $this->validate($request, [
             'customer_id' => 'required',
-            'detail' => 'required'
+            'detail' => 'required',
+        ], [
+            'customer_id.required' => 'Filed tidak boleh kosong'
         ]);
 
         DB::beginTransaction();
@@ -88,6 +93,10 @@ class TransactionController extends Controller
             }
             $transaction->update(['amount' => $amount]);
             DB::commit();
+            
+            $user = $request->user();
+            $users = User::whereIn('role', [3])->get();
+            Notification::send($users, new TransactionNotification($transaction, $user));
 
             return response()->json([
                 'status' => 'success',

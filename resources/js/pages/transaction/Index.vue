@@ -1,6 +1,6 @@
 <template>
     <div class="main-content">
-        <section class="section">
+        <section class="section" v-if="$can('create transaction')">
             <div class="section-header">
                  <div class="section-header-back">
                     <router-link :to="{ name: 'transactions.list' }" class="btn btn-icon" v-show="$route.name !== 'transactions.list' ">

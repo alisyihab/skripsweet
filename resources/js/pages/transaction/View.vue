@@ -185,7 +185,7 @@
                                                 <i class="fas fa-paper-plane"></i>
                                             </button>
                                             <button @click="print" class="btn btn-info btn-sm" v-if="transaction.payment">
-                                                <i class="fa fa-print"></i>Print
+                                                <i class="fa fa-print"></i>
                                             </button>
                                         </td>
                                     </tr>

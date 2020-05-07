@@ -1,4 +1,5 @@
 <template>
+<div>
     <div class="main-content">
         <section class="section" v-if="$can('create transaction')">
             <div class="section-header">
@@ -28,11 +29,12 @@
         <section class="section-body">
             <router-view></router-view>
         </section>
-
-        <div v-if="!$can('create transaction')">
-            <page404 />
-        </div>
     </div>
+
+    <div v-if="!$can('create transaction')">
+        <page404 />
+    </div>
+</div>
 </template>
 
 <script>

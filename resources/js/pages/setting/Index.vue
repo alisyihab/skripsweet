@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="main-content" v-if="$can('read users')">
+    <div class="main-content">
         <section class="section">
             <div class="section-header">
                 <h1>{{ $route.meta.title }}</h1>

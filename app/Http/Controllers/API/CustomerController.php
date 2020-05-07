@@ -33,7 +33,20 @@ class CustomerController extends Controller
             'password' => 'required|min:6|string',
             'address' => 'required|string',
             'phone' => 'required|string|max:13',
-            'photo' => 'required|image|max:5120'
+            'photo' => 'required|image|max:2048'
+        ], [
+            'nik.required' => 'Nik tidak boleh kosong',
+            'nik.unique' => 'Nik telah dipakai',
+            'name.required' => 'Nama tidak boleh kosong',
+            'name.max' => 'Nama maximal 150 karakter',
+            'email.required' => 'Email tidak boleh kosong',
+            'email.unique' => 'Email telah dipakai.',
+            'password.required' => 'Password tidak boleh kosong',
+            'address.required' => 'Alamat tidak boleh kosong',
+            'phone.required' => 'No Hp tidak boleh kosong',
+            'phone.max' => 'No. Hp maxsimal 13 karakter',
+            'photo.required' => 'Photo tidak boleh kosong',
+            'photo.max' => 'Ukuran file terlalu besar, max 2mb' 
         ]);
 
         DB::beginTransaction();

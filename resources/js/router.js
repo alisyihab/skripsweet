@@ -39,11 +39,17 @@ import DataPersons from "./pages/users/Users";
 import AddPerson from "./pages/users/Add";
 import EditPerson from "./pages/users/Edit";
 
+import Page404 from "./pages/Page404";
+
 Vue.use(Router);
 
 const router = new Router({
     mode: 'history',
     routes: [
+        {
+            path: '*',
+            component: Page404,
+        },
         {
             path: '/',
             redirect: '/login'

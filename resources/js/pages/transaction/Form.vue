@@ -95,7 +95,11 @@
                             </td>
                             <td>
                                 <div class="input-group">
-                                    <input type="number" v-model="row.qty" class="form-control" @blur="calculate(index)">
+                                    <input 
+                                        type="number" 
+                                        v-model="row.qty" 
+                                        class="form-control" 
+                                        @blur="calculate(index)">
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             {{ row.laundry_price != null && row.laundry_price.unit_type == 'Kilogram' ? 'gram':'Pcs' }}

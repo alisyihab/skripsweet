@@ -34,7 +34,9 @@
                 <tr>
                     <th>Alamat </th>
                     <td>:</td>
-                    <td>{{ transactions.customer_id.address }}</td>
+                    <td>
+                       <span v-html="transactions.customer_id.address"></span>
+                    </td>
                 </tr>
                 <tr>
                     <th>Deposit </th>
@@ -98,8 +100,10 @@
                                     <input 
                                         type="number" 
                                         v-model="row.qty" 
-                                        class="form-control" 
-                                        @blur="calculate(index)">
+                                        class="form-control"
+                                        :min="0"
+                                        @blur="calculate(index)"
+                                    >
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             {{ row.laundry_price != null && row.laundry_price.unit_type == 'Kilogram' ? 'gram':'Pcs' }}

@@ -24,13 +24,33 @@
             <p class="text-danger" v-if="errors.password">{{ errors.password[0] }}</p>
         </div>
          <div class="form-group" :class="{ 'has-error': errors.address }">
-            <label for="">Alamat</label>
-            <textarea cols="5" rows="5" class="form-control" v-model="customer.address"></textarea>
+            <label>Alamat</label>
+             <editor
+                v-model="customer.address"
+                api-key="ass6mxswiyrquok43dpktqx703k9dmrul7awy97gwfmakzjg"
+                :init="{
+                    height: 200,
+                    menubar: false,
+                    plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                    ],
+                    toolbar:
+                    'undo redo | formatselect | bold italic backcolor'
+                }"
+            />
+            <!-- <textarea cols="10" rows="5" class="form-control" v-model="customer.address"></textarea> -->
             <p class="text-danger" v-if="errors.address">{{ errors.address[0] }}</p>
         </div>
         <div class="form-group" :class="{ 'has-error': errors.phone }">
-            <label for="">No Telp</label>
-            <input type="text" class="form-control" v-model="customer.phone">
+            <label>No Telp</label>
+            <the-mask
+                type="tel"
+                :mask="['####-####-####']"
+                class="form-control"
+                v-model="customer.phone" 
+            />
             <p class="text-danger" v-if="errors.phone">{{ errors.phone[0] }}</p>
         </div>
         <div class="form-group" :class="{ 'has-error': errors.photo }">
@@ -49,6 +69,9 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
+import {TheMask} from 'vue-the-mask'
+import Editor from '@tinymce/tinymce-vue'
+
 
 export default {
     name: 'FormCustomer',
@@ -144,6 +167,10 @@ export default {
                 })
             }
         }
+    },
+    components: {
+        'editor': Editor,
+        TheMask
     }
 }
 </script>

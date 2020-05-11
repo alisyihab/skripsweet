@@ -22,6 +22,9 @@
                     <template v-slot:cell(deposit)="row">
                         {{ row.item.deposit | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
                     </template>
+                    <template v-slot:cell(address)="row">
+                        <span v-html="row.item.address"></span>
+                    </template>
                     <template v-slot:cell(actions)="row">
                         <router-link
                             v-b-tooltip.hover.top="'Edit data'"

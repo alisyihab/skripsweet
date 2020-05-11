@@ -27,6 +27,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@tinymce/tinymce-vue": "^3.2.1",
         "bootstrap-vue": "^2.0.0-rc.26",
         "chart.js": "^2.9.3",
         "dayjs": "^1.8.26",

@@ -69,7 +69,7 @@
                             </div>
                             <hr>
                             <p>
-                                <b>Alamat Rumah : </b> {{ transaction.customer.address }} 
+                                <b>Alamat Rumah : </b> <span v-html="transaction.customer.address"></span> 
                             </p>
                             <p>
                                 <b>No Telpone:</b> {{ transaction.customer.phone }}

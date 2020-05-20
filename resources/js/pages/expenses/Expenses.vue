@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <b-table striped hover bordered responsive :items="expenses.data" :fields="fields" show-empty>
+                <b-table striped hover responsive :items="expenses.data" :fields="fields" show-empty>
                     <template v-slot:cell(status)="row">
                         <span class="badge badge-success" v-if="row.item.status == 1">Diterima</span>
                         <span class="badge badge-warning" v-else-if="row.item.status == 0">Diproses</span>
@@ -25,7 +25,8 @@
                         {{ row.item.user.name }}
                     </template>
                     <template v-slot:cell(reason)="row">
-                        {{ row.item.reason == '' ? '-':row.item.reason }}
+                        <span v-if="row.item.reason !== null">{{ row.item.reason.substr(0, 15) }} ..</span>
+                        <span v-else class="text-center">-</span>
                     </template>
                     <template v-slot:cell(actions)="row">
                         <router-link

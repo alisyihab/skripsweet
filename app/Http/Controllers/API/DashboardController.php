@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Transaction;
 use App\Expense;
 use App\User;
+use App\Http\Resources\ExpenseCollection;
 use App\Http\Resources\TransactionCollection;
 use App\Http\Controllers\Controller;
 use App\Exports\TransactionExport;
@@ -126,5 +127,21 @@ class DashboardController extends Controller
         return response()->json([
             'data' => $transaction
         ]);
+    }
+
+    public function getExpenseDashboard()
+    {
+        $user = request()->user();
+        $expenses = Expense::with(['user'])->orderBy('created_at', 'DESC');
+
+        if ($user->role = 1) {
+            $transaction = $expenses
+                ->where('user_id', $user->id)
+            ;
+        }
+
+        return (new ExpenseCollection(
+            $expenses->take(5)->get())
+        );
     }
 }

@@ -26,7 +26,7 @@ class ExpensesController extends Controller
             $expenses = $expenses->where('description', 'LIKE', '%' . request()->q . '%');
         }
 
-        if (in_array($user->role, ['1, 3'])) {
+        if ($user->role = 1) {
             $expenses = $expenses->where('user_id', $user->id);
         }
 

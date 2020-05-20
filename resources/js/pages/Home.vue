@@ -9,11 +9,14 @@
 
             <div class="section-body">
                 <div class="row">
-                    <chart-expense v-if="authenticated.role == 0 || authenticated.role == 2 " />
+                    <chart-expense v-if="authenticated.role == 0 " />
                     <profile v-if="authenticated.role == 3"/>
+
+                    <status v-if="authenticated.role == 1"  />
+
                     <last-trans />
 
-                    <chart-trans v-if="authenticated.role == 0 || authenticated.role == 1 " />
+                    <chart-trans v-if="authenticated.role == 0" />
                 </div>
             </div>
         </section>
@@ -31,6 +34,7 @@
     import LastTrans from "../components/homepage/LastTrans";
     import TransactionChart from '../components/homepage/TransactionChart';
     import Profile from '../components/homepage/Profile';
+    import StatusExpense from '../components/homepage/statusExpense';
 
     export default {
         computed: {
@@ -47,7 +51,8 @@
             'last-trans': LastTrans,
             'chart-expense': ExpenseChart,
             'chart-trans': TransactionChart,
-            'profile': Profile
+            'profile': Profile,
+            'status': StatusExpense
 
         },
     }

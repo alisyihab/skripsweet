@@ -55,14 +55,14 @@
                     </div>
                     <div class="col-md-6">
                         <div class="pull-right">
-                            <b-pagination-nav
+                            <b-pagination
                                     v-model="page"
                                     :total-rows="customers.meta.total"
                                     :per-page="customers.meta.per_page"
                                     aria-controls="couriers"
                                     v-if="customers.data && customers.data.length > 0"
                                     align="right">
-                            </b-pagination-nav>
+                            </b-pagination>
                         </div>
                     </div>
                 </div>

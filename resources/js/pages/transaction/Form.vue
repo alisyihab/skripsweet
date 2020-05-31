@@ -41,12 +41,7 @@
                 <tr>
                     <th>Deposit </th>
                     <td>:</td>
-                    <td>Rp {{ transactions.customer_id.deposit }}</td>
-                </tr>
-                <tr>
-                    <th>Point </th>
-                    <td>:</td>
-                    <td>{{ transactions.customer_id.point }}</td>
+                    <td>{{ transactions.customer_id.deposit | currency('Rp. ', '2', { spaceBetweenAmountAndSymbol: true }) }}</td>
                 </tr>
             </table>
         </div>

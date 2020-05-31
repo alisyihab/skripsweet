@@ -45,7 +45,9 @@
                         <h4>Pendapatan</h4>
                     </div>
                     <div class="card-body">
-                        {{ totData.income | currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                       <h6>
+                           {{ totData.income | currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                       </h6>
                     </div>
                 </div>
             </div>
@@ -60,7 +62,9 @@
                         <h4>Pengeluaran</h4>
                     </div>
                     <div class="card-body">
+                        <h6>
                         {{ totData.expanse | currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                        </h6>
                     </div>
                 </div>
             </div>

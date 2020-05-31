@@ -31,13 +31,17 @@ import EditCustomer from "./pages/customers/Edit";
 
 import IndexTransaction from "./pages/transaction/Index";
 import AddTransaction from "./pages/transaction/Add";
-import ViewTransaction from "./pages/transaction/View";
+import InvoiceTrasaction from "./pages/transaction/Invoice";
 import ListTransaction from "./pages/transaction/List";
+import ViewTransaction from "./pages/transaction/View";
 
 import IndexUsers from "./pages/users/Index";
 import DataPersons from "./pages/users/Users";
 import AddPerson from "./pages/users/Add";
 import EditPerson from "./pages/users/Edit";
+
+import IndexNotification from "./pages/notification/Index";
+import DataNotification from "./pages/notification/Notification";
 
 import Page404 from "./pages/Page404";
 
@@ -208,6 +212,12 @@ const router = new Router({
                     meta: { title: 'Detail Transaksi' }
                 },
                 {
+                    path: 'invoice/:id',
+                    name: 'transactions.invoice',
+                    component: InvoiceTrasaction,
+                    meta: { title: 'Invoice' }
+                },
+                {
                     path: 'list',
                     name: 'transactions.list',
                     component: ListTransaction,
@@ -237,6 +247,19 @@ const router = new Router({
                     name: 'persons.edit',
                     component: EditPerson,
                     meta: { title: 'Ubah Pengguna' }
+                }
+            ]
+        },
+        {
+            path: '/notification',
+            component: IndexNotification,
+            meta: { requiresAuth: true },
+            children: [
+                {
+                    path: '',
+                    name: 'notifications.data',
+                    component: DataNotification,
+                    meta: { title: 'Daftar Notification' }
                 }
             ]
         },

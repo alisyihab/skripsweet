@@ -28,4 +28,14 @@ class NotificationController extends Controller
            'status' => 'success'
         ]);
     }
+
+    public function notificationList()
+    {
+        $notification = request()->user()->notifications()->orderBy('created_at', 'desc')->paginate(10);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $notification
+        ]);
+    }
 }

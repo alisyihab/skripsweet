@@ -26,17 +26,21 @@
                         {{ row.item.price | currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) }}
                     </template>
                     <template v-slot:cell(actions)="row">
-                        <router-link
-                            v-b-tooltip.hover.top="'Edit data'"
-                            :to="{ name: 'products.edit', params: {id: row.item.id} }"
-                            class="btn btn-warning btn-sm">
-                            <i class="fa fa-edit"></i>
-                        </router-link>
-                        <button
-                            v-b-tooltip.hover.top="'Hapus data'"
-                            class="btn btn-danger btn-sm" @click="deleteProduct(row.item.id)">
-                            <i class="fa fa-trash"></i>
-                        </button>
+                        <a href="#" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </a>
+                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <div class="dropdown-title">Aksi</div>
+                            <router-link
+                                :to="{ name: 'products.edit', params: {id: row.item.id} }"
+                                class="dropdown-item has-icon">
+                                <i class="fas fa-pen" style="color:#6777ef"></i>Edit Data
+                            </router-link>
+                            <button
+                                class="dropdown-item has-icon" @click="deleteProduct(row.item.id)">
+                                <i class="fa fa-trash-alt" style="color:red"></i>Hapus Data
+                            </button>
+                        </div>
                     </template>
                     <template v-slot:cell(service)="row">
                         {{ row.item.service }} {{ row.item.service_type }}

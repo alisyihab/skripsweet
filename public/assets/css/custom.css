@@ -6,3 +6,14 @@
  */
 
 /*# sourceMappingURL=custom.css.map */
+
+button.dropdown-item {
+    padding: 10px 20px;
+    font-weight: 500;
+    line-height: 1.2; 
+}
+
+button.dropdown-item:focus, button.dropdown-item:active, button.dropdown-item.active {
+    background-color: #6777ef;
+    color: #fff !important; 
+}

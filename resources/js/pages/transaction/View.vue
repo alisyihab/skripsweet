@@ -16,14 +16,14 @@
                         </div>
                         <div class="form-group">
                             <label>Jumlah Bayar</label>
-                            <money type="tel"
+                            <input type="number"
                                 class="form-control"
-                                v-model.lazy="amount"
-                                v-bind="money"/>
+                                v-model="amount" />
                         </div>
                         <div class="form-group"
                              v-if="transaction.customer && transaction.customer.deposit >= transaction.amount">
-                            <input type="checkbox" v-model="via_deposit"> Bayar Via Deposit?
+                            <input type="checkbox" v-model="via_deposit" id="deposit"> 
+                            <label for="deposit">Bayar Via Deposit?</label>
                         </div>
                         <p v-if="isCustomerChange">
                             Kembalian:
@@ -49,13 +49,9 @@
                                     <div class="profile-widget-item-label">Deposit</div>
                                     <div class="profile-widget-item-value">
                                         {{ transaction.customer.deposit | 
-                                            currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) 
+                                            currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) 
                                         }}
                                     </div>
-                                </div>
-                                <div class="profile-widget-item">
-                                    <div class="profile-widget-item-label">Point</div>
-                                    <div class="profile-widget-item-value">{{ transaction.customer.point }}</div>
                                 </div>
                             </div>
                         </div>
@@ -95,11 +91,11 @@
                                     <td><strong>{{ row.product.name }}</strong></td>
                                     <td>{{ row.qty }} ({{ row.product.unit_type == 'Kilogram' ? 'gram':'Pcs'}})</td>
                                     <td>
-                                         {{ row.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                                         {{ row.price | currency('Rp', '2', { spaceBetweenAmountAndSymbol: true }) }}
                                         / {{ row.product.unit_type }}
                                     </td>
                                     <td>
-                                        {{ row.subtotal | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                                        {{ row.subtotal | currency('Rp', '2', { spaceBetweenAmountAndSymbol: true }) }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -148,12 +144,12 @@
                             <table class="table table-hover table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Paket</th>
-                                        <th width="28%">Waktu Layanan</th>
-                                        <th>Berat/Satuan</th>
-                                        <th>Harga</th>
-                                        <th>Subtotal</th>
-                                        <th>Aksi</th>
+                                        <th class="text-center" width="25%">Paket</th>
+                                        <th class="text-center" width="28%">Cucian Selesai</th>
+                                        <th class="text-center">Berat/Satuan</th>
+                                        <th class="text-center">Harga</th>
+                                        <th class="text-center">Subtotal</th>
+                                        <th class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -164,29 +160,46 @@
                                                 <sup v-html="row.status_label"></sup>
                                             </h6>
                                         </td>
-                                        <td>{{ row.service_time }}</td>
+                                        <td class="text-center" v-if="row.status == 0">
+                                            {{ row.end_date | formatDate }}
+                                        </td>
+                                        <td v-else class="text-center">
+                                            <span class="badge badge-success">Selesai</span>
+                                        </td>
                                         <td>
                                             {{ row.qty }} ({{ row.product.unit_type == 'Kilogram' ? 'gram':'Potong'}})
                                         </td>
                                         <td>
-                                            {{ row.price | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
-                                            / {{ row.product.unit_type }}
+                                            <p class="text-small">
+                                                {{ row.price | currency('Rp', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                                                / {{ row.product.unit_type  == 'Kilogram' ? 'kg':'pcs'}}
+                                            </p>
                                         </td>
                                         <td>
-                                            {{ row.subtotal | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                                           <p class="text-small">
+                                               {{ row.subtotal | currency('Rp', '2', { spaceBetweenAmountAndSymbol: true }) }}
+                                           </p>
                                         </td>
                                         <td>
-                                            <button
-                                                v-show="$can('create transaction')"
-                                                v-b-tooltip.hover.top="'Selesaikan Transaksi'"
-                                                class="btn btn-success btn-sm"
-                                                v-if="transaction.status == 1  && row.status == 0"
-                                                @click="isDone(row.id)">
-                                                <i class="fas fa-paper-plane"></i>
-                                            </button>
-                                            <button @click="print" class="btn btn-info btn-sm" v-if="transaction.payment">
-                                                <i class="fa fa-print"></i>
-                                            </button>
+                                            <a href="#" data-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </a>
+                                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <div class="dropdown-title">Aksi</div>
+                                                    <button
+                                                      class="dropdown-item has-icon"
+                                                      v-show="$can('create transaction')"
+                                                      v-if="transaction.status == 1  && row.status == 0"
+                                                      @click="isDone(row.id)"
+                                                    >
+                                                        <i class="fas fa-paper-plane"  style="color: #6777ef"></i> 
+                                                        Selesaikan Transaksi
+                                                    </button>
+                                                    <button @click="print" class="dropdown-item has-icon">
+                                                        <i class="fa fa-print"  style="color: #6777ef"></i>
+                                                         Print
+                                                    </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -202,6 +215,8 @@
     import { mapActions, mapState, mapMutations } from 'vuex'
     import Vue2Filters from 'vue2-filters'
     import Vue from 'vue'
+    import moment from 'moment'
+
     import {Money} from 'v-money'
     import VueHtmlToPaper from 'vue-html-to-paper';
 
@@ -214,6 +229,7 @@
         ],
         styles: [
             'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+            'https://lubinar.id/files/style.css',
             'https://unpkg.com/kidlat-css/css/kidlat.css'
         ]
     }
@@ -258,6 +274,11 @@
                     return parseInt(this.amount - this.transaction.amount)
                 }
                 return 0
+            },
+        },
+        filters: {
+            formatDate(val) {
+                return moment(new Date(val)).calendar();
             }
         },
         methods: {
@@ -295,7 +316,11 @@
                         this.detailTransaction(this.$route.params.id)
                     } else {
                         this.loading = false
-                        alert(res.data)
+                        this.$swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: res.data,
+                        });
                     }
                 })
             },

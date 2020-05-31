@@ -39,9 +39,12 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // expenses
     Route::resource('expenses', 'API\ExpensesController')->except(['create', 'show']);
-    Route::resource('notification', 'API\NotificationController')->except(['create', 'destroy']);
     Route::post('expenses/accept', 'API\ExpensesController@accept')->name('expenses.accept');
     Route::post('expenses/cancel', 'API\ExpensesController@cancleRequest')->name('expenses.cancel');
+    
+    //notification
+    Route::resource('notification', 'API\NotificationController')->except(['create', 'destroy']);
+    Route::get('list-notif', 'API\NotificationController@notificationList');
 
     // Customer
     Route::resource('/customer', 'API\CustomerController')->except(['create', 'show', 'update']);

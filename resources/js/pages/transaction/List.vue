@@ -26,9 +26,9 @@
                          <p class="text-center">{{ data.index + 1 }}</p>
                     </template>
                      <template v-slot:cell(customer)="row">
-                        <p><strong>{{ row.item.customer ? row.item.customer.name:'' }}</strong></p>
-                        <p>Telp: {{ row.item.customer.phone }}</p>
-                        <p>NIK: {{ row.item.customer.nik }}</p>
+                        <p class="text-small"><strong>{{ row.item.customer ? row.item.customer.name:'' }}</strong></p>
+                        <p class="text-small">Telp: {{ row.item.customer.phone }}</p>
+                        <p class="text-small">NIK: {{ row.item.customer.nik }}</p>
                     </template>
                     <template v-slot:cell(user_id)="row">
                         <p>{{ row.item.user ? row.item.user.name:'' }}</p>
@@ -46,12 +46,24 @@
                         <p v-html="row.item.status_label"></p>
                     </template>
                     <template v-slot:cell(actions)="row">
-                        <router-link
-                            v-b-tooltip.hover.top="'Lihat data'"
-                            :to="{ name: 'transactions.view', params: {id: row.item.id} }"
-                            class="btn btn-info btn-sm">
-                            <i class="fa fa-eye"></i>
-                        </router-link>
+                        <a href="#" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </a>
+                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <div class="dropdown-title">Aksi</div>
+                            <router-link
+                                :to="{ name: 'transactions.view', params: {id: row.item.id} }"
+                                class="dropdown-item has-icon">
+                                <i class="fas fa-eye"></i> Detail
+                            </router-link>
+                            <router-link 
+                                v-if="row.item.status == 1"
+                                :to=" {name: 'transactions.invoice', params: {id: row.item.id} }"
+                                class="dropdown-item has-icon"
+                            >
+                                <i class="fas fa-file-invoice"></i> Invoice
+                            </router-link>
+                        </div>
                     </template>
                 </b-table>
 
@@ -65,14 +77,14 @@
                     </div>
                     <div class="col-md-6">
                         <div class="pull-right">
-                            <b-pagination-nav
+                            <b-pagination
                                     v-model="page"
                                     :total-rows="transactions.meta.total"
                                     :per-page="transactions.meta.per_page"
                                     aria-controls="couriers"
                                     v-if="transactions.data && transactions.data.length > 0"
                                     align="right">
-                            </b-pagination-nav>
+                            </b-pagination>
                         </div>
                     </div>
                 </div>
@@ -93,7 +105,7 @@
 
     Vue.filter('formatDate', function(value) {
         if (value) {
-            return moment(String(value)).format('Do MMMM YYYY, h:mm:ss a')
+            return moment(String(value)).format('Do MMMM YYYY')
         }
     });
 
@@ -109,7 +121,7 @@
             return {
                 fields: [
                     {key: 'index', label:'No', sortable: true},
-                    {key: 'customer', label: 'Customer', sortable: true},
+                    {key: 'customer', label: 'Pelanggan', sortable: true},
                     {key: 'user_id', label: 'Admin', sortable: true},
                     {key: 'service', label: 'Item Jasa', sortable: true},
                     {key: 'amount', label: 'Total', sortable: true},

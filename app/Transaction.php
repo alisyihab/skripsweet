@@ -12,6 +12,7 @@ class Transaction extends Model
     protected $guarded = [];
     protected $appends = ['status_label'];
 
+
     /**
      * @return HasMany
      */
@@ -50,8 +51,19 @@ class Transaction extends Model
     public function getStatusLabelAttribute()
     {
         if ($this->status == 1) {
-            return '<span class="badge badge-success">Selesai</span>';
+            return 
+                '<span class="badge badge-success">
+                        <i class="fas fa-check"></i>
+                        Pembayaran 
+                </span>'
+            ;
         }
-        return '<span class="badge badge-primary">Proses</span>';
+        return '<span class="badge badge-primary">Proses Pembayaran</span>';
+    }
+
+    public function getCreatedAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['created_at'])
+        ->format('d, M Y H:i');
     }
 }

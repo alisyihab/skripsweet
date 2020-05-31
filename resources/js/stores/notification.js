@@ -1,12 +1,20 @@
 import $axios from '../api.js'
 
 const state = () => ({
-    notifications: []
+    notifications: [],
+    list_notifications: [],
+    page: 1
 });
 
 const mutations = {
     ASSIGN_DATA(state, payload) {
         state.notifications = payload
+    },
+    ASSIGN_DATA_NOTIFICATION(state, payload) {
+        state.list_notifications = payload
+    },
+    SET_PAGE(state, payload) {
+        state.page = payload
     }
 };
 
@@ -25,6 +33,14 @@ const actions = {
             $axios.post(`/notification`, payload)
             .then((response) => {
                 dispatch('getNotifications').then(() => resolve(response.data))
+            })
+        })
+    },
+    getListNotifications({ commit }) {
+        return new Promise((resolve) => {
+            $axios.get(`list-notif`).then((response) => {
+                commit('ASSIGN_DATA_NOTIFICATION', response.data.data);
+                resolve(response.data)
             })
         })
     }

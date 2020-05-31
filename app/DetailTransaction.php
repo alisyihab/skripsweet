@@ -16,7 +16,7 @@ class DetailTransaction extends Model
      */
     public function getServiceTimeAttribute()
     {
-        return $this->start_date->format('d-m-Y H:i:s') . 's/d' . $this->end_date->format('d-m-Y H:i:s');
+        return $this->end_date->format('d, M Y H:i:s');
     }
 
     /**

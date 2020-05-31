@@ -13,15 +13,23 @@
         </form>
         <ul class="navbar-nav navbar-right">
             <li class="dropdown dropdown-list-toggle" v-if="$can('read products')">
-                <a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep">
+                
+                <a 
+                    v-if="notifications.length > 0"
+                    href="#" data-toggle="dropdown" 
+                    class="nav-link nav-link-lg message-toggle beep">
+                    <i class="far fa-bell"></i>
+                    <sup>{{ notifications.length }}</sup>
+                </a>
+                <a 
+                    v-else
+                    href="#" data-toggle="dropdown" 
+                    class="nav-link nav-link-lg message-toggle">
                     <i class="far fa-bell"></i>
                     <sup>{{ notifications.length }}</sup>
                 </a>
                 <div class="dropdown-menu dropdown-list dropdown-menu-right">
                     <div class="dropdown-header">You have {{ notifications.length }}
-                        <div class="float-right">
-                            <a href="#">Mark All As Read</a>
-                        </div>
                     </div>
                     <div class="dropdown-list-content dropdown-list-message" v-if="notifications.length > 0">
                         <span v-for="(row, index) in notifications" :key="index">
@@ -39,7 +47,10 @@
                         </span>
                     </div>
                     <div class="dropdown-footer text-center">
-                        <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                        <router-link :to="{ name: 'notifications.data' }">
+                            Lihat Semua 
+                            <i class="fas fa-chevron-right"></i>
+                        </router-link>
                     </div>
                 </div>
             </li>

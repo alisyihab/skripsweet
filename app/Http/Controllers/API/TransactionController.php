@@ -113,7 +113,7 @@ class TransactionController extends Controller
 
     public function edit($id)
     {
-        $transaction = Transaction::with(['customer', 'payment', 'detail', 'detail.product'])->find($id);
+        $transaction = Transaction::with(['user','customer', 'payment', 'detail', 'detail.product'])->find($id);
 
         return response()->json([
             'status' => 'success',
@@ -149,7 +149,7 @@ class TransactionController extends Controller
 
             if ($request->via_deposit) {
                 if ($transaction->customer->deposit < $request->amount) {
-                    return response()->json(['status' => 'error', 'data' => 'Deposit Kurang!']);
+                    return response()->json(['status' => 'error', 'data' => 'Deposit tidak cukup']);
                 }
 
                 $transaction->customer()->update(['deposit' => $transaction->customer->deposit - $request->amount]);

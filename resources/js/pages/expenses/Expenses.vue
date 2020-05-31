@@ -29,24 +29,27 @@
                         <span v-else class="text-center">-</span>
                     </template>
                     <template v-slot:cell(actions)="row">
-                        <router-link
-                            v-b-tooltip.hover.top="'Edit data'"
-                            :to="{ name: 'expenses.edit', params: {id: row.item.id} }"
-                            class="btn btn-warning btn-sm" v-if="row.item.status == 0">
-                            <i class="fa fa-edit"></i>
-                        </router-link>
-                        <router-link
-                            v-b-tooltip.hover.top="'Lihat data'"
-                            :to="{ name: 'expenses.view', params: {id: row.item.id} }"
-                            class="btn btn-info btn-sm">
-                            <i class="fa fa-eye"></i>
-                        </router-link>
-                        <button
-                            v-b-tooltip.hover.top="'Hapus data'"
-                            class="btn btn-danger btn-sm" @click="deleteExpenses(row.item.id)"
-                            v-if="row.item.status == 0">
-                            <i class="fa fa-trash"></i>
-                        </button>
+                        <a href="#" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </a>
+                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <div class="dropdown-title">Aksi</div>
+                            <router-link
+                                :to="{ name: 'expenses.edit', params: {id: row.item.id} }"
+                                class="dropdown-item has-icon" v-if="row.item.status == 0">
+                                <i class="fas fa-pen"></i>Edit Data
+                            </router-link>
+                            <router-link
+                                :to="{ name: 'expenses.view', params: {id: row.item.id} }"
+                                class="dropdown-item has-icon">
+                                <i class="fas fa-eye"></i> Lihat Data
+                            </router-link>
+                            <button
+                                class="dropdown-item has-icon" @click="deleteExpenses(row.item.id)"
+                                v-if="row.item.status == 0">
+                                <i class="fa fa-trash-alt text-danger"></i>Hapus Data
+                            </button>
+                        </div>
                     </template>
                 </b-table>
 

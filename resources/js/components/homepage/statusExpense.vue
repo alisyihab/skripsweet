@@ -4,7 +4,7 @@
                 <div class="card-header">
                   <h4>Status Permohonan</h4>
                   <div class="card-header-action">
-                    <router-link :to="{name: 'expenses.data'}" class="btn btn-danger">
+                    <router-link :to="{name: 'expenses.data'}" class="btn btn-primary">
                         Lihat Semua <i class="fas fa-chevron-right"></i>
                     </router-link>
                   </div>

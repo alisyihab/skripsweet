@@ -56,7 +56,7 @@
             ...mapActions('notification', ['readNotification']),
             readTransNotif(row) {
                 this.readNotification({id: row.id}).then(() => this.$router.push ({
-                    name: 'transactions.list',
+                    name: 'transactions.view',
                     params: {id: row.data.transaction.id}
                 }))
             },

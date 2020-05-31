@@ -23,18 +23,22 @@
                         <span class="badge badge-default" v-else>Belum di set</span>
                     </template>
                     <template v-slot:cell(actions)="row">
-                        <router-link
-                            v-b-tooltip.hover.top="'Edit'"
-                            :to="{ name: 'persons.edit', params: {id: row.item.id} }"
-                            class="btn btn-primary btn-sm">
-                            <i class="fas fa-pencil-alt"></i>
-                        </router-link>
-                        <button
-                            v-b-tooltip.hover.top="'Hapus'"
-                            class="btn btn-danger btn-sm"
-                            @click="deletePerson(row.item.id)">
-                            <i class="fa fa-trash"></i>
-                        </button>
+                        <a href="#" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </a>
+                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <div class="dropdown-title">Aksi</div>
+                            <router-link
+                                :to="{ name: 'persons.edit', params: {id: row.item.id} }"
+                                class="dropdown-item has-icon">
+                                <i class="fas fa-pen text-primary"></i>Edit Data
+                            </router-link>
+                            <button
+                                class="dropdown-item has-icon"
+                                @click="deletePerson(row.item.id)">
+                                <i class="fa fa-trash-alt text-danger"></i>Hapus Data
+                            </button>
+                        </div>
                     </template>
                 </b-table>
 

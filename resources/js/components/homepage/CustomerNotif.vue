@@ -1,16 +1,30 @@
 <template>
-<li class="dropdown dropdown-list-toggle" v-if="authenticated.role != 0 && authenticated.role != 1">
-    <a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep">
-        <i class="far fa-bell"></i>
-        <sup>{{ notifications.length }}</sup>
-    </a>
+    <li class="dropdown dropdown-list-toggle" v-if="authenticated.role != 0 && authenticated.role != 1">
+        <a 
+            v-if="notifications.length > 0"
+            href="#" data-toggle="dropdown" 
+            class="nav-link nav-link-lg message-toggle beep"
+        >
+            <i class="far fa-bell"></i>
+            <sup>{{ notifications.length }}</sup>
+        </a>
+        <a 
+            v-else
+            href="#" data-toggle="dropdown" 
+            class="nav-link nav-link-lg message-toggle"
+        >
+            <i class="far fa-bell"></i>
+            <sup>{{ notifications.length }}</sup>
+        </a>
         <div class="dropdown-menu dropdown-list dropdown-menu-right">
             <div class="dropdown-header">You have {{ notifications.length }}
                 <div class="float-right">
                     <a href="#">Mark All As Read</a>
                 </div>
             </div>
-            <div class="dropdown-list-content dropdown-list-message" v-if="notifications.length > 0">
+            <div 
+                class="dropdown-list-content dropdown-list-message" 
+                v-if="notifications.length > 0">
                 <span v-for="(row, index) in notifications" :key="index">
                     <a href="javascript:void(0)" @click="readTransNotif(row)" class="dropdown-item dropdown-item-unread">
                         <div class="dropdown-item-avatar">
@@ -20,7 +34,7 @@
                         <div class="dropdown-item-desc">
                             <b>{{ row.data.sender_name }}</b>
                             <p  v-show="authenticated.role = 3">
-                                Kamu telah melakukan transaksi.
+                                Laundry kamu telah selesai, Silahkan di pikup.
                             </p>
                             <div class="time">{{ row.created_at | formatDate }}</div>
                         </div>
@@ -28,7 +42,10 @@
                 </span>
             </div>
         <div class="dropdown-footer text-center">
-            <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+             <router-link :to="{ name: 'notifications.data' }">
+                Lihat Semua 
+                <i class="fas fa-chevron-right"></i>
+            </router-link>
         </div>
     </div>
 </li>
@@ -57,7 +74,7 @@
             readTransNotif(row) {
                 this.readNotification({id: row.id}).then(() => this.$router.push ({
                     name: 'transactions.view',
-                    params: {id: row.data.transaction.id}
+                    params: {id: row.data.transaction.transaction.id}
                 }))
             },
         }

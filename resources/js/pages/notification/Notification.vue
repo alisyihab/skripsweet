@@ -3,25 +3,39 @@
         <h2 class="section-title">Notification</h2>
         <div class="row">
             <div class="col-12">
-                <div class="activities" v-for="item in notifications" :key="item.id">
+                <div class="activities" v-for="(row, index) in notifications" :key="index">
                     <div class="activity">
                         <div class="activity-icon bg-primary text-white shadow-primary">
                             <i class="fas fa-comment-alt"></i>
-                            <p class="text-muted text-small">
-                                {{ item.data.sender_name }}
-                            </p>
                         </div>
                         <div class="activity-detail">
                             <div class="mb-2">
-                                <span class="text-job text-primary">2 min ago</span>
+                                <span class="text-job text-primary">
+                                    Dibaca {{ row.read_at | formatDate }}
+                                </span>
                                 <span class="bullet"></span>
-                                <a class="text-job" href="#">Lihat</a>
+                                <router-link 
+                                    class="text-job" 
+                                    :to="{ name: 'transactions.view', params: {id: row.data.transaction.id} }">
+                                    Lihat
+                                </router-link>
                             </div>
-                            <p>Have commented on the task of "<a href="#">Responsive design</a>".</p>
+                            <p>
+                                <b>{{ row.data.transaction.product.name }}</b>
+                            </p>
+                            <p>
+                                total biaya laundy 
+                                {{ row.data.transaction.transaction.amount | 
+                                    currency('Rp', '2', { spaceBetweenAmountAndSymbol: true }) 
+                                }} 
+                            </p>
+                            <p>
+                                <span v-html="row.data.transaction.status_label" />
+                            </p>
                         </div>
                     </div>
                 </div>
-                <infinite-loading @distance="1" @infinite="infiniteHandler"></infinite-loading>
+               <infinite-loading spinner="spiral" @distance="1" @infinite="infiniteHandler" />
             </div>
         </div>
     </div>
@@ -29,10 +43,8 @@
 
 <script>
     import $axios from "../../api";
-    import {mapState, mapActions} from 'vuex';
-    import Vue from "vue";
-
-    Vue.component('InfiniteLoading', require('vue-infinite-loading'));
+    import moment from 'moment'
+    import InfiniteLoading from 'vue-infinite-loading';
 
     export default {
         data() {
@@ -43,16 +55,28 @@
         },
         methods: {
             infiniteHandler($state) {
-                $axios.get(`list-notif?page=`+this.page).then(response => {
-                    return response.json();
-                }).then(data => {
-                    $.each(data.data, (key, value) => {
-                        this.notifications.push(value)
-                    });
-                    $state.loaded()
+                $axios.get(`list-notif`, {
+                    params: {
+                        page: this.page,
+                    },
+                }).then(({ data }) => {
+                    if (data.data.data.length) {
+                        this.page += 1;
+                        this.notifications.push(...data.data.data);
+                        $state.loaded();
+                    } else {
+                        $state.complete();
+                    }
                 })
-                this.page = this.page + 1
             }
+        },
+        filters: {
+            formatDate(val) {
+                return moment(new Date(val)).fromNow()
+            }
+        },
+        components: {
+            InfiniteLoading
         }
     }
 </script>

@@ -30,6 +30,12 @@
                                    {{ row.amount | currency('Rp', '2', { spaceBetweenAmountAndSymbol: true }) }}
                                </span>
                             </p>
+                            <p>
+                                <router-link :to="{ name: 'transactions.view', params: {id: row.id} }">
+                                    Lihat
+                                    <i class="fas fa-arrow-right"></i>
+                                </router-link>
+                            </p>
                         </div>
                     </li>
                 </ul>

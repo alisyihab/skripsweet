@@ -18,9 +18,6 @@
         </a>
         <div class="dropdown-menu dropdown-list dropdown-menu-right">
             <div class="dropdown-header">You have {{ notifications.length }}
-                <div class="float-right">
-                    <a href="#">Mark All As Read</a>
-                </div>
             </div>
             <div 
                 class="dropdown-list-content dropdown-list-message" 

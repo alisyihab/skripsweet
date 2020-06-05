@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/login', 'Auth\LoginController@login');
+Route::post('reset-password', 'Auth\ForgotPasswordController@sendPasswordResetLink');
+Route::post('reset/password', 'Auth\ResetPasswordController@callResetPassword');
 
 Route::group(['middleware' => 'auth:api'], function () {
     // outlet

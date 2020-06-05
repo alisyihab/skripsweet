@@ -3,7 +3,8 @@ import Router from "vue-router";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import store from "./store";
-import Member from "./pages/Customer";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPasswordForm from './pages/ResetPasswordForm';
 
 import IndexOutlet from "./pages/outlets/Index";
 import DataOutlet from "./pages/outlets/Outlet";
@@ -59,21 +60,25 @@ const router = new Router({
             redirect: '/login'
         },
         {
-            path: '/dashboard',
-            name: 'home',
-            component: Home,
-            meta: { requiresAuth: true }
+            path: '/reset-password',
+            name: 'reset-password',
+            component: ForgotPassword,
         },
         {
-            path: '/member',
-            name: 'member',
-            component: Member,
-            meta: { requiresAuth: true }
+            path: '/reset-password/:token', 
+            name: 'reset-password-form', 
+            component: ResetPasswordForm,
         },
         {
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: '/dashboard',
+            name: 'home',
+            component: Home,
+            meta: { requiresAuth: true }
         },
         {
             path: '/outlets',

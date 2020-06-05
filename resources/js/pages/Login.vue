@@ -50,9 +50,9 @@
                             </div>
 
                             <div class="form-group text-right">
-                                <router-link :to="{name: 'reset-password'}" class="float-left mt-3">
+                                <!-- <router-link :to="{name: 'reset-password'}" class="float-left mt-3">
                                     Lupa password?
-                                </router-link>
+                                </router-link> -->
                                 <button type="submit" class="btn btn-primary btn-lg btn-icon icon-right"
                                     @click.prevent="postLogin" tabindex="4">
                                     Login

@@ -56,9 +56,10 @@ class TransactionController extends Controller
         try {
             $user = $request->user();
             $transaction = Transaction::create([
+                'invoice' => $this->generateInvoice(),
                 'customer_id' => $request->customer_id['id'],
                 'user_id' => $user->id,
-                'amount' => 0
+                'amount' => 0,
             ]);
 
             $amount = 0;
@@ -177,5 +178,16 @@ class TransactionController extends Controller
         } catch (\Exception $e) {
             return response()->json(['status' => 'failed', 'data' => $e->getMessage()]);
         }
+    }
+    public function generateInvoice()
+    {
+        $order = Transaction::orderBy('created_at', 'DESC');
+        if ($order->count() > 0) {
+            $order = $order->first();
+            $explode = explode('-', $order->invoice);
+            $count = $explode[1] + 1;
+            return 'INV-' . $count;
+        }
+        return 'INV-1';
     }
 }

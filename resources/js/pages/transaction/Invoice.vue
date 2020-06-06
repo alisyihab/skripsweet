@@ -4,7 +4,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="invoice-title">
-                        <h2>Invoice</h2>
+                      <h2>Invoice</h2>
+                      <div class="invoice-number">#{{ transaction.invoice }}</div>
                     </div>
                     <hr>
                     <div class="row">
@@ -33,7 +34,7 @@
                         </div>
                         <div class="col-md-6 text-md-right">
                             <address>
-                                <strong>Tanggal order:</strong><br>
+                                <strong>Tanggal Laundry:</strong><br>
                                 {{ transaction.created_at | formatDate }}<br><br>
                             </address>
                         </div>

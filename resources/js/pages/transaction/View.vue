@@ -149,7 +149,9 @@
                                         <th class="text-center">Berat/Satuan</th>
                                         <th class="text-center">Harga</th>
                                         <th class="text-center">Subtotal</th>
-                                        <th class="text-center">Aksi</th>
+                                        <th class="text-center" v-if="$can('create transaction')">
+                                            Aksi
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -180,7 +182,7 @@
                                                {{ row.subtotal | currency('Rp', '2', { spaceBetweenAmountAndSymbol: true }) }}
                                            </p>
                                         </td>
-                                        <td>
+                                        <td v-if="$can('create transaction')">
                                             <a href="#" data-toggle="dropdown" aria-expanded="false">
                                                 <i class="fas fa-ellipsis-h"></i>
                                             </a>

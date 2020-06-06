@@ -24,6 +24,7 @@ import DataExpenses from "./pages/expenses/Expenses";
 import CreateExpenses from "./pages/expenses/Add";
 import ViewExpenses from "./pages/expenses/View";
 import EditExpenses from "./pages/expenses/Edit";
+import Income from "./pages/expenses/Income";
 
 import IndexCustomer from "./pages/customers/Index";
 import DataCustomer from "./pages/customers/Customer";
@@ -171,6 +172,12 @@ const router = new Router({
                     name: 'expenses.view',
                     component: ViewExpenses,
                     meta: { title: 'Lihat Permintaan' }
+                },
+                {
+                    path: 'income',
+                    name: 'income',
+                    component: Income,
+                    meta: { title: 'Pendapatan Bersih' }
                 },
             ]
         },

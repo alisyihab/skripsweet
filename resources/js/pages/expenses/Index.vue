@@ -4,13 +4,13 @@
         <section class="section">
             <div class="section-header">
                 <div class="section-header-back">
-                    <router-link :to="{ name: 'expenses.data' }" class="btn btn-icon" v-show="$route.name !== 'expenses.data' ">
+                    <router-link :to="{ name: 'expenses.data' }" class="btn btn-icon" v-show="$route.name !== 'expenses.data' && $route.name !== 'income' ">
                         <i class="fas fa-arrow-left"></i>
                     </router-link>
                 </div>
                 <h1>{{ $route.meta.title }}</h1>
                 <div class="section-header-button">
-                    <router-link :to="{ name: 'expenses.create' }" class="btn btn-primary" v-show="$route.name !== 'expenses.create' ">
+                    <router-link :to="{ name: 'expenses.create' }" class="btn btn-primary" v-show="$route.name !== 'expenses.create' && $route.name !== 'income'">
                         Tambah Data
                     </router-link>
                 </div>

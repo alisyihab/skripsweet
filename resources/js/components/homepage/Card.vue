@@ -27,7 +27,7 @@
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>Transaksi</h4>
+                        <h4>Laundry</h4>
                     </div>
                     <div class="card-body">
                         {{ totData.orders }}

@@ -11,7 +11,7 @@ class Payment extends Model
 
     public function getTypeLabelAttribute()
     {
-        if ($this->type == 0) {
+        if ($this->type == false) {
             return 'Cash';
         }
         return 'Deposit';

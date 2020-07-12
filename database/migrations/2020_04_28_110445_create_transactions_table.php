@@ -21,7 +21,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('amount');
             $table->date('start_date');
             $table->date('end_date');
-            $table->boolean('status')->default(false);
+            $table->integer('status')->default(false);
             $table->timestamps();
 
             $table->foreign('courier_id')

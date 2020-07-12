@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use File;
 
 class TransactionController extends Controller
 {
@@ -27,14 +28,12 @@ class TransactionController extends Controller
                 $q->where('name', 'LIKE', '%' . $search . '%');
             });
 
-        if (in_array(request()->status, [0, 1])) {
+        if (in_array(request()->status, [0, 1, 2])) {
             $transaction = $transaction->where('status', request()->status);
         }
 
         if ($user->role != 0 && $user->role != 1) {
-            $transaction = $transaction
-                ->where('customer_id', $user->id)
-            ;
+            $transaction = $transaction->where('customer_id', $user->id);
         }
 
         $transaction = $transaction->paginate(10);
@@ -95,10 +94,6 @@ class TransactionController extends Controller
             $transaction->update(['amount' => $amount]);
             DB::commit();
             
-            $user = $request->user();
-            $users = User::whereIn('role', [3])->get();
-            Notification::send($users, new TransactionNotification($transaction, $user));
-
             return response()->json([
                 'status' => 'success',
                 'data' => $transaction
@@ -125,56 +120,95 @@ class TransactionController extends Controller
     public function completeItem(Request $request)
     {
 
-        $transaction = DetailTransaction::with(['transaction.customer'])->find($request->id);
+        $transaction = DetailTransaction::with(['transaction.customer, product'])->find($request->id);
         $transaction->update(['status' => 1]);
         $transaction->transaction->customer()
             ->update([
                 'point' => $transaction->transaction->customer->point + 1
             ]);
 
+        $user = $request->user();
+        $users = User::whereIn('role', [3])->get();
+        Notification::send($users, new TransactionNotification($transaction, $user));
+
         return response()->json(['status' => 'success']);
     }
 
     public function makePayment(Request $request)
     {
+        
         $this->validate($request, [
             'transaction_id' => 'required|exists:transactions,id',
-            'amount' => 'required|integer'
+            'amount' => 'required|integer',
         ]);
-
+        
         DB::beginTransaction();
         try {
+            $user = request()->user();
+
             $transaction = Transaction::find($request->transaction_id);
 
             $customer_change = 0;
 
-            if ($request->via_deposit) {
+            if (filter_var($request->via_deposit, FILTER_VALIDATE_BOOLEAN)) {
                 if ($transaction->customer->deposit < $request->amount) {
-                    return response()->json(['status' => 'error', 'data' => 'Deposit tidak cukup']);
+                    return response()->json([
+                        'status' => 'error', 
+                        'data' => 'Deposit tidak cukup'
+                    ]);
                 }
 
                 $transaction->customer()->update(['deposit' => $transaction->customer->deposit - $request->amount]);
 
             } else {
-                if ($request->customer_change) {
+                if (filter_var($request->customer_change, FILTER_VALIDATE_BOOLEAN)) {
                     $customer_change = $request->amount - $transaction->amount;
                     $transaction->customer()->update(['deposit' => $transaction->customer->deposit + $customer_change]);
                 }
             }
-
+            
             $customer_change = $request->amount - $transaction->amount;
+
+            $name = null;
+            if ($request->hasFile('photo')) {
+                $file = $request->file('photo');
+                $name = $request->id . '-' . time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('public/transaction', $name);
+            }
+
+            if ($user->role != 0 && $user->role != 1 && $request->hasFile('photo') == null) {
+                return response()->json([
+                    'status' => 'error',
+                    'data' => 'Bukti Transaksi tidak boleh kosong'
+                ]);
+            }
+
             Payment::create([
                 'transaction_id' => $transaction->id,
                 'amount' => $request->amount,
                 'customer_change' => $customer_change,
-                'type' => $request->via_deposit
+                'type' => $request->via_deposit,
+                'photo' => $name
             ]);
-
-            $transaction->update(['status' => 1]);
+            
+            if ($user->role != 0 && $user->role != 1) {
+                $transaction = $transaction->update(['status' => 1]);
+            } else {
+                $transaction->update(['status' => 2]);                
+            }            
 
             DB::commit();
+            
+            if ($user->role != 0 && $user->role != 1) {
+                return response()->json([
+                    'status' => 'berhasil',
+                    'pesan' => 'Pembayaran berhasil dilakukan, harap tunggu pengecekan dari admin.'
+                ]);
+            }
 
-            return response()->json(['status' => 'success']);
+            return response()->json([
+                'status' => 'success',
+            ]);
         } catch (\Exception $e) {
             return response()->json(['status' => 'failed', 'data' => $e->getMessage()]);
         }
@@ -189,5 +223,14 @@ class TransactionController extends Controller
             return 'INV-' . $count;
         }
         return 'INV-1';
+    }
+
+    public function accept(Request $request)
+    {
+        $this->validate($request, ['id' => 'required|exists:transactions,id']);
+        $transaction = Transaction::with(['payment'])->find($request->id);
+        $transaction->update(['status' => 2]);
+
+        return response()->json(['status' => 'success']);
     }
 }

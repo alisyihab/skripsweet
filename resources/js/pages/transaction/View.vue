@@ -20,6 +20,16 @@
                                 class="form-control"
                                 v-model="amount" />
                         </div>
+                        <div class="form-group" v-if="authenticated.role == 3">
+                            <label>Bukti Transfer</label>
+                            <input type="file" class="form-control" accept="image/*" @change="uploadImage($event)" id="file-input">
+                            <p class="text-medium text-black mt-3">
+                                Transfer ke <b>No.Rek : 0009213xxx</b>
+                            </p>
+                            <div id="preview">
+                                <img class="img-responsive" v-if="url" :src="url"/>
+                            </div>
+                        </div>
                         <div class="form-group"
                              v-if="transaction.customer && transaction.customer.deposit >= transaction.amount">
                             <input type="checkbox" v-model="via_deposit" id="deposit"> 
@@ -251,6 +261,8 @@
                 loading: false,
                 payment_message: null,
                 via_deposit: false,
+                photo: '',
+                url: null,
                 money: {
                     decimal: ',',
                     thousands: '.',
@@ -264,6 +276,9 @@
         computed: {
             ...mapState('transaction', {
                 transaction: state => state.transaction
+            }),
+             ...mapState('user', {
+                authenticated: state => state.authenticated
             }),
             isCustomerChange() {
                 if(!this.via_deposit) {
@@ -285,7 +300,24 @@
         },
         methods: {
             ...mapActions('transaction', ['detailTransaction', 'payment', 'completeItem']),
+            onFileChange(event) {
+                const file = event.target.files[0];
+                this.url = URL.createObjectURL(file);
+            },
+            uploadImage(event) {
+                this.photo = event.target.files[0];
+                this.url = URL.createObjectURL(this.photo)
+            },
             makePayment() {
+                if (this.amount == null) {
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Anda belum memasukan nominal.',
+                    });
+                    return
+                }
+
                 if (this.amount < this.transaction.amount) {
                     this.$swal.fire({
                         icon: 'error',
@@ -296,18 +328,38 @@
                     return
                 }
                 this.loading = true
-                this.payment({
-                    transaction_id: this.$route.params.id,
-                    amount: this.amount,
-                    customer_change: this.customer_change,
-                    via_deposit: this.via_deposit
-                }).then((res) => {
+
+                let form = new FormData();
+                form.append('transaction_id', this.$route.params.id);
+                form.append('amount', this.amount);
+                form.append('customer_change', this.customer_change);
+                form.append('via_deposit', this.via_deposit);
+                form.append('photo', this.photo);
+                
+                this.payment(form).then((res) => {
                     if (res.status == 'success') {
                         this.$swal.fire(
                             'Success!',
                             'Pembayaran berhasil.',
                             'success'
                         );
+                        setTimeout(() => {
+                            this.loading = false
+                            this.amount = null
+                            this.customer_change = false
+                            this.payment_message = null
+                            this.via_deposit = false
+                        }, 500)
+                        this.detailTransaction(this.$route.params.id)
+                    } else if (res.status == 'berhasil') {
+                        this.$swal.fire({
+                            title: '<strong>HTML <u>example</u></strong>',
+                            icon: 'info',
+                            showCancelButton: false,
+                            focusConfirm: false,    
+                            title: 'Sukses',
+                            text: res.pesan
+                        });
                         setTimeout(() => {
                             this.loading = false
                             this.amount = null

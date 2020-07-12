@@ -121,6 +121,14 @@
                 })
             }
         },
+        watch: {
+            $route: {
+                immediate: true,
+                handler(to, from) {
+                    document.title = to.meta.title || 'Laundry - Login';
+                }
+            }
+        },
         destroyed() {
             this.getUserLogin()
         }

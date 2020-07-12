@@ -43,6 +43,14 @@
             }),
             ...mapState(['token']),
         },
+        watch: {
+            $route: {
+                immediate: true,
+                handler(to, from) {
+                    document.title = to.meta.title || 'Laundry - Dashboard';
+                }
+            }
+        },
         components: {
             mixins: [
                 Vue2Filters.mixin

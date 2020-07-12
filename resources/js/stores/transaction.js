@@ -83,7 +83,11 @@ const actions = {
     },
     payment({commit}, payload) {
         return new Promise((resolve, reject) => {
-            $axios.post(`/transaction/payment`, payload)
+            $axios.post(`/transaction/payment`, payload, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
             .then((response) => {
                 resolve(response.data)
             })
@@ -96,6 +100,14 @@ const actions = {
             $axios.get(`/transaction?page=${state.page}&q=${search}&status=${status}`)
             .then((response) => {
                 commit('ASSIGN_DATA_TRANSACTION', response.data)
+                resolve(response.data)
+            })
+        })
+    },
+    acceptPayment({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            $axios.post(`/transaction/accept`, { id: payload })
+            .then((response) => {
                 resolve(response.data)
             })
         })

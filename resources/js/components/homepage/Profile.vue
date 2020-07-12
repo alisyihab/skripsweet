@@ -8,7 +8,7 @@
                 />
                 <div class="profile-widget-items">
                     <div class="profile-widget-item">
-                        <div class="profile-widget-item-label">Transaksi</div>
+                        <div class="profile-widget-item-label">Laundry</div>
                         <div class="profile-widget-item-value">{{ trans.data }}</div>
                     </div>
                     <div class="profile-widget-item">

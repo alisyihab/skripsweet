@@ -94,7 +94,7 @@
 </template>
 
 <script>
-    import { mapActions, mapState, mapMutations } from 'vuex'
+    import { mapActions, mapState, mapMutations } from 'vuex';
     import Vue2Filters from 'vue2-filters'
     import Vue from 'vue'
     import VueHtmlToPaper from 'vue-html-to-paper';

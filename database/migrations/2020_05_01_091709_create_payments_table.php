@@ -18,7 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('transaction_id');
             $table->integer('amount');
             $table->integer('customer_change');
-            $table->boolean('type')->default(false)->comment('0: Cash, 1: Deposit');
+            $table->integer('type')->default(false)->comment('0: Cash, 1: Deposit');
             $table->timestamps();
         });
     }

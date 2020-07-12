@@ -82,7 +82,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|max:150',
             'email' => 'required',
-            'password' => '->nullable|min:6',
+            'password' => 'nullable|min:6',
             'role' => 'required'
         ], [
             'name.required' => 'Field tidak boleh kosong',

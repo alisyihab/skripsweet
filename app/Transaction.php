@@ -50,7 +50,7 @@ class Transaction extends Model
      */
     public function getStatusLabelAttribute()
     {
-        if ($this->status == 1) {
+        if ($this->status == 2) {
             return 
                 '<span class="badge badge-success">
                         <i class="fas fa-check"></i>
@@ -58,7 +58,16 @@ class Transaction extends Model
                 </span>'
             ;
         }
-        return '<span class="badge badge-primary">Proses Pembayaran</span>';
+
+        if ($this->status == 1) {
+            return 
+                '<span class="badge badge-primary">
+                        <i class="fas fa-eye"></i>
+                        Pengecekan pembayaran
+                </span>'
+            ;
+        }
+        return '<span class="badge badge-warning">Proses Pembayaran</span>';
     }
 
     public function getCreatedAtAttribute()

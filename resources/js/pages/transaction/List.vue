@@ -7,9 +7,10 @@
             <div class="card-body">
                 <div class="float-left">
                     <select v-model="filter_status" class="form-control selectric">
-                        <option value="2">All</option>
-                        <option value="1">Selesai</option>
-                        <option value="0">Proses</option>
+                        <option value="3">All</option>
+                        <option value="2">Selesai</option>
+                        <option value="1">Pengecekan pembayaran</option>
+                        <option value="0">Pembayaran</option>
                     </select>
                 </div>
                 <div class="float-right">
@@ -57,11 +58,18 @@
                                 <i class="fas fa-eye"></i> Detail
                             </router-link>
                             <router-link 
-                                v-if="row.item.status == 1"
+                                v-if="row.item.status == 2"
                                 :to=" {name: 'transactions.invoice', params: {id: row.item.id} }"
                                 class="dropdown-item has-icon"
                             >
                                 <i class="fas fa-file-invoice"></i> Invoice
+                            </router-link>
+                            <router-link 
+                                v-if="row.item.status == 1 && $can('read users')"
+                                :to=" {name: 'transaction.payment', params: {id: row.item.id} }"
+                                class="dropdown-item has-icon"
+                            >
+                                <i class="fas fa-file-invoice"></i> Lihat Pembayaran
                             </router-link>
                         </div>
                     </template>
@@ -126,11 +134,11 @@
                     {key: 'service', label: 'Item Jasa', sortable: true},
                     {key: 'amount', label: 'Total', sortable: true},
                     {key: 'created_at', label: 'Tgl Transaksi', sortable: true},
-                    {key: 'status', label: 'Status', sortable: true},
+                    {key: 'status', label: 'Status Pembayaran', sortable: true},
                     {key: 'actions', label: 'Aksi'}
                 ],
                 search: '',
-                filter_status: 2
+                filter_status: 3
             }
         },
         computed: {

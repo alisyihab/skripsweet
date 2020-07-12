@@ -226,6 +226,14 @@
                     this.isSuccess = true
                 })
             }
+
+            if (filter.length <= 0) {
+                this.$swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Paket Belum diisi',
+                });
+            }
         },
         newCustomer() {
             this.isForm = true

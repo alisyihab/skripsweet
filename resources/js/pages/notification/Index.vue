@@ -19,5 +19,13 @@
 <script>
     export default {
         name: 'IndexNotification',
+        watch: {
+            $route: {
+                immediate: true,
+                handler(to, from) {
+                    document.title = to.meta.title;
+                }
+            }
+        },
     }
 </script>

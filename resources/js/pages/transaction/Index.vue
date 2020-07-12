@@ -40,6 +40,14 @@
         name: "IndexTransaction",
         components: {
             'page404': Page404
-        }
+        },
+        watch: {
+            $route: {
+                immediate: true,
+                handler(to, from) {
+                    document.title = to.meta.title;
+                }
+            }
+        },
     }
 </script>

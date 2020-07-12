@@ -36,6 +36,7 @@ import AddTransaction from "./pages/transaction/Add";
 import InvoiceTrasaction from "./pages/transaction/Invoice";
 import ListTransaction from "./pages/transaction/List";
 import ViewTransaction from "./pages/transaction/View";
+import AccPayment from "./pages/payment/Index";
 
 import IndexUsers from "./pages/users/Index";
 import DataPersons from "./pages/users/Users";
@@ -190,7 +191,7 @@ const router = new Router({
                     path: '',
                     name: 'customers.data',
                     component: DataCustomer,
-                    meta: { title: 'Manage Pelanggan' }
+                    meta: { title: 'Daftar Pelanggan' }
                 },
                 {
                     path: 'add',
@@ -234,6 +235,12 @@ const router = new Router({
                     name: 'transactions.list',
                     component: ListTransaction,
                     meta: { title: 'Daftar Transaksi' }
+                },
+                {
+                    path: 'payment/:id',
+                    name: 'transaction.payment',
+                    component: AccPayment,
+                    meta: {title: 'Pembayaran'}
                 },
             ]
         },

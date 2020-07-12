@@ -119,18 +119,13 @@ class TransactionController extends Controller
 
     public function completeItem(Request $request)
     {
+        $this->validate($request, [
+            'id' => 'required|exists:detail_transactions,id'
+        ]);
 
-        $transaction = DetailTransaction::with(['transaction.customer, product'])->find($request->id);
+        $transaction = DetailTransaction::with(['transaction.customer'])->find($request->id);
         $transaction->update(['status' => 1]);
-        $transaction->transaction->customer()
-            ->update([
-                'point' => $transaction->transaction->customer->point + 1
-            ]);
-
-        $user = $request->user();
-        $users = User::whereIn('role', [3])->get();
-        Notification::send($users, new TransactionNotification($transaction, $user));
-
+        $transaction->transaction->customer()->update(['point' => $transaction->transaction->customer->point + 1]);
         return response()->json(['status' => 'success']);
     }
 

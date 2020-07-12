@@ -136,7 +136,7 @@
                                 <td class="text-left">{{ transaction.payment.type_label }}</td>
                             </tr>
                             <hr>
-                            <tr>
+                            <tr v-if="transaction.payment.type_lable == false">
                                 <th>Kembalian</th>
                                 <td>:</td>
                                 <td class="text-left">
@@ -201,7 +201,7 @@
                                                     <button
                                                       class="dropdown-item has-icon"
                                                       v-show="$can('create transaction')"
-                                                      v-if="transaction.status == 1  && row.status == 0"
+                                                      v-if="transaction.status == 2  && row.status == 0"
                                                       @click="isDone(row.id)"
                                                     >
                                                         <i class="fas fa-paper-plane"  style="color: #6777ef"></i> 

@@ -9,13 +9,12 @@
                         <h4 class="text-dark font-weight-normal">Welcome to <span class="font-weight-bold">Laundry</span>
                         </h4>
                             <div class="form-group has-feedback" :class="{'has-error': errors.email}">
-                                <label for="email">Email</label>
+                                <label for="email">No Hp Or Email</label>
                                 <input
                                     id="email"
-                                    type="email"
-                                    v-model="data.email"
+                                    v-model="data.phone"
                                     class="form-control"
-                                    name="email"
+                                    name="phone"
                                     tabindex="1"
                                     required
                                     autofocus>
@@ -92,7 +91,7 @@
         data() {
             return {
                 data: {
-                    email: '',
+                    phone: '',
                     password: '',
                     remember_me: false
                 }

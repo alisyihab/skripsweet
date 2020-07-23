@@ -6,6 +6,7 @@ use App\Http\Resources\TransactionCollection;
 use App\Http\Controllers\Controller;
 use App\DetailTransaction;
 use App\Notifications\TransactionNotification;
+use App\Notifications\PaymentNotification;
 use App\Payment;
 use App\Transaction;
 use App\User;
@@ -23,7 +24,7 @@ class TransactionController extends Controller
         $user = request()->user();
 
         $transaction = Transaction::with(['user', 'detail', 'customer'])
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('updated_at', 'DESC')
             ->whereHas('customer', function ($q) use ($search) {
                 $q->where('name', 'LIKE', '%' . $search . '%');
             });
@@ -124,9 +125,14 @@ class TransactionController extends Controller
         ]);
 
         $transaction = DetailTransaction::with(['transaction.customer'])->find($request->id);
+
         $transaction->update(['status' => 1]);
+        
         $transaction->transaction->customer()->update(['point' => $transaction->transaction->customer->point + 1]);
-        return response()->json(['status' => 'success']);
+
+        return response()->json([
+            'status' => 'success'
+        ]);
     }
 
     public function makePayment(Request $request)
@@ -178,7 +184,15 @@ class TransactionController extends Controller
                 ]);
             }
 
-            Payment::create([
+            if ($user->role != 0 && $user->role != 1 && $request->amount > $transaction->amount) {
+                return response()->json([
+                    'status' => 'error',
+                    'data' => 'Nominal harus sesuai dengan tagihan'
+                ]);
+            }
+
+            $payment = Payment::create([
+                'user_id' => $user->id,
                 'transaction_id' => $transaction->id,
                 'amount' => $request->amount,
                 'customer_change' => $customer_change,
@@ -186,14 +200,18 @@ class TransactionController extends Controller
                 'photo' => $name
             ]);
             
+
             if ($user->role != 0 && $user->role != 1) {
                 $transaction = $transaction->update(['status' => 1]);
+                $users = User::whereIn('role', [0, 1])->get();
+
+                Notification::send($users, new PaymentNotification($payment, $user));
             } else {
                 $transaction->update(['status' => 2]);                
             }            
-
-            DB::commit();
             
+            DB::commit();
+
             if ($user->role != 0 && $user->role != 1) {
                 return response()->json([
                     'status' => 'berhasil',
@@ -208,6 +226,7 @@ class TransactionController extends Controller
             return response()->json(['status' => 'failed', 'data' => $e->getMessage()]);
         }
     }
+    
     public function generateInvoice()
     {
         $order = Transaction::orderBy('created_at', 'DESC');
@@ -217,15 +236,24 @@ class TransactionController extends Controller
             $count = $explode[1] + 1;
             return 'INV-' . $count;
         }
+
         return 'INV-1';
     }
 
     public function accept(Request $request)
     {
         $this->validate($request, ['id' => 'required|exists:transactions,id']);
-        $transaction = Transaction::with(['payment'])->find($request->id);
+
+        $transaction = Transaction::with(['detail.product'])->find($request->id);
         $transaction->update(['status' => 2]);
 
-        return response()->json(['status' => 'success']);
+        $user = request()->user();
+        
+        Notification::send($transaction->customer, new TransactionNotification($transaction, $user));
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $transaction
+        ]);
     }
 }

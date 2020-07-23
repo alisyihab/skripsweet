@@ -14,16 +14,17 @@
                                     Dibaca {{ row.read_at | formatDate }}
                                 </span>
                                 <span class="bullet"></span>
-                                <router-link 
+                                <router-link
+                                    v-if="row.data.transaction"
                                     class="text-job" 
                                     :to="{ name: 'transactions.view', params: {id: row.data.transaction.id} }">
                                     Lihat
                                 </router-link>
                             </div>
-                            <p>
-                                <b>{{ row.data.transaction.product.name }}</b>
+                            <p v-if="row.data.transaction">
+                                <!-- <b>{{ row.data.product.name }}</b> -->
                             </p>
-                            <p>
+                            <!-- <p>
                                 total biaya laundy 
                                 {{ row.data.transaction.transaction.amount | 
                                     currency('Rp', '2', { spaceBetweenAmountAndSymbol: true }) 
@@ -31,11 +32,16 @@
                             </p>
                             <p>
                                 <span v-html="row.data.transaction.status_label" />
-                            </p>
+                            </p> -->
                         </div>
                     </div>
                 </div>
-               <infinite-loading spinner="spiral" @distance="1" @infinite="infiniteHandler" />
+               <infinite-loading spinner="spiral" @distance="1" @infinite="infiniteHandler">
+                   <div slot="no-more">
+                       Tidak ada data lagi
+                    <i class="far fa-smile-wink" style="font-size: 28px"></i>
+                    </div>
+               </infinite-loading>
             </div>
         </div>
     </div>
@@ -60,9 +66,9 @@
                         page: this.page,
                     },
                 }).then(({ data }) => {
-                    if (data.data.data.length) {
+                    if (data.result.data.length) {
                         this.page += 1;
-                        this.notifications.push(...data.data.data);
+                        this.notifications.push(...data.result.data);
                         $state.loaded();
                     } else {
                         $state.complete();

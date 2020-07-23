@@ -60,7 +60,7 @@
                             List Transaksi
                         </router-link>
                     </li>
-                    <li v-if="$can('read transaction')">
+                    <li v-if="$can('read transactions')">
                         <router-link class="nav-link" :to="{name: 'transactions.add'}">
                             Buat Transaksi
                         </router-link>

@@ -23,9 +23,8 @@
     <script src="{{ asset('assets/vendor/popper.js/dist/umd/popper.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/jquery.nicescroll/dist/jquery.nicescroll.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/moment/moment.js') }}"></script>
-
     <script src="{{ asset('assets/js/stisla.js') }}"></script>
+
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

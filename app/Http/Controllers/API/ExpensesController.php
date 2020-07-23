@@ -26,7 +26,7 @@ class ExpensesController extends Controller
             $expenses = $expenses->where('description', 'LIKE', '%' . request()->q . '%');
         }
 
-        if ($user->role = 1) {
+        if ($user->role == 1) {
             $expenses = $expenses->where('user_id', $user->id);
         }
 
@@ -55,7 +55,7 @@ class ExpensesController extends Controller
 
         $expenses = Expense::create($request->all());
 
-        $users = User::whereIn('role', [0, 2])->get();
+        $users = User::whereIn('role', [0])->get();
         Notification::send($users, new ExpensesNotification($expenses, $user));
 
         return response()->json(['status' => 'success']);

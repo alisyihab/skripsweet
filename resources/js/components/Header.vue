@@ -12,7 +12,7 @@
             </ul>
         </form>
         <ul class="navbar-nav navbar-right">
-            <li class="dropdown dropdown-list-toggle" v-if="$can('read products')">
+            <li class="dropdown dropdown-list-toggle">
                 
                 <a 
                     v-if="notifications.length > 0"
@@ -34,13 +34,31 @@
                     <div class="dropdown-list-content dropdown-list-message" v-if="notifications.length > 0">
                         <span v-for="(row, index) in notifications" :key="index">
                             <a href="javascript:void(0)" @click="readNotif(row)" class="dropdown-item dropdown-item-unread">
-                                <div class="dropdown-item-avatar">
+                                <div class="dropdown-item-avatar" v-if="row.data.sender_photo == null">
                                     <img alt="image" src="https://via.placeholder.com/160" class="rounded-circle">
+                                    <div class="is-online"></div>
+                                </div>
+                                <div class="dropdown-item-avatar" v-else>
+                                    <img alt="image" 
+                                        :src="'/storage/users/' + row.data.sender_photo" 
+                                        class="rounded-circle"
+                                    />
                                     <div class="is-online"></div>
                                 </div>
                                 <div class="dropdown-item-desc">
                                     <b>{{ row.data.sender_name }}</b>
-                                    <p>{{ row.data.expenses.description.substr(0, 30) }}</p>
+                                    <p v-if="row.data.expenses">
+                                        {{ row.data.expenses.description.substr(0, 30) }}
+                                    </p>
+                                    <p v-else-if="row.data.payment">
+                                        <span>
+                                            {{ row.data.note }}
+                                        </span>
+                                    </p>
+                                    <p v-else-if="row.data.transaction">
+                                        Pembayaran telah di verifikasi oleh admin.
+                                        <span v-html="row.data.transaction.status_label"></span>
+                                    </p>
                                     <div class="time">{{ row.created_at | formatDate }}</div>
                                 </div>
                             </a>
@@ -54,9 +72,6 @@
                     </div>
                 </div>
             </li>
-
-            <!-- Customer notif -->
-            <notif />
 
             <li class="dropdown">
                 <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
@@ -105,10 +120,28 @@
         methods: {
             ...mapActions('notification', ['readNotification']),
             readNotif(row) {
-                this.readNotification({id: row.id}).then(() => this.$router.push({
-                    name: 'expenses.view',
-                    params: {id: row.data.expenses.id}
-                }))
+                if (row.data.expenses) {
+                        this.readNotification({id: row.id}).then(() => this.$router.push({
+                        name: 'expenses.view',
+                        params: {
+                            id: row.data.expenses.id
+                        }
+                    }))
+                } else if (row.data.payment) {
+                        this.readNotification({id: row.id}).then(() => this.$router.push({
+                        name: 'transaction.payment',
+                        params: {
+                            id: row.data.payment.transaction_id
+                        }
+                    }))
+                } else if (row.data.transaction) {
+                      this.readNotification({id: row.id}).then(() => this.$router.push({
+                        name: 'transactions.view',
+                        params: {
+                            id: row.data.transaction.id
+                        }
+                    }))
+                }
             },
             logout() {
                 return new Promise((resolve, reject) => {

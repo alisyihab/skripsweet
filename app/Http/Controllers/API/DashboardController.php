@@ -25,7 +25,7 @@ class DashboardController extends Controller
         $parse = Carbon::parse($filter);
         $array_date = range($parse->startOfMonth()->format('d'), $parse->endOfMonth()->format('d'));
 
-        $transaction = Transaction::where('status', 1)
+        $transaction = Transaction::where('status', 2)
             ->select(DB::raw('date(created_at) as date,sum(amount) as total'))
             ->where('created_at', 'LIKE', '%' . $filter . '%')
             ->groupBy(DB::raw('date(created_at)'))
@@ -65,7 +65,7 @@ class DashboardController extends Controller
 
     public function data()
     {
-        $tot_income = Transaction::where('status', 1)->sum('amount');
+        $tot_income = Transaction::where('status', 2)->sum('amount');
         $tot_orders = Transaction::count();
         $tot_expanses = Expense::where('status', 1)->sum('price');
         $tot_cus =  User::where('role', '=', '3')->count();
@@ -113,7 +113,7 @@ class DashboardController extends Controller
             ;
         }
 
-        $transaction = $transaction->take(5)->get();
+        $transaction = $transaction->take(3)->get();
 
         return new TransactionCollection($transaction);
     }

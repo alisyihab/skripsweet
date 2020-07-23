@@ -31,15 +31,16 @@
                             </div>
                         </div>
                         <div class="form-group"
+                            v-show="authenticated.role != 3"
                              v-if="transaction.customer && transaction.customer.deposit >= transaction.amount">
                             <input type="checkbox" v-model="via_deposit" id="deposit"> 
                             <label for="deposit">Bayar Via Deposit?</label>
                         </div>
-                        <p v-if="isCustomerChange">
+                        <p v-if="isCustomerChange" v-show="authenticated.role != 3">
                             Kembalian:
                             {{ customerChangeAmount | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
                         </p>
-                        <div class="form-group" v-if="isCustomerChange">
+                        <div class="form-group" v-if="isCustomerChange && authenticated.role != 3">
                             <input type="checkbox" v-model="customer_change" id="customer_change">
                             <label for="customer_change"> Kembalian Jadi Deposit?</label>
                         </div>
@@ -133,10 +134,17 @@
                             <tr>
                                 <th>Metode Pembayaran </th>
                                 <td>:</td>
-                                <td class="text-left">{{ transaction.payment.type_label }}</td>
+                                <td class="text-left">
+                                    <span v-if="transaction.payment.type == 'false'">
+                                        Cash
+                                    </span>
+                                    <span v-else>
+                                        Deposit
+                                    </span>
+                                </td>
                             </tr>
                             <hr>
-                            <tr v-if="transaction.payment.type_lable == false">
+                            <tr v-if="transaction.payment.type == 'false'">
                                 <th>Kembalian</th>
                                 <td>:</td>
                                 <td class="text-left">

@@ -90,11 +90,6 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <th>Metode Pembayaran</th>
-                                        <td>:</td>
-                                        <td class="text-left">{{ transaction.payment.type_label }}</td>
-                                    </tr>
                                     <hr>
                                     <tr>
                                         <th>Bukti Transfer</th>

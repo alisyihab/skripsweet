@@ -195,7 +195,12 @@
         },
         addProduct() {
             if (this.filterProduct.length == 0) {
-                this.transactions.detail.push({ laundry_price: null, qty: null, price: 0, subtotal: 0 })
+                this.transactions.detail.push({ 
+                    laundry_price: null, 
+                    qty: null, 
+                    price: 0, 
+                    subtotal: 0 
+                })
             }
         },
         removeProduct(index) {

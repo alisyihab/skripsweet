@@ -31,11 +31,15 @@ class NotificationController extends Controller
 
     public function notificationList()
     {
-        $notification = request()->user()->notifications()->orderBy('created_at', 'desc')->paginate(10);
+        $notification = request()->user()
+            ->notifications()
+            ->orderBy('created_at', 'desc')
+            ->paginate(5)
+        ;
 
         return response()->json([
             'status' => 'success',
-            'data' => $notification
+            'result' => $notification
         ]);
     }
 }

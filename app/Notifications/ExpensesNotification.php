@@ -49,7 +49,8 @@ class ExpensesNotification extends Notification
         return [
             'sender_id' => $this->user->id,
             'sender_name' => $this->user->name,
-            'expenses' => $this->expenses
+            'expenses' => $this->expenses,
+            'note' => 'Ada permintaan pengajuan pengeluaran'
         ];
     }
 

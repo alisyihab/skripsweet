@@ -31,14 +31,14 @@
                                </span>
                             </p>
                             <p>
-                                <router-link v-if="row.status == 2"
-                                    :to="{ name: 'transactions.view', params: {id: row.id} }">
+                                <router-link v-if="row.status == 1"
+                                v-show="$can('create transaction')"
+                                    :to="{ name: 'transaction.payment', params: {id: row.id} }">
                                     Lihat
                                     <i class="fas fa-arrow-right"></i>
                                 </router-link>
                                 <router-link v-else
-                                    v-show="$can('create transaction')"
-                                    :to="{ name: 'transaction.payment', params: {id: row.id} }">
+                                     :to="{ name: 'transactions.view', params: {id: row.id} }">
                                     Lihat
                                     <i class="fas fa-arrow-right"></i>
                                 </router-link>

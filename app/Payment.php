@@ -11,7 +11,7 @@ class Payment extends Model
 
     public function getTypeLabelAttribute()
     {
-        if ($this->type == false) {
+        if (filter_var($this->type == false, FILTER_VALIDATE_BOOLEAN)) {
             return 'Cash';
         }
         return 'Deposit';

@@ -11,6 +11,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 class TransactionNotification extends Notification
 {
     use Queueable;
+    
     protected $transaction;
     protected $user;
 
@@ -46,6 +47,7 @@ class TransactionNotification extends Notification
         return [
             'sender_id' => $this->user->id,
             'sender_name' => $this->user->name,
+            'sender_photo' => $this->user->photo,
             'transaction' => $this->transaction
         ];
     }

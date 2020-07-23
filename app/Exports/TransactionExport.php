@@ -24,6 +24,7 @@ class TransactionExport implements FromView, ShouldAutoSize
         $this->total = $this->total = $total = $total = DB::table("transactions")
             ->select(DB::raw("SUM(amount) as count"))
             ->where('created_at', 'LIKE', '%' . $filter . '%')
+            ->where('status', 2)
             ->groupBy(DB::raw("month(created_at)"))
             ->get();;
     }

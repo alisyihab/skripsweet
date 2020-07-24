@@ -33,12 +33,19 @@
         methods: {
             requestResetPassword() {
                 $axios.post("reset-password", {email: this.email}).then(result => {
-                    this.response = result.data;
-                    this.$swal.fire(
-                      'Success!',
-                      'link reset password berhasil dikirim ke ' + this.email,
-                      'success'
-                    );
+                  if (this.response = result.data) {
+                      this.$swal.fire(
+                        'Success!',
+                        'link reset password berhasil dikirim ke ' + this.email,
+                        'success'
+                      );
+                  } if (this.response = result.status) {
+                    this.$swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Email ' + this.email + ' tidak ditemukan',
+                        });
+                  }
                 }, error => {
                     console.error(error);
                 });

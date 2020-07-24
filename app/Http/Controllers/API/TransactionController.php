@@ -226,7 +226,7 @@ class TransactionController extends Controller
             return response()->json(['status' => 'failed', 'data' => $e->getMessage()]);
         }
     }
-    
+        
     public function generateInvoice()
     {
         $order = Transaction::orderBy('created_at', 'DESC');

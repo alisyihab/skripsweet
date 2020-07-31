@@ -59,12 +59,8 @@
                             </div>
 
                         <div class="text-center mt-5 text-small">
-                            Copyright &copy; Laundry. Made with 💙 by <a href="https://instagram.com">alibelucky</a>
-                            <div class="mt-2">
-                                <a href="#">Privacy Policy</a>
-                                <div class="bullet"></div>
-                                <a href="#">Terms of Service</a>
-                            </div>
+                            Copyright &copy; {{ new Date().getFullYear() }} Laundry. Made with 💙 by 
+                            <a href="https://instagram.com">alibelucky</a>
                         </div>
                     </div>
                 </div>

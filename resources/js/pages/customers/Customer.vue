@@ -1,5 +1,4 @@
 <template>
-     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <h4>Data Pelanggan</h4>
@@ -67,7 +66,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </template>
 

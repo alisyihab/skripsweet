@@ -48,7 +48,7 @@ class ForgotPasswordController extends Controller
     {
         return response()->json([
             'pesan' => 'Email tidak ditemukan.',
-            'status' => 'error'
+            'error' => 'error'
         ]);
     }
 }

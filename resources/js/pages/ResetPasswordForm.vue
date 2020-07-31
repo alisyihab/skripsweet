@@ -5,9 +5,9 @@
         <div class="card card-default">
           <div class="card-header">New Password</div>
           <div class="card-body">
-            <!-- <ul v-if="errors">
+            <ul v-if="errors">
               <li v-for="error in errors" v-bind:key="error">{{ msg }}</li>
-            </ul> -->
+            </ul>
             <form autocomplete="off" @submit.prevent="resetPassword" method="post">
               <div class="form-group">
                   <label for="email">E-mail</label>
@@ -60,12 +60,12 @@
                     );
                     this.$router.push({name: 'home'})
                 }, error => {
-                  this.$swal.fire(
-                      'error!',
-                      ' gagal ' + error,
-                      'success'
-                    );
-                    console.error(error);
+                  this.$swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: error,
+                  });
+                  console.error(error);
                 });
             }
         }

@@ -1,22 +1,44 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-6">
-        <div class="card card-default">
-          <div class="card-header">Reset Password</div>
-          <div class="card-body">
-            <form autocomplete="off" @submit.prevent="requestResetPassword" method="post">
-              <div class="form-group">
-                  <label for="email">E-mail</label>
-                  <input type="email" id="email" class="form-control" placeholder="user@example.com" v-model="email" required>
+  <section class="section">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+            <div class="login-brand">
+              <img :src="'/assets/img/logo.png'" alt="logo" width="100" class="shadow-light rounded-circle">
+            </div>
+
+            <div class="card card-primary">
+              <div class="card-header">
+                  <h4>Lupa Password</h4>
+                </div>
+
+              <div class="card-body">
+                <p class="text-muted">We will send a link to reset your password</p>
+                <form autocomplete="off" @submit.prevent="requestResetPassword" method="POST">
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" class="form-control" name="email" tabindex="1"  v-model="email" required autofocus>
+                  </div>
+
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                     Send Password Reset Link
+                    </button> <br>
+                    <router-link :to="{ name: 'login' }">
+                        <i class="fas fa-arrow-left"></i> Kembali
+                    </router-link>
+                  </div>
+                </form>
               </div>
-              <button type="submit" class="btn btn-primary">Send Password Reset Link</button>
-            </form>
+            </div>
+            <div class="simple-footer">
+             Copyright &copy; {{ new Date().getFullYear() }} Laundry. Made with 💙 by 
+              <a href="https://instagram.com">alibelucky</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
 </template>
 
 <script>
@@ -38,11 +60,10 @@
                         'link reset password berhasil dikirim ke ' + this.email,
                         'success'
                       );
-                  } if (this.response = result.status) {
+                  } if (this.response = result.error) {
                     this.$swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Email ' + this.email + ' tidak ditemukan',
                         });
                   }
                 }, error => {

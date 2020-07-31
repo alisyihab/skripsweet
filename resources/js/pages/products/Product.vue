@@ -1,5 +1,4 @@
 <template>
-    <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <h4>Data Product</h4>
@@ -49,7 +48,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <p v-if="products.data" style="padding-left: 20px;">
+                        <p v-if="products.data">
                             <i class="fa fa-bars"></i>
                             {{ products.data.length }} item dari {{ products.meta.total }}
                             total data
@@ -69,7 +68,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </template>
 

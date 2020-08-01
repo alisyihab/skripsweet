@@ -111,7 +111,6 @@
                     if (this.isAuth) {
                         this.CLEAR_ERRORS();
                         this.$router.push({name: 'home'})
-                        // location.reload();
                     }
                 })
             }

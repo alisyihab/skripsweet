@@ -1,12 +1,12 @@
 <template>
     <div id="app">
         <div class="main-wrapper">
-            <app-header v-if="isAuth" />
-            <div class="main-sidebar" v-if="isAuth">
+            <app-header v-show="isAuth == true" />
+            <div class="main-sidebar" v-show="isAuth == true">
                 <app-menu />
             </div>
             <router-view></router-view>
-            <app-footer v-if="isAuth" />
+            <app-footer v-show="isAuth == true" />
         </div>
     </div>
 </template>

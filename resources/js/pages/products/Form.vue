@@ -1,22 +1,33 @@
 <template>
     <div>
-        <div class="form-group" :class="{ 'has-error': errors.name }">
+        <div class="form-group">
             <label>Nama Item</label>
-            <input type="text" class="form-control" v-model="product.name" placeholder="Kemeja">
-            <p class="text-danger" v-if="errors.name">{{ errors.name[0] }}</p>
+            <input type="text" 
+                class="form-control"
+                :class="{ 'is-invalid': errors.name }" 
+                v-model="product.name" 
+                placeholder="Kemeja"
+            >
+            <div class="invalid-feedback" v-if="errors.name">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.name[0] }} 
+            </div>
         </div>
-        <div class="form-group" :class="{ 'has-error': errors.unit_type }">
+        <div class="form-group">
             <label>Tipe</label>
-            <select v-model="product.unit_type" class="form-control">
+            <select v-model="product.unit_type" class="form-control" :class="{ 'is-invalid': errors.unit_type }">
                 <option value="">Pilih</option>
                 <option value="Kilogram">Kilogram</option>
                 <option value="Potong">Potong</option>
             </select>
-            <p class="text-danger" v-if="errors.unit_type">{{ errors.unit_type[0] }}</p>
+            <div class="invalid-feedback" v-if="errors.unit_type">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.unit_type[0] }} 
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <div class="form-group" :class="{ 'has-error': errors.laundry_type }">
+                <div class="form-group">
                     <label>
                         Jenis Jasa
                         <sup>
@@ -28,58 +39,83 @@
                             </a>
                         </sup>
                     </label>
-                    <select v-model="product.laundry_type" class="form-control">
+                    <select v-model="product.laundry_type" class="form-control" :class="{ 'is-invalid': errors.laundry_type }">
                         <option value="">Pilih</option>
                         <option v-for="(row, index) in laundry_types" :key="index" :value="row.id">{{ row.name }}</option>
                     </select>
-                    <p class="text-danger" v-if="errors.laundry_type">{{ errors.laundry_type[0] }}</p>
+                    <div class="invalid-feedback" v-if="errors.laundry_type">
+                        <i class="fa fa-exclamation-circle fa-fw"></i> 
+                        {{ errors.laundry_type[0] }} 
+                    </div>
                 </div>
             </div>
 
             <div class="col-md-6" v-if="showForm">
-                <div class="form-group" :class="{ 'has-error': errors.name_laundry_type }">
-                    <label for="">&nbsp;</label>
-                    <div class="input-group">
-                        <button class="btn btn-warning btn-sm" @click="cancleAdd">
-                            <i class="fa fa-window-close"></i>
-                        </button>
-                        <input type="text" placeholder="Cuci Kering + Setrika" v-model="laundry_type" class="form-control">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <div class="input-group input-group">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-warning" @click="cancleAdd">Batal</button>
+                        </div>
+                        <input 
+                            type="text" 
+                            placeholder="Cuci Kering + Setrika" 
+                            v-model="laundry_type" 
+                            class="form-control"
+                            :class="{ 'is-invalid': errors.name_laundry_type }"
+                        >
                         <div class="input-group-append">
                             <button class="btn btn-primary btn-sm" @click="addNewLaundryType">
                                 Simpan
                             </button>
                         </div>
                     </div>
-                    <p class="text-danger" v-if="errors.name_laundry_type">{{ errors.name_laundry_type[0] }}</p>
+                    <div class="invalid-feedback" v-if="errors.name_laundry_type">
+                        <i class="fa fa-exclamation-circle fa-fw"></i> 
+                        {{ errors.name_laundry_type[0] }} 
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="form-group" :class="{ 'has-error': errors.price }">
+        <div class="form-group">
             <label>Harga</label>
-            <money class="form-control"
-                   type="tel"
-                   v-model.lazy="product.price"
-                   v-bind="money" />
+            <money 
+                class="form-control"
+                :class="{ 'is-invalid': errors.price }"
+                type="tel"
+                v-model.lazy="product.price"
+                v-bind="money" 
+            />
+            <div class="invalid-feedback" v-if="errors.price">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.price[0] }} 
+            </div>
             <p class="text-danger" v-if="errors.price">{{ errors.price[0] }}</p>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <div class="form-group" :class="{'has-error': errors.service}">
+                <div class="form-group">
                     <label>Lama Pengerjaan</label>
-                    <input type="number" class="form-control" v-model="product.service">
-                    <p class="text-danger" v-if="errors.service">{{ errors.service[0] }}</p>
+                    <input type="number" class="form-control" :class="{'is-invalid': errors.service}" v-model="product.service">
+                    <div class="invalid-feedback" v-if="errors.service">
+                        <i class="fa fa-exclamation-circle fa-fw"></i> 
+                        {{ errors.service[0] }} 
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="form-group" :class="{'has-error': errors.service_type}">
+                <div class="form-group">
                     <label>Satuan</label>
-                    <select class="form-control" v-model="product.service_type">
+                    <select class="form-control" :class="{'is-invalid': errors.service_type}" v-model="product.service_type">
                         <option value="">Pilih</option>
                         <option value="Hari">Hari</option>
                         <option value="Jam">Jam</option>
                     </select>
-                    <p class="text-danger" v-if="errors.service_type">{{ errors.service_type[0] }}</p>
+                    <div class="invalid-feedback" v-if="errors.service_type">
+                        <i class="fa fa-exclamation-circle fa-fw"></i> 
+                        {{ errors.service_type[0] }} 
+                    </div>
                 </div>
             </div>
         </div>

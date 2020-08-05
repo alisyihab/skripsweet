@@ -1,19 +1,17 @@
 <template>
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h4>Tambah Pengguna</h4>
-            </div>
-            <div class="card-body">
-                <person-form ref="formCourier"></person-form>
-                <div class="form-group">
-                    <router-link :to="{name: 'persons.data'}" class="btn btn-outline-secondary">
-                        <i class="fa fa-arrow-circle-left"></i> Kembali
-                    </router-link>
-                    <button class="btn btn-outline-primary" @click.prevent="submit">
-                        <i class="fa fa-save"></i> Tambah Data
-                    </button>
-                </div>
+    <div class="card">
+        <div class="card-header">
+            <h6>Tambah Pengguna</h6>
+        </div>
+        <div class="card-body">
+            <person-form ref="formCourier"></person-form>
+            <div class="form-group">
+                <router-link :to="{name: 'persons.data'}" class="btn btn-outline-secondary">
+                    <i class="fa fa-arrow-circle-left"></i> Kembali
+                </router-link>
+                <button class="btn btn-outline-primary" @click.prevent="submit">
+                    <i class="fa fa-save"></i> Tambah Data
+                </button>
             </div>
         </div>
     </div>

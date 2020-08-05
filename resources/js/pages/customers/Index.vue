@@ -1,42 +1,61 @@
 <template>
-    <div class="main-content">
-        <section class="section">
-            <div class="section-header">
-                <div class="section-header-back">
-                    <router-link :to="{ name: 'customers.data' }" class="btn btn-icon" v-show="$route.name !== 'customers.data' ">
-                        <i class="fas fa-arrow-left"></i>
+<div class="app-main">
+    <main v-show="$can('read customer')">
+      <div class="wrapper">
+        <div class="page">
+          <div class="page-inner">
+            <header class="page-title-bar">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item active">
+                    <router-link :to="{ name: 'customers.data' }" v-show="$route.name !== 'customers.data' ">
+                      <i class="breadcrumb-icon fa fa-angle-left mr-2"></i> Kembali ke data pelanggan
                     </router-link>
+                  </li>
+                </ol>
+              </nav>
+              <div class="d-md-flex align-items-md-start">
+                <h1 class="page-title mr-sm-auto"> {{ $route.meta.title }} </h1>
+                <div class="btn-toolbar">
+                  <router-link
+                      :to="{ name: 'customers.add' }"
+                      v-show="$route.name == 'customers.data'"
+                      class="btn btn-light"
+                  >
+                    <i class="oi oi-plus"></i>
+                    <span class="ml-1">Tambah Data</span>
+                  </router-link>
                 </div>
-                <h1>{{ $route.meta.title }}</h1>
-                <div class="section-header-button">
-                    <router-link :to="{ name: 'customers.add' }" class="btn btn-primary" v-show="$route.name !== 'customers.add' ">
-                        Tambah Data
-                    </router-link>
-                </div>
-                <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item">
-                        <router-link :to="{ name: 'home' }"><i class="fa fa-dashboard"></i> Home</router-link>
-                    </div>
-                    <div class="breadcrumb-item active">{{ $route.meta.title }}</div>
-                </div>
+              </div>
+            </header>
+            <div class="page-section">
+              <router-view></router-view>
             </div>
-        </section>
-
-        <section class="section-body">
-            <router-view></router-view>
-        </section>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div v-show="!$can('read customer')">
+      <page404/>
     </div>
+  </div>
 </template>
+
 <script>
-    export default {
-        name: 'IndexOutlet',
-        watch: {
-            $route: {
-                immediate: true,
-                handler(to, from) {
-                    document.title = to.meta.title;
-                }
-            }
-        },
+ import Page404 from '../Page404';
+
+export default {
+  name: 'IndexExpenses',
+  components: {
+    'page404': Page404
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      handler(to, from) {
+        document.title = to.meta.title;
+      }
     }
+  },
+}
 </script>

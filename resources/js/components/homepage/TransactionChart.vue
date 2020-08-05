@@ -1,53 +1,47 @@
 <template>
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h4>Data Transaksi</h4>
-                <div class="card-header-action">
-                    <a data-collapse="#mycard-collapse1" class="btn btn-icon btn-info" href="#">
-                        <i class="fas fa-minus"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="collapse show" id="mycard-collapse1">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="">Bulan</label>
-                                <select v-model="month" class="form-control">
-                                    <option value="01">Januari</option>
-                                    <option value="02">Februari</option>
-                                    <option value="03">Maret</option>
-                                    <option value="04">April</option>
-                                    <option value="05">Mei</option>
-                                    <option value="06">Juni</option>
-                                    <option value="07">Juli</option>
-                                    <option value="08">Agustus</option>
-                                    <option value="09">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="">Tahun</label>
-                                <select v-model="year" class="form-control">
-                                    <option v-for="(y, i) in years" :key="i" :value="y">{{ y }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-primary" @click="exportData">Export</button>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h6>Data Transaksi</h6>
+        </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="">Bulan</label>
+                            <select v-model="month" class="form-control">
+                                <option value="01">Januari</option>
+                                <option value="02">Februari</option>
+                                <option value="03">Maret</option>
+                                <option value="04">April</option>
+                                <option value="05">Mei</option>
+                                <option value="06">Juni</option>
+                                <option value="07">Juli</option>
+                                <option value="08">Agustus</option>
+                                <option value="09">September</option>
+                                <option value="10">Oktober</option>
+                                <option value="11">November</option>
+                                <option value="12">Desember</option>
+                            </select>
                         </div>
                     </div>
-                    <line-chart 
-                        v-if="transactions.length > 0" :data="transaction_data"
-                        :options="chartOptions" :labels="labels"
-                    />
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="">Tahun</label>
+                            <select v-model="year" class="form-control">
+                                <option v-for="(y, i) in years" :key="i" :value="y">{{ y }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mt-4">
+                        <button class="btn btn-primary" @click="exportData">Export</button>
+                    </div>
                 </div>
+                <line-chart
+                    class="mt-4"
+                    v-if="transactions.length > 0" :data="transaction_data"
+                    :options="chartOptions" :labels="labels"
+                />
             </div>
         </div>
     </div>

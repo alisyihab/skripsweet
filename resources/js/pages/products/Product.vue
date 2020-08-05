@@ -1,15 +1,15 @@
 <template>
         <div class="card">
             <div class="card-header">
-                <h4>Data Product</h4>
-                <div class="card-header-action">
+                <h6>Data Product</h6>
+                <div class="float-right" style="width:40%">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" v-model="search">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-search"></i>
-                            </button>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <span class="oi oi-magnifying-glass"></span>
+                            </span>
                         </div>
+                        <input type="text" class="form-control" placeholder="Cari..." v-model="search">
                     </div>
                 </div>
             </div>
@@ -25,20 +25,20 @@
                         {{ row.item.price | currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) }}
                     </template>
                     <template v-slot:cell(actions)="row">
-                        <a href="#" data-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-ellipsis-h"></i>
-                        </a>
-                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
-                            <div class="dropdown-title">Aksi</div>
-                            <router-link
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-arrow"></div>
+                                <router-link
                                 :to="{ name: 'products.edit', params: {id: row.item.id} }"
                                 class="dropdown-item has-icon">
-                                <i class="fas fa-pen" style="color:#6777ef"></i>Edit Data
-                            </router-link>
-                            <button
-                                class="dropdown-item has-icon" @click="deleteProduct(row.item.id)">
-                                <i class="fa fa-trash-alt" style="color:red"></i>Hapus Data
-                            </button>
+                                Edit Data
+                                </router-link>
+                                <button
+                                    class="dropdown-item has-icon" @click="deleteProduct(row.item.id)">
+                                    Hapus Data
+                                </button>
+                            </div>
                         </div>
                     </template>
                     <template v-slot:cell(service)="row">

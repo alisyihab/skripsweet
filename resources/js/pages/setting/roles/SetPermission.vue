@@ -3,7 +3,7 @@
             <div class="col-md-5">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Assign Role to User</h4>
+                        <h6>Assign Role to User</h6>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -22,7 +22,10 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-primary" @click="setRole">Set Role</button>
+                            <button class="btn btn-primary" @click="setRole" :disabled="loading">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loading"></span>    
+                                Set Role
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -30,7 +33,7 @@
             <div class="col-md-7">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Set Permission</h4>
+                        <h6>Set Permission</h6>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
@@ -42,34 +45,33 @@
                             <p class="text-danger" v-if="errors.role_id">{{ errors.role_id[0] }}</p>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-primary btn-sm" @click="checkPermission">{{ loading ? 'Loading...':'Check' }}</button>
+                            <button class="btn btn-primary" @click="checkPermission" :disabled="loading">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loading"></span>    
+                                Cek
+                            </button>
                         </div>
                         <div class="form-group">
-                            <div class="nav-tabs-custom">
-                                <ul class="nav nav-tabs">
-                                    <li class="active">
-                                        <a href="#tab_1" data-toggle="tab">Permissions</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="tab_1">
-                                        <template v-for="(row, index) in permissions">
-                                            <input type="checkbox"
-                                                class="minimal-red"
-                                                :key="index"
-                                                :value="row.name"
-                                                :checked="role_permission.findIndex(x => x.name == row.name) !== -1"
-                                                @click="addPermission(row.name)"
-                                                > {{ row.name }} <br :key="'row' + index">
-                                            <br :key="'enter' + index" v-if="(index+1) %4 === 0">
-                                        </template>
-                                    </div>
-                                </div>
+                            <div class="list-group list-group-flush list-group-bordered">
+                                <div class="list-group-header"> Set Hak Akses </div>
+                                <template>
+                                    <label v-for="(row, index) in permissions" :key="index" 
+                                        class="list-group-item custom-control custom-checkbox mb-0">
+                                        <input 
+                                            type="checkbox" 
+                                            class="custom-control-input"
+                                            :key="index"
+                                            :value="row.name"
+                                            :checked="role_permission.findIndex(x => x.name == row.name) !== -1"
+                                            @click="addPermission(row.name)"
+                                        > 
+                                        <span class="custom-control-label">{{ row.name }}</span>
+                                    </label>
+                                </template>
                             </div>
                         </div>
-                        <div class="pull-right">
+                        <div class="float-right">
                             <button class="btn btn-primary" @click="setPermission">
-                                <i class="fa fa-send"></i> Set Permission
+                                <i class="fas fa-paper-plane"></i> Set Permission
                             </button>
                         </div>
                     </div>
@@ -118,6 +120,7 @@
             ]),
             ...mapMutations('user', ['CLEAR_ROLE_PERMISSION']),
             setRole() {
+                this.loading = true;
                 this.setRoleUser(this.role_user).then(() => {
                     this.role_user = {
                         role: '',
@@ -128,6 +131,9 @@
                         'Hak role telah diberikan.',
                         'success'
                     );
+                    setTimeout(() => {
+                        this.loading = false;
+                    })
                 })
             },
             addPermission(name) {

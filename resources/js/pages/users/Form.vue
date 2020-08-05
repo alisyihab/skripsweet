@@ -1,27 +1,27 @@
 <template>
     <div>
-        <div class="form-group" :class="{ 'has-error': errors.name }">
+        <div class="form-group" :class="{ 'is-invalid': errors.name }">
             <label>Nama Lengkap</label>
-            <input type="text" class="form-control" v-model="persons.name">
+            <input type="text" placeholder="Nama" class="form-control" v-model="persons.name">
             <p class="text-danger" v-if="errors.name">{{ errors.name[0] }}</p>
         </div>
-        <div class="form-group" :class="{ 'has-error': errors.email }">
+        <div class="form-group" :class="{ 'is-invalid': errors.email }">
             <label>Email</label>
-            <input type="email" class="form-control" v-model="persons.email">
+            <input type="email" placeholder="Email" class="form-control" v-model="persons.email">
             <p class="text-danger" v-if="errors.email">{{ errors.email[0] }}</p>
         </div>
-        <div class="form-group" :class="{ 'has-error': errors.password }">
+        <div class="form-group" :class="{ 'is-invalid': errors.password }">
             <label>Passowrd</label>
-            <input type="password" class="form-control" v-model="persons.password">
+            <input type="password" placeholder="Password" class="form-control" v-model="persons.password">
             <p class="text-danger" v-if="errors.password">{{ errors.password[0] }}</p>
             <p class="text-warning" v-show="$route.name != 'persons.add'">
                 Biarkan kosong bila tidak ingin mengganti passsword
             </p>
         </div>
-        <div class="form-group" :class="{ 'has-error': errors.role }">
+        <div class="form-group" :class="{ 'is-invalid': errors.role }">
             <label>Role</label>
-            <select class="form-control" v-model="persons.role">
-                <option value="">Pilih</option>
+            <select v-model="persons.role" class="custom-select">
+                <option disabled value="">Pilih</option>
                 <option value="0">Super Admin</option>
                 <option value="1">Admin</option>
             </select>

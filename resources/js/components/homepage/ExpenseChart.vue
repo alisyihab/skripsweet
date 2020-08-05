@@ -1,34 +1,27 @@
 <template>
-        <div class="col-lg-8 col-md-12 col-12 col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Data Pengeluaran</h4>
-                    <div class="card-header-action">
-                        <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#">
-                            <i class="fas fa-minus"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="collapse show" id="mycard-collapse" style="">
-                    <div class="card-body">
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="">Tahun</label>
-                                <select v-model="year" class="form-control">
-                                    <option v-for="(y, i) in years" :key="i" :value="y">{{ y }}</option>
-                                </select>
-                            </div>
+    <div class="col-lg-8 col-md-12 col-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h6>Data Pengeluaran</h6>
+            </div>
+                <div class="card-body">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="">Tahun</label>
+                            <select v-model="year" class="form-control">
+                                <option v-for="(y, i) in years" :key="i" :value="y">{{ y }}</option>
+                            </select>
                         </div>
-                        <div class="mb-3"></div>
-                        <bar-chart
-                            :data="expanse_data"
-                            :options="options"
-                            :labels="label"
-                        />
                     </div>
-                </div>
+                <div class="mb-3"></div>
+                <bar-chart
+                    :data="expanse_data"
+                    :options="options"
+                    :labels="label"
+                />
             </div>
         </div>
+    </div>
 </template>
 
 <script>

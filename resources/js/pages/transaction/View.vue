@@ -43,48 +43,41 @@
                             <input type="checkbox" v-model="customer_change" id="customer_change">
                             <label for="customer_change"> Kembalian Jadi Deposit?</label>
                         </div>
-                        <button class="btn btn-primary" :disabled="loading" @click="makePayment">Bayar</button>
+                        <button class="btn btn-primary" :disabled="loading" @click="makePayment">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loading"></span>
+                            Bayar
+                        </button>
                     </div>
                     <div class="col-md-6" v-if="transaction.customer">
-                        <h4>Customer Info</h4>
+                        <h6>Customer Info</h6>
                         <hr>
-                        <div class="profile-widget pt-4">
-                        <div class="profile-widget-header">
-                            <img alt="image" 
-                                :src="'/storage/users/' + transaction.customer.photo"
-                                class="rounded-circle profile-widget-picture"
-                            />
-                            <div class="profile-widget-items">
-                                <div class="profile-widget-item">
-                                    <div class="profile-widget-item-label">Deposit</div>
-                                    <div class="profile-widget-item-value">
-                                        {{ transaction.customer.deposit | 
-                                            currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) 
-                                        }}
+                        <div class="card card-fluid">
+                            <div class="card-body text-center">
+                                <span class="user-avatar user-avatar-xl my-3">
+                                    <img :src="'/storage/users/' + transaction.customer.photo" alt="">
+                                </span>
+                                <h3 class="card-title text-truncate">
+                                <span>{{ transaction.customer.name }}</span>
+                                </h3>
+                                <h6 class="card-subtitle text-muted mb-3">  <b>No Telpone:</b> {{ transaction.customer.phone }} </h6>
+                                <p>
+                                    <b>Alamat Rumah : </b> <span v-html="transaction.customer.address"></span> 
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="card-footer-item card-footer-item-bordered">
+                                    <div class="metric">
+                                        <h6 class="metric-value"> Deposit </h6>
+                                        <p class="metric-label"> 
+                                            {{ transaction.customer.deposit | currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) }} 
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="profile-widget-description pb-0">
-                            <div class="profile-widget-name">
-                                    {{ transaction.customer.name }}
-                                <div class="text-muted d-inline font-weight-normal">
-                                <div class="slash"></div>
-                                    {{ transaction.customer.nik }}
-                                </div>
-                            </div>
-                            <hr>
-                            <p>
-                                <b>Alamat Rumah : </b> <span v-html="transaction.customer.address"></span> 
-                            </p>
-                            <p>
-                                <b>No Telpone:</b> {{ transaction.customer.phone }}
-                            </p>
-                        </div>
-                    </div>
                     </div>
                     <div class="col-md-6" v-if="transaction.payment" id="printMe">
-                        <h4>Riwayat Pembayaran</h4>
+                        <h6>Riwayat Pembayaran</h6>
                         <hr>
                         <div class="table-responsive">
                         <table class="table">
@@ -155,7 +148,7 @@
                     </div>
 
                     <div class="col-md-12" style="padding-top: 20px">
-                        <h4>Detail Transaction</h4>
+                        <h5>Detail Laundry</h5>
                         <hr>
                         <div class="table-responsive">
                             <table class="table table-hover table-bordered">
@@ -200,24 +193,21 @@
                                            </p>
                                         </td>
                                         <td v-if="$can('create transaction')">
-                                            <a href="#" data-toggle="dropdown" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-h"></i>
-                                            </a>
-                                            <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                <div class="dropdown-title">Aksi</div>
+                                            <div class="dropdown">
+                                                <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></button>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                    <div class="dropdown-arrow"></div>
                                                     <button
-                                                      class="dropdown-item has-icon"
+                                                      class="dropdown-item"
                                                       v-show="$can('create transaction')"
                                                       v-if="transaction.status == 2  && row.status == 0"
-                                                      @click="isDone(row.id)"
-                                                    >
-                                                        <i class="fas fa-paper-plane"  style="color: #6777ef"></i> 
+                                                      @click="isDone(row.id)">
                                                         Selesaikan Transaksi
                                                     </button>
-                                                    <button @click="print" class="dropdown-item has-icon">
-                                                        <i class="fa fa-print"  style="color: #6777ef"></i>
+                                                    <button @click="print" class="dropdown-item">
                                                          Print
                                                     </button>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>

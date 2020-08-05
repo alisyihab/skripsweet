@@ -2,7 +2,7 @@
     <div class="col-lg-4 col-md-12 col-12 col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h4>Transaksi Terahir</h4>
+                <h6>Transaksi Terahir</h6>
             </div>
             <div class="card-body">
                 <ul class="list-unstyled list-unstyled-border"
@@ -47,7 +47,7 @@
                     </li>
                 </ul>
                 <div class="text-center pt-1 pb-1">
-                    <router-link :to="{ name: 'transactions.list' }" class="btn btn-primary btn-lg btn-round">
+                    <router-link :to="{ name: 'transactions.list' }" class="btn btn-primary">
                         Lihat Semua
                     </router-link>
                 </div>

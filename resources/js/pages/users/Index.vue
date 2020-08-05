@@ -1,34 +1,42 @@
 <template>
-<div>
-    <div class="main-content" v-if="$can('read users')">
-        <section class="section">
-            <div class="section-header">
-                <div class="section-header-back">
-                    <router-link :to="{ name: 'persons.data' }" class="btn btn-icon" v-show="$route.name !== 'persons.data' ">
-                        <i class="fas fa-arrow-left"></i>
+<div class="app-main" >
+    <main v-if="$can('read users')">
+        <div class="wrapper">
+        <div class="page">
+          <div class="page-inner">
+            <header class="page-title-bar">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item active">
+                    <router-link :to="{ name: 'persons.data' }" v-show="$route.name !== 'persons.data' ">
+                      <i class="breadcrumb-icon fa fa-angle-left mr-2"></i> Kembali ke data user
                     </router-link>
+                  </li>
+                </ol>
+              </nav>
+              <div class="d-md-flex align-items-md-start">
+                <h1 class="page-title mr-sm-auto"> {{ $route.meta.title }} </h1>
+                <div class="btn-toolbar">
+                  <router-link
+                      :to="{ name: 'persons.add' }"
+                      v-show="$route.name == 'persons.data'"
+                      class="btn btn-light"
+                  >
+                    <i class="oi oi-plus"></i>
+                    <span class="ml-1">Tambah Data</span>
+                  </router-link>
                 </div>
-                <h1>{{ $route.meta.title }}</h1>
-                <div class="section-header-button">
-                    <router-link :to="{ name: 'persons.add' }" class="btn btn-primary" v-show="$route.name !== 'persons.add' ">
-                        Tambah Data
-                    </router-link>
-                </div>
-                <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item">
-                        <router-link :to="{ name: 'home' }"><i class="fa fa-dashboard"></i> Home</router-link>
-                    </div>
-                    <div class="breadcrumb-item active">{{ $route.meta.title }}</div>
-                </div>
+              </div>
+            </header>
+            <div class="page-section">
+              <router-view></router-view>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+    </main>
 
-        <section class="section-body">
-            <router-view></router-view>
-        </section>
-    </div>
-
-    <div class="main-content" v-if="!$can('read users')">
+    <div v-if="!$can('read users')">
         <page404 />
     </div>
 </div>

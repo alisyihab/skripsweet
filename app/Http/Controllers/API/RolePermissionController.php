@@ -42,6 +42,7 @@ class RolePermissionController extends Controller
 
         $role = Role::find($request->role_id);
         $role->syncPermissions($request->permissions);
+        
         return response()->json(['status' => 'success']);
     }
 

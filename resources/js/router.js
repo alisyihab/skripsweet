@@ -176,7 +176,7 @@ const router = new Router({
                 },
                 {
                     path: 'income',
-                    name: 'income',
+                    name: 'expenses.income',
                     component: Income,
                     meta: { title: 'Pendapatan Bersih' }
                 },
@@ -256,13 +256,13 @@ const router = new Router({
                     meta: { title: 'Daftar Pengguna' }
                 },
                 {
-                    path: '/add',
+                    path: 'add',
                     name: 'persons.add',
                     component: AddPerson,
                     meta: { title: 'Tambah Pengguna' }
                 },
                 {
-                    path: '/edit/:id',
+                    path: 'edit/:id',
                     name: 'persons.edit',
                     component: EditPerson,
                     meta: { title: 'Ubah Pengguna' }
@@ -278,7 +278,7 @@ const router = new Router({
                     path: '',
                     name: 'notifications.data',
                     component: DataNotification,
-                    meta: { title: 'Daftar Notification' }
+                    meta: { title: 'Pemberitahuan' }
                 }
             ]
         },

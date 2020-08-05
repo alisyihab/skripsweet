@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group" :class="{ 'has-error': errors.customer_id }">
-            <label>Customer <sup><a href="javascript:void(0)" @click="newCustomer">New Customer</a></sup></label>
+            <label>Customer</label>
                 <v-select :options="customers.data"
                     v-model="transactions.customer_id"
                     @search="onSearch"
@@ -48,8 +48,8 @@
         <div class="col-md-6" v-if="isForm">
             <h4>Add New Customer</h4>
             <form-customer />
-            <button class="btn btn-primary btn-sm" @click="addCustomer">Simpan</button>
-            <button class="btn btn-primary btn-sm" @click="cancleAddCs">Batal</button>
+            <button class="btn btn-primary" @click="addCustomer">Simpan</button>
+            <button class="btn btn-warning" @click="cancleAddCs">Batal</button>
         </div>
         <div class="col-md-12">
             <hr>

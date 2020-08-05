@@ -1,145 +1,145 @@
 <template>
-        <div class="card">
-            <div class="card-header">
-                <h4>Data Pelanggan</h4>
-                <div class="card-header-action">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" v-model="search">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+  <div class="card">
+    <div class="card-header">
+      <h6>Data Pelanggan</h6>
+        <div class="float-right" style="width:40%">
+            <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <span class="oi oi-magnifying-glass"></span>
+                </span>
             </div>
-            <div class="card-body p-0">
-                <b-table striped hover bordered responsive :items="customers.data" :fields="fields" show-empty>
-                    <template v-slot:cell(photo)="row">
-                        <img :src="'/storage/users/' + row.item.photo" :width="80" :alt="row.item.name">
-                    </template>
-                    <template v-slot:cell(deposit)="row">
-                        {{ row.item.deposit | currency('IDR', '2', { spaceBetweenAmountAndSymbol: true }) }}
-                    </template>
-                    <template v-slot:cell(address)="row">
-                        <span v-html="row.item.address"></span>
-                    </template>
-                    <template v-slot:cell(actions)="row">
-                        <a href="#" data-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-ellipsis-h"></i>
-                        </a>
-                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
-                            <div class="dropdown-title">Aksi</div>
-                            <router-link
-                                :to="{ name: 'customers.edit', params: {id: row.item.id} }"
-                                class="dropdown-item has-icon">
-                                <i class="fas fa-pen"></i>Edit Data
-                            </router-link>
-                            <button
-                                class="dropdown-item has-icon"
-                                @click="deleteCustomer(row.item.id)">
-                                <i class="fa fa-trash-alt text-danger"></i>Hapus Data
-                            </button>
-                        </div>
-                    </template>
-                </b-table>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <p v-if="customers.data" style="padding-left: 20px;">
-                            <i class="fa fa-bars"></i>
-                            {{ customers.data.length }} item dari {{ customers.meta.total }}
-                            total data
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="pull-right">
-                            <b-pagination
-                                    v-model="page"
-                                    :total-rows="customers.meta.total"
-                                    :per-page="customers.meta.per_page"
-                                    aria-controls="couriers"
-                                    v-if="customers.data && customers.data.length > 0"
-                                    align="right">
-                            </b-pagination>
-                        </div>
-                    </div>
-                </div>
+            <input type="text" class="form-control" placeholder="Cari..." v-model="search">
             </div>
+        </div>
     </div>
+    <div class="card-body p-0">
+      <b-table striped hover bordered responsive :items="customers.data" :fields="fields" show-empty>
+        <template v-slot:cell(photo)="row">
+          <img :src="'/storage/users/' + row.item.photo" :width="80" :alt="row.item.name">
+        </template>
+        <template v-slot:cell(deposit)="row">
+          {{ row.item.deposit | currency('IDR', '2', {spaceBetweenAmountAndSymbol: true}) }}
+        </template>
+        <template v-slot:cell(address)="row">
+          <span v-html="row.item.address"></span>
+        </template>
+        <template v-slot:cell(actions)="row">
+          <div class="dropdown">
+            <button type="button" class="btn btn-icon btn-light" data-toggle="dropdown" aria-expanded="false"><i
+                class="fa fa-ellipsis-v"></i></button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <div class="dropdown-arrow"></div>
+              <router-link
+                  :to="{ name: 'customers.edit', params: {id: row.item.id} }"
+                  class="dropdown-item has-icon">
+                Edit Data
+              </router-link>
+              <button
+                  class="dropdown-item has-icon"
+                  @click="deleteCustomer(row.item.id)">
+                Hapus Data
+              </button>
+            </div>
+          </div>
+        </template>
+      </b-table>
+
+      <div class="row">
+        <div class="col-md-6">
+          <p v-if="customers.data" style="padding-left: 20px;">
+            <i class="fa fa-bars"></i>
+            {{ customers.data.length }} item dari {{ customers.meta.total }}
+            total data
+          </p>
+        </div>
+        <div class="col-md-6">
+          <div class="pull-right">
+            <b-pagination
+                v-model="page"
+                :total-rows="customers.meta.total"
+                :per-page="customers.meta.per_page"
+                aria-controls="couriers"
+                v-if="customers.data && customers.data.length > 0"
+                align="right">
+            </b-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-    import {mapActions, mapState} from 'vuex'
-    import Vue2Filters from 'vue2-filters'
+import {mapActions, mapState} from 'vuex'
+import Vue2Filters from 'vue2-filters'
 
-    export default {
-        name: 'DataCustomer',
-        created() {
-            this.getCustomers()
-        },
-        data() {
-            return {
-                fields: [
-                    {key: 'photo', label: '#'},
-                    {key: 'nik', label: 'NIK'},
-                    {key: 'name', label: 'Nama Lengkap'},
-                    {key: 'email', label: 'Email'},
-                    {key: 'address', label: 'Alamat'},
-                    {key: 'phone', label: 'No Hp'},
-                    {key: 'point', label: 'Poin'},
-                    {key: 'deposit', label: 'Deposit'},
-                    {key: 'actions', label: 'Aksi'}
-                ],
-                search: ''
-            }
-        },
-        computed: {
-            ...mapState('customer', {
-                customers: state => state.customers
-            }),
-            page: {
-                get() {
-                    return this.$store.state.customer.page
-                },
-                set(val) {
-                    this.$store.commit('customer/SET_PAGE', val)
-                }
-            }
-        },
-        watch: {
-            page() {
-                this.getCustomers()
-            },
-            search() {
-                this.getCustomers(this.search)
-            }
-        },
-        methods: {
-            ...mapActions('customer', ['getCustomers', 'removeCustomer']),
-            deleteCustomer(id) {
-                this.$swal({
-                    title: 'Kamu Yakin?',
-                    text: "Tindakan ini akan menghapus secara permanent!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Iya, Lanjutkan!'
-                }).then((result) => {
-                    if (result.value) {
-                        this.$swal.fire(
-                            'Success!',
-                            'Data Berhasil Dihapus!',
-                            'success'
-                        );
-                        this.removeCustomer(id);
-                    }
-                })
-            }
-        },
-        components: {
-            mixins: [Vue2Filters.mixin]
-        }
+export default {
+  name: 'DataCustomer',
+  created() {
+    this.getCustomers()
+  },
+  data() {
+    return {
+      fields: [
+        {key: 'photo', label: '#'},
+        {key: 'nik', label: 'NIK'},
+        {key: 'name', label: 'Nama Lengkap'},
+        {key: 'email', label: 'Email'},
+        {key: 'address', label: 'Alamat'},
+        {key: 'phone', label: 'No Hp'},
+        {key: 'deposit', label: 'Deposit'},
+        {key: 'actions', label: 'Aksi'}
+      ],
+      search: ''
     }
+  },
+  computed: {
+    ...mapState('customer', {
+      customers: state => state.customers
+    }),
+    page: {
+      get() {
+        return this.$store.state.customer.page
+      },
+      set(val) {
+        this.$store.commit('customer/SET_PAGE', val)
+      }
+    }
+  },
+  watch: {
+    page() {
+      this.getCustomers()
+    },
+    search() {
+      this.getCustomers(this.search)
+    }
+  },
+  methods: {
+    ...mapActions('customer', ['getCustomers', 'removeCustomer']),
+    deleteCustomer(id) {
+      this.$swal({
+        title: 'Kamu Yakin?',
+        text: "Tindakan ini akan menghapus secara permanent!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Iya, Lanjutkan!'
+      }).then((result) => {
+        if (result.value) {
+          this.$swal.fire(
+              'Success!',
+              'Data Berhasil Dihapus!',
+              'success'
+          );
+          this.removeCustomer(id);
+        }
+      })
+    }
+  },
+  components: {
+    mixins: [Vue2Filters.mixin]
+  }
+}
 </script>

@@ -1,24 +1,23 @@
 <template>
-    <div class="container mt-5">
-        <div class="page-error">
-            <div class="page-inner">
-                <h1>404</h1>
-                <div class="page-description">
-                    Opss page yang kamu cari tidak ditemukan.
-                </div>
-                <div class="page-search">
-                   
-                    <div class="mt-3">
-                        <router-link to="/" class="btn btn-primary">
-                            Back to Home
-                        </router-link>
-                    </div>
-                </div>
+  <div>
+    <div class="card">
+          <div class="card-header bg-light text-left">
+            <i class="fa fa-fw fa-circle text-red"></i> <i class="fa fa-fw fa-circle text-yellow"></i> <i class="fa fa-fw fa-circle text-teal"></i>
+          </div>
+          <div class="card-body">
+            <h1 class="state-header display-1 font-weight-bold">
+              <span>4</span> <i class="far fa-frown text-red"></i> <span>4</span>
+            </h1>
+            <h3> Page not found! </h3>
+            <p class="state-description lead"> Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. </p>
+            <div class="state-action">
+              <router-link to="/" class="btn btn-lg btn-light"><i class="fa fa-angle-left"></i> Go Home</router-link>
             </div>
+          </div>
         </div>
-    </div>
+  </div>
 </template>
 
 <script>
-    export default {}
+export default {}
 </script>

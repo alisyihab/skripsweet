@@ -1,7 +1,16 @@
 <template>
-    <div class="main-content">
-        <page404 />
-    </div>
+<main class="app-main">
+        <!-- .wrapper -->
+        <div class="wrapper">
+          <!-- .empty-state -->
+          <div class="empty-state">
+            <!-- .empty-state-container -->
+            <div class="empty-state-container">
+                <page404 />
+            </div><!-- /.empty-state-container -->
+          </div><!-- /.empty-state -->
+        </div><!-- /.wrapper -->
+      </main><!-- /.app-main -->
 </template>
 
 <script>

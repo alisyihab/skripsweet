@@ -1,83 +1,64 @@
 <template>
-    <div id="app">
-        <section class="section">
-            <div class="d-flex flex-wrap align-items-stretch">
-                <div class="col-lg-4 col-md-6 col-12 order-lg-1 min-vh-100 order-2 bg-white">
-                    <div class="p-4 m-3">
-                        <img :src="'/assets/img/logo.png'" alt="logo" width="100"
-                             class="shadow-light rounded-circle mb-5 mt-2">
-                        <h4 class="text-dark font-weight-normal">Welcome to <span class="font-weight-bold">Laundry</span>
-                        </h4>
-                            <div class="form-group has-feedback" :class="{'has-error': errors.email}">
-                                <label for="email">No Hp Or Email</label>
-                                <input
-                                    id="email"
-                                    v-model="data.phone"
-                                    class="form-control"
-                                    name="phone"
-                                    tabindex="1"
-                                    required
-                                    autofocus>
-                                 <p class="text-danger" v-if="errors.email">{{ errors.email[0] }}</p>
-                            </div>
-
-                            <div class="form-group has-feedback" :class="{'has-error': errors.password}">
-                                <div class="d-block">
-                                    <label for="password" class="control-label">Password</label>
-                                </div>
-                                <input
-                                    v-model="data.password"
-                                    id="password"
-                                    type="password"
-                                    class="form-control"
-                                    name="password"
-                                    tabindex="2"
-                                    required
-                                >
-                                <p class="text-danger" v-if="errors.password">{{ errors.password[0] }}</p>
-                            </div>
-                            <div class="alert alert-danger" v-if="errors.invalid">{{ errors.invalid }}</div>
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox"
-                                        name="remember"
-                                        class="custom-control-input" tabindex="3"
-                                        id="remember-me"
-                                        v-model="data.remember_me">
-                                    <label class="custom-control-label" for="remember-me">Remember Me</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group text-right">
-                                <router-link :to="{name: 'reset-password'}" class="float-left mt-3">
-                                    Lupa password?
-                                </router-link>
-                                <button type="submit" class="btn btn-primary btn-lg btn-icon icon-right"
-                                    @click.prevent="postLogin" tabindex="4">
-                                    Login
-                                </button>
-                            </div>
-
-                        <div class="text-center mt-5 text-small">
-                            Copyright &copy; {{ new Date().getFullYear() }} Laundry. Made with 💙 by 
-                            <a href="https://instagram.com">alibelucky</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8 col-12 order-lg-2 order-1 min-vh-100 position-relative overlay-gradient-bottom"
-                     :style="{'background-image': 'url(' + require('../../../public/assets/img/drawkit/drawkit-full-stack-man-colour.svg') + ')'}">
-                     <div class="absolute-bottom-left index-2">
-                        <div class="text-light p-5 pb-2">
-                        <div class="mb-5 pb-3">
-                            <h1 class="mb-2 display-4 font-weight-bold" style="color: black">Hello There!</h1>
-                            Created by <a class="text-light bb" target="_blank" href="https://intagram.com/alibelucky">alibelucky</a>
-                        </div>
-                    </div>
-                </div>
-                </div>
+    <main class="auth">
+      <header id="auth-header" class="auth-header" 
+       :style="{'background-image': 'url(' + require('../../../public/assets/img/img.png') + ')'}">
+        <h1>
+          <img :src="'/images/logo-whitebig.png'" alt="logo" width="200px">
+          <span class="sr-only">Sign In</span>
+        </h1>
+      </header>
+      <form class="auth-form" method="post">
+        
+        <div class="form-group">
+          <div class="form-label-group">
+            <input 
+                v-model="data.email"
+                type="text" 
+                class="form-control" 
+                :class="{'is-invalid': errors.email}" 
+                autocomplete="off"> 
+            <label for="inputUser">Email</label>
+          </div>
+            <div class="invalid-feedback" v-if="errors.email">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.email[0] }} 
             </div>
-        </section>
-    </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label-group">
+            <input type="password" 
+                v-model="data.password" 
+                class="form-control" :class="{'is-invalid': errors.password}" 
+                placeholder="Password"> 
+            <label for="inputPassword">Password</label>
+          </div>
+          <p class="text-danger" v-if="errors.password">{{ errors.password[0] }}</p>
+        </div>
+        
+        <div class="alert alert-danger" v-if="errors.invalid">{{ errors.invalid }}</div>
+
+        <div class="form-group text-right">
+            <router-link :to="{ name: 'reset-password' }">
+                lupa password?
+            </router-link>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block" type="submit" @click.prevent="postLogin">
+              Masuk
+          </button>
+        </div>
+      </form>
+
+      <footer class="auth-footer"> 
+          Copyright &copy; {{ new Date().getFullYear() }}. Laundry  <br>
+        <p class="text-center">
+           Made with <i class="fas fa-heart" style="color:red"></i> By
+           <a href="https://instagram.com/alibelucky" target="_blank"> alibelucky</a>
+        </p> 
+      </footer>
+    </main>
 </template>
 
 <script>
@@ -87,7 +68,7 @@
         data() {
             return {
                 data: {
-                    phone: '',
+                    email: '',
                     password: '',
                     remember_me: false
                 }

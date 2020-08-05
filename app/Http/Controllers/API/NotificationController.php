@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class NotificationController extends Controller
 {
@@ -31,15 +32,20 @@ class NotificationController extends Controller
 
     public function notificationList()
     {
-        $notification = request()->user()
-            ->notifications()
-            ->orderBy('created_at', 'desc')
-            ->paginate(5)
+        $user = request()->user();
+
+        $notifications = 
+            $user->notifications()
+            ->orderBy('created_at', 'DESC')
+            ->get()
+            ->groupBy(function($date) {
+                return Carbon::parse($date->created_at)->format('Y-m-d');
+            })
         ;
 
         return response()->json([
             'status' => 'success',
-            'result' => $notification
+            'result' => $notifications
         ]);
     }
 }

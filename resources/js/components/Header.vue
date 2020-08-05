@@ -1,107 +1,128 @@
 <template>
-    <div>
-    <div class="navbar-bg"></div>
-    <nav class="navbar navbar-expand-lg main-navbar">
-        <div class="form-inline mr-auto">
-            <ul class="navbar-nav mr-3">
-                <li>
-                    <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg">
-                        <i class="fas fa-bars"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <ul class="navbar-nav navbar-right">
-            <li class="dropdown dropdown-list-toggle">
-                
-                <a 
-                    v-if="notifications.length > 0"
-                    href="#" data-toggle="dropdown" 
-                    class="nav-link nav-link-lg message-toggle beep">
-                    <i class="far fa-bell"></i>
-                    <sup>{{ notifications.length }}</sup>
-                </a>
-                <a 
-                    v-else
-                    href="#" data-toggle="dropdown" 
-                    class="nav-link nav-link-lg message-toggle">
-                    <i class="far fa-bell"></i>
-                    <sup>{{ notifications.length }}</sup>
-                </a>
-                <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                    <div class="dropdown-header">You have {{ notifications.length }}
-                    </div>
-                    <div class="dropdown-list-content dropdown-list-message" v-if="notifications.length > 0">
-                        <span v-for="(row, index) in notifications" :key="index">
-                            <a href="javascript:void(0)" @click="readNotif(row)" class="dropdown-item dropdown-item-unread">
-                                <div class="dropdown-item-avatar" v-if="row.data.sender_photo == null">
-                                    <img alt="image" src="https://via.placeholder.com/160" class="rounded-circle">
-                                    <div class="is-online"></div>
-                                </div>
-                                <div class="dropdown-item-avatar" v-else>
-                                    <img alt="image" 
-                                        :src="'/storage/users/' + row.data.sender_photo" 
-                                        class="rounded-circle"
-                                    />
-                                    <div class="is-online"></div>
-                                </div>
-                                <div class="dropdown-item-desc">
-                                    <b>{{ row.data.sender_name }}</b>
-                                    <p v-if="row.data.expenses">
-                                        {{ row.data.expenses.description.substr(0, 30) }}
-                                    </p>
-                                    <p v-else-if="row.data.payment">
-                                        <span>
-                                            {{ row.data.note }}
-                                        </span>
-                                    </p>
-                                    <p v-else-if="row.data.transaction">
-                                        Pembayaran telah di verifikasi oleh admin.
-                                        <span v-html="row.data.transaction.status_label"></span>
-                                    </p>
-                                    <div class="time">{{ row.created_at | formatDate }}</div>
-                                </div>
-                            </a>
-                        </span>
-                    </div>
-                    <div class="dropdown-footer text-center">
-                        <router-link :to="{ name: 'notifications.data' }">
-                            Lihat Semua 
-                            <i class="fas fa-chevron-right"></i>
-                        </router-link>
-                    </div>
-                </div>
-            </li>
-
-            <li class="dropdown">
-                <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    <span v-if="authenticated.photo == null">
-                        <img alt="image" src="https://via.placeholder.com/160" class="rounded-circle mr-1">
+    <header class="app-header app-header-dark">
+        <div class="top-bar">
+            <div class="top-bar-brand">
+                <button class="hamburger hamburger-squeeze mr-2" type="button" data-toggle="aside-menu" aria-label="toggle aside menu">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
                     </span>
-                    <img
-                        v-if="authenticated.photo !== null" 
-                        alt="image" 
-                        :src="'/storage/users/' + authenticated.photo"
-                        class="rounded-circle"
-                    >
-                    <div class="d-sm-none d-lg-inline-block">Hi, {{ authenticated.name }}</div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="javascript:void(0)" @click="logout" class="dropdown-item has-icon text-danger">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
+                </button>
+                <router-link to="/">
+                    <img :src="'/images/logo-white.png'" alt="logo">
+                </router-link>
+            </div>
+
+            <div class="top-bar-list">
+                <div class="top-bar-item px-2 d-md-none d-lg-none d-xl-none">
+                    <button class="hamburger hamburger-squeeze" type="button" data-toggle="aside" aria-label="toggle menu">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
                 </div>
-            </li>
-        </ul>
-    </nav>
-</div>
+                <div class="top-bar-item top-bar-item-right px-0">
+                    <ul class="header-nav nav">
+                        <li class="nav-item dropdown header-nav-dropdown">
+                            <a class="nav-link has-badge" href="#" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                                <span class="badge badge-pill badge-warning" 
+                                    v-if="notifications.length > 0">
+                                    {{ notifications.length }}
+                                </span>
+                                <span class="oi oi-bell"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-rich dropdown-menu-right">
+                                <div class="dropdown-arrow"></div>
+                                <h6 class="dropdown-header stop-propagation">
+                                    <span>
+                                        Pemberitahuan
+                                        <span class="badge">({{notifications.length}})</span>
+                                    </span>
+                                </h6>
+                                <div class="dropdown-scroll perfect-scrollbar">
+                                    <span v-for="(row, index) in notifications" :key="index">
+                                        <a href="javascript:void(0)" @click="readNotif(row)" class="dropdown-item unread">
+                                            <div class="user-avatar">
+                                                <img 
+                                                    v-if="row.data.sender_photo == null" 
+                                                    alt="image" src="https://via.placeholder.com/160"
+                                                />
+                                                <img 
+                                                    v-else 
+                                                    alt="image" :src="'/storage/users/' + row.data.sender_photo" 
+                                                />
+                                            </div>
+                                            <div class="dropdown-item-body">
+                                                <p class="subject"> {{ row.data.sender_name }} </p>
+                                                <p class="text text-truncate" v-if="row.data.expenses">
+                                                    {{ row.data.expenses.description.substr(0, 30) }}
+                                                </p>
+                                                <p class="text" v-else-if="row.data.payment">
+                                                    <span>
+                                                        {{ row.data.note }}
+                                                    </span>
+                                                </p>
+                                                <p v-else-if="row.data.transaction" class="text">
+                                                    Pembayaran telah di verifikasi oleh admin.
+                                                    <span v-html="row.data.transaction.status_label"></span>
+                                                </p>
+                                                <span class="date">{{ row.created_at | formatDate }}</span>
+                                            </div>
+                                        </a>
+                                    </span>
+                                </div>
+                                <router-link :to="{ name: 'notifications.data' }" class="dropdown-footer">Lihat Semua
+                                    <i class="fas fa-fw fa-long-arrow-alt-right"></i>
+                                </router-link>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="dropdown d-none d-sm-flex">
+                    <button class="btn-account" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="user-avatar user-avatar-md">
+                            <img
+                                v-if="authenticated.photo !== null"
+                                alt="image"
+                                :src="'/storage/users/' + authenticated.photo"
+                            />
+                            <img v-if="authenticated.photo == null" alt="image" src="https://via.placeholder.com/160" class="rounded-circle mr-1">
+                        </span>
+                        <span class="account-summary pr-lg-4 d-none d-lg-block">
+                        <span class="account-name">{{ authenticated.name }}</span> 
+                            <span class="account-description">
+                                <span v-if="authenticated.role == 0">
+                                        superadmin
+                                </span>
+                                <span v-else-if="authenticated.role == 1">
+                                    admin
+                                </span>
+                                <span v-else>
+                                    Pelanggan
+                                </span>
+                            </span>
+                        </span>
+                    </button> <!-- .dropdown-menu -->
+                    <div class="dropdown-menu">
+                        <div class="dropdown-arrow d-lg-none" x-arrow=""></div>
+                        <div class="dropdown-arrow ml-3 d-none d-lg-block"></div>
+                        <h6 class="dropdown-header d-none d-sm-block d-lg-none">
+                            {{ authenticated.name }}
+                        </h6>
+                        <a class="dropdown-item" href="javascript:void(0)" @click="logout">
+                            <span class="dropdown-icon oi oi-account-logout text-danger"></span>
+                            Logout
+                        </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 </template>
 
 <script>
     import {mapActions, mapState} from "vuex";
     import moment from 'moment'
-
-    import CustomerNotif from './homepage/CustomerNotif';
 
     export default {
         computed: {
@@ -121,21 +142,21 @@
             ...mapActions('notification', ['readNotification']),
             readNotif(row) {
                 if (row.data.expenses) {
-                        this.readNotification({id: row.id}).then(() => this.$router.push({
+                    this.readNotification({id: row.id}).then(() => this.$router.push({
                         name: 'expenses.view',
                         params: {
                             id: row.data.expenses.id
                         }
                     }))
                 } else if (row.data.payment) {
-                        this.readNotification({id: row.id}).then(() => this.$router.push({
+                    this.readNotification({id: row.id}).then(() => this.$router.push({
                         name: 'transaction.payment',
                         params: {
                             id: row.data.payment.transaction_id
                         }
                     }))
                 } else if (row.data.transaction) {
-                      this.readNotification({id: row.id}).then(() => this.$router.push({
+                    this.readNotification({id: row.id}).then(() => this.$router.push({
                         name: 'transactions.view',
                         params: {
                             id: row.data.transaction.id
@@ -153,8 +174,5 @@
                 })
             }
         },
-        components: {
-            'notif': CustomerNotif,
-        }
     }
 </script>

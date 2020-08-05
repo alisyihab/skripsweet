@@ -43,33 +43,15 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'password' => 'required',
-        ], [
-            'password.required' => 'Password tidak Boleh kosong'
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required'
         ]);
 
         $auth = $request->except(['remember_me']);
-        // if (auth()->attempt($auth, $request->remember_me)) {
-
-        //     auth()->user()->update(['api_token' => Str::random(40)]);
-            
-        //     return response()->json([
-        //         'status' => 'success', 
-        //         'data' => auth()->user()->api_token
-        //     ], 200);
-        //  }
-        
-        $fieldType = filter_var($request->phone, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
-        if (auth()->attempt([$fieldType => $request['phone'], 'password' => $request['password']]))
-        {            
+        if (auth()->attempt($auth, $request->remember_me)) {
             auth()->user()->update(['api_token' => Str::random(40)]);
-            
-            return response()->json([
-                'status' => 'success', 
-                'data' => auth()->user()->api_token
-            ], 200);
+            return response()->json(['status' => 'success', 'data' => auth()->user()->api_token], 200);
         }
-
         return response()->json(['status' => 'failed']);
     }
 }

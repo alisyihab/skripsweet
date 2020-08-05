@@ -1,32 +1,45 @@
 <template>
     <div>
-        <div class="form-group" :class="{ 'has-error': errors.nik }">
+        <div class="form-group">
             <label>Nik</label>
-            <input type="number" class="form-control" v-model="customer.nik" :disabled="$route.name == 'customers.edit'">
-            <p class="text-danger" v-if="errors.name">{{ errors.nik[0] }}</p>
+            <input type="number" class="form-control" :class="{ 'is-invalid': errors.nik }" v-model="customer.nik" :disabled="$route.name == 'customers.edit'">
+            <div class="invalid-feedback" v-if="errors.nik">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.nik[0] }} 
+            </div>
         </div>
-        <div class="form-group" :class="{ 'has-error': errors.name }">
+        <div class="form-group">
             <label>Nama Lengkap</label>
-            <input type="text" class="form-control" v-model="customer.name">
-            <p class="text-danger" v-if="errors.name">{{ errors.name[0] }}</p>
+            <input type="text" class="form-control" :class="{ 'is-invalid': errors.name }" v-model="customer.name">
+            <div class="invalid-feedback" v-if="errors.name">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.name[0] }} 
+            </div>
         </div>
-        <div class="form-group" :class="{ 'has-error': errors.email }">
+        <div class="form-group">
             <label>Email</label>
-            <input type="email" class="form-control" v-model="customer.email" :disabled="$route.name == 'customers.edit'">
-            <p class="text-danger" v-if="errors.email">{{ errors.email[0] }}</p>
+            <input type="email" class="form-control" :class="{ 'is-invalid': errors.email }" v-model="customer.email" :disabled="$route.name == 'customers.edit'">
+            <div class="invalid-feedback" v-if="errors.email">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.email[0] }} 
+            </div>
         </div>
-        <div class="form-group" :class="{ 'has-error': errors.password }">
+        <div class="form-group">
             <label>Password</label>
-            <input type="password" class="form-control" v-model="customer.password">
+            <input type="password" class="form-control" :class="{ 'is-invalid': errors.password }" v-model="customer.password">
             <p class="text-warning" v-show="$route.name === 'customers.edit'">
                 Biarkan kosong bila tidak ingin mengganti password.
             </p>
-            <p class="text-danger" v-if="errors.password">{{ errors.password[0] }}</p>
+            <div class="invalid-feedback" v-if="errors.password">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.password[0] }} 
+            </div>
         </div>
-         <div class="form-group" :class="{ 'has-error': errors.address }">
+         <div class="form-group">
             <label>Alamat</label>
              <editor
                 v-model="customer.address"
+                :class="{ 'is-invalid': errors.address }"
                 api-key="ass6mxswiyrquok43dpktqx703k9dmrul7awy97gwfmakzjg"
                 :init="{
                     height: 200,
@@ -43,26 +56,33 @@
             <!-- <textarea cols="10" rows="5" class="form-control" v-model="customer.address"></textarea> -->
             <p class="text-danger" v-if="errors.address">{{ errors.address[0] }}</p>
         </div>
-        <div class="form-group" :class="{ 'has-error': errors.phone }">
+        <div class="form-group">
             <label>No Telp</label>
             <the-mask
                 type="tel"
                 :mask="['####-####-####']"
                 class="form-control"
+                :class="{ 'is-invalid': errors.phone }"
                 v-model="customer.phone" 
             />
-            <p class="text-danger" v-if="errors.phone">{{ errors.phone[0] }}</p>
+            <div class="invalid-feedback" v-if="errors.phone">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.phone[0] }} 
+            </div>
         </div>
-        <div class="form-group" :class="{ 'has-error': errors.photo }">
+        <div class="form-group">
             <label>Foto</label>
-            <input type="file" class="form-control" accept="image/*" @change="uploadImage($event)" id="file-input">
+            <input type="file" class="form-control" :class="{ 'is-invalid': errors.photo }" accept="image/*" @change="uploadImage($event)" id="file-input">
             <div id="preview">
                 <img class="img-responsive" v-if="url" :src="url"/>
             </div>
             <p class="text-warning" v-show="$route.name === 'customers.edit'">
                 Biarkan kosong bila tidak ingin mengganti photo.
             </p>
-            <p class="text-danger" v-if="errors.photo">{{ errors.photo[0] }}</p>
+            <div class="invalid-feedback" v-if="errors.photo">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.photo[0] }} 
+            </div>
         </div>
     </div>
 </template>

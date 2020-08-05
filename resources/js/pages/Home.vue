@@ -1,26 +1,30 @@
 <template>
-    <div class="main-content">
-        <section class="section">
-            <div class="section-header">
-                <h1>Homepage</h1>
-            </div>
+    <main class="app-main">
+        <div class="wrapper">
+            <div class="page">
+                <div class="page-inner">
+                    <header class="page-title-bar">
+                        <h1 class="page-title"> Dashboard </h1>
+                    </header>
+                    <div class="page-section">
+                        <card-status v-if="authenticated.role == 0 || authenticated.role == 1 " />  
+                        <div class="section-block">
+                            <div class="row">
+                                <chart-expense v-if="authenticated.role == 0 " />
+                                <profile v-if="authenticated.role == 3"/>
 
-            <card-status v-if="authenticated.role == 0 || authenticated.role == 1 " />
+                                <status v-if="authenticated.role == 1"  />
 
-            <div class="section-body">
-                <div class="row">
-                    <chart-expense v-if="authenticated.role == 0 " />
-                    <profile v-if="authenticated.role == 3"/>
+                                <last-trans />
 
-                    <status v-if="authenticated.role == 1"  />
-
-                    <last-trans />
-
-                    <chart-trans v-if="authenticated.role == 0" />
+                                <chart-trans v-if="authenticated.role == 0" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </main>
 </template>
 
 <script>

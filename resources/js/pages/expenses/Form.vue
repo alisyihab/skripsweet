@@ -1,19 +1,28 @@
 <template>
     <div>
-        <div class="form-group" :class="{ 'has-error': errors.description }">
+        <div class="form-group">
             <label>Permintaan</label>
-            <input type="text" class="form-control" v-model="expenses.description">
-            <p class="text-danger" v-if="errors.description">{{ errors.description[0] }}</p>
+            <input type="text" class="form-control" :class="{ 'is-invalid': errors.description }" v-model="expenses.description">
+            <div class="invalid-feedback" v-if="errors.description">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.description[0] }} 
+            </div>
         </div>
-        <div class="form-group" :class="{ 'has-error': errors.price }">
+        <div class="form-group">
             <label>Biaya</label>
-            <input type="number" class="form-control" v-model="expenses.price">
-            <p class="text-danger" v-if="errors.price">{{ errors.price[0] }}</p>
+            <input type="number" class="form-control" :class="{ 'is-invalid': errors.price }" v-model="expenses.price">
+             <div class="invalid-feedback" v-if="errors.price">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.price[0] }} 
+            </div>
         </div>
-        <div class="form-group" :class="{ 'has-error': errors.note }">
+        <div class="form-group">
             <label>Catatan</label>
-            <textarea cols="5" rows="5" class="form-control" v-model="expenses.note"></textarea>
-            <p class="text-danger" v-if="errors.note">{{ errors.note[0] }}</p>
+            <textarea cols="5" rows="5" class="form-control" :class="{ 'is-invalid': errors.note }" v-model="expenses.note"></textarea>
+            <div class="invalid-feedback" v-if="errors.note">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.note[0] }} 
+            </div>
         </div>
     </div>
 </template>

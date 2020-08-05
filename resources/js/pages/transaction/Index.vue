@@ -1,36 +1,40 @@
 <template>
-<div>
-    <div class="main-content">
-        <section class="section">
-            <div class="section-header">
-                 <div class="section-header-back">
-                    <router-link :to="{ name: 'transactions.list' }" class="btn btn-icon" v-show="$route.name !== 'transactions.list' ">
-                        <i class="fas fa-arrow-left"></i>
-                    </router-link>
-                </div>
-                <h1>{{ $route.meta.title }}</h1>
-                <div class="section-header-button">
-                    <router-link :to="{ name: 'transactions.add' }"
-                        class="btn btn-primary"
-                        v-if="$can('create transaction')"
-                        v-show="$route.name == 'transactions.list'">
-                        Tambah Data
-                    </router-link>
-                </div>
-                <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item">
-                        <router-link :to="{ name: 'home' }"><i class="fa fa-dashboard"></i> Home</router-link>
+    <main class="app-main">
+        <div class="wrapper">
+            <div class="page">
+                <div class="page-inner">
+                    <header class="page-title-bar">
+                        <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active">
+                                <router-link :to="{ name: 'transactions.list' }" v-show="$route.name !== 'transactions.list' ">
+                                    <i class="breadcrumb-icon fa fa-angle-left mr-2"></i> Kembali ke list transaksi
+                                </router-link>
+                            </li>
+                        </ol>
+                        </nav>
+                        <div class="d-md-flex align-items-md-start">
+                            <h1 class="page-title mr-sm-auto"> {{ $route.meta.title }} </h1><!-- .btn-toolbar -->
+                            <div class="btn-toolbar">
+                                <router-link
+                                    :to="{ name: 'transactions.add' }"
+                                    v-if="$can('create transaction')"
+                                    v-show="$route.name == 'transactions.list'" 
+                                    class="btn btn-light"
+                                >
+                                    <i class="oi oi-plus"></i> 
+                                    <span class="ml-1">Tambah Data</span>
+                                </router-link>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="page-section">
+                        <router-view></router-view>
                     </div>
-                    <div class="breadcrumb-item active">{{ $route.meta.title }}</div>
                 </div>
             </div>
-            <div class="section-body">
-                <router-view></router-view>
-            </div>
-        </section>
-
-    </div>
-</div>
+        </div>
+    </main>
 </template>
 
 <script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Expense;
+use App\FinancialRecords;
 use App\Notifications\ExpensesNotification;
 use App\User;
 use App\Http\Resources\ExpenseCollection;
@@ -69,9 +70,17 @@ class ExpensesController extends Controller
     public function accept(Request $request)
     {
         $this->validate($request, ['id' => 'required|exists:expenses,id']);
+
         $expenses = Expense::with(['user'])->find($request->id);
         $expenses->update(['status' => 1]);
+
         Notification::send($expenses->user, new ExpensesNotification($expenses, $expenses->user));
+
+        FinancialRecords::create([
+            'amount' => $expenses->price,
+            'type' => 1
+        ]);
+
         return response()->json(['status' => 'success']);
     }
 

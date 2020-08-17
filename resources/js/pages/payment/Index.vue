@@ -7,40 +7,30 @@
                         <div class="col-md-6">
                             <h4>Customer Info</h4>
                             <hr>
-                            <div class="profile-widget pt-4">
-                                <div class="profile-widget-header">
-                                    <img alt="image"
-                                         :src="'/storage/users/' + transaction.customer.photo"
-                                         class="rounded-circle profile-widget-picture"
-                                    />
-                                    <div class="profile-widget-items">
-                                        <div class="profile-widget-item">
-                                            <div class="profile-widget-item-label">Deposit</div>
-                                            <div class="profile-widget-item-value">
-                                                {{ transaction.customer.deposit |
-                                                currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true })
-                                                }}
-                                            </div>
-                                        </div>
+                            <div class="card card-fluid">
+                            <div class="card-body text-center">
+                                <span class="user-avatar user-avatar-xl my-3">
+                                    <img :src="'/storage/users/' + transaction.customer.photo" alt="">
+                                </span>
+                                <h3 class="card-title text-truncate">
+                                <span>{{ transaction.customer.name }}</span>
+                                </h3>
+                                <h6 class="card-subtitle text-muted mb-3">  <b>No Telpone:</b> {{ transaction.customer.phone }} </h6>
+                                <p>
+                                    <b>Alamat Rumah : </b> <span v-html="transaction.customer.address"></span> 
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="card-footer-item card-footer-item-bordered">
+                                    <div class="metric">
+                                        <h6 class="metric-value"> Deposit </h6>
+                                        <p class="metric-label"> 
+                                            {{ transaction.customer.deposit | currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) }} 
+                                        </p>
                                     </div>
-                                </div>
-                                <div class="profile-widget-description pb-0">
-                                    <div class="profile-widget-name">
-                                        {{ transaction.customer.name }}
-                                        <div class="text-muted d-inline font-weight-normal">
-                                            <div class="slash"></div>
-                                            {{ transaction.customer.nik }}
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <p>
-                                        <b>Alamat Rumah : </b> <span v-html="transaction.customer.address"></span>
-                                    </p>
-                                    <p>
-                                        <b>No Telpone:</b> {{ transaction.customer.phone }}
-                                    </p>
                                 </div>
                             </div>
+                        </div>
                         </div>
                         <div class="col-md-6">
                             <h4>Pembayaran</h4>

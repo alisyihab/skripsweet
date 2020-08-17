@@ -151,7 +151,7 @@ const router = new Router({
             meta: { requiresAuth: true },
             children: [
                 {
-                    path: '',
+                    path: 'list',
                     name: 'expenses.data',
                     component: DataExpenses,
                     meta: { title: 'Permintaan Biaya' }
@@ -178,7 +178,7 @@ const router = new Router({
                     path: 'income',
                     name: 'expenses.income',
                     component: Income,
-                    meta: { title: 'Pendapatan Bersih' }
+                    meta: { title: 'Pendapatan' }
                 },
             ]
         },

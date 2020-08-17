@@ -18,11 +18,11 @@
                 :class="{'is-invalid': errors.email}" 
                 autocomplete="off"> 
             <label for="inputUser">Email</label>
-          </div>
             <div class="invalid-feedback" v-if="errors.email">
                 <i class="fa fa-exclamation-circle fa-fw"></i> 
                 {{ errors.email[0] }} 
             </div>
+          </div>
         </div>
 
         <div class="form-group">
@@ -32,8 +32,11 @@
                 class="form-control" :class="{'is-invalid': errors.password}" 
                 placeholder="Password"> 
             <label for="inputPassword">Password</label>
+            <div class="invalid-feedback" v-if="errors.password">
+                <i class="fa fa-exclamation-circle fa-fw"></i> 
+                {{ errors.password[0] }} 
+            </div>
           </div>
-          <p class="text-danger" v-if="errors.password">{{ errors.password[0] }}</p>
         </div>
         
         <div class="alert alert-danger" v-if="errors.invalid">{{ errors.invalid }}</div>

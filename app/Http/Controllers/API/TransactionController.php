@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\FinancialRecords;
 use App\Http\Resources\TransactionCollection;
 use App\Http\Controllers\Controller;
 use App\DetailTransaction;
@@ -94,7 +95,12 @@ class TransactionController extends Controller
             }
             $transaction->update(['amount' => $amount]);
             DB::commit();
-            
+
+            FinancialRecords::create([
+                'amount' => $transaction->amount,
+                'type' => 0
+            ]);
+
             return response()->json([
                 'status' => 'success',
                 'data' => $transaction

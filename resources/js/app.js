@@ -34,6 +34,7 @@ new Vue({
         ...mapActions('user', ['getUserLogin']),
         ...mapActions('notification', ['getNotifications']),
         ...mapActions('expenses', ['getExpenses']),
+        ...mapActions('transaction', ['getTransactions']),
         initialLister() {
             if (this.isAuth) {
                 window.Echo = new Echo({
@@ -53,6 +54,7 @@ new Vue({
                         .notification(() => {
                             this.getNotifications()
                             this.getExpenses()
+                            this.getTrasactions()
                         })
                 }
             }

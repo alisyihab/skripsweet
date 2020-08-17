@@ -64,7 +64,7 @@
                     <span class="menu-text">Keuangan</span> 
                   </a>
                   <ul class="menu">
-                    <li :class="[currentPage.includes('expanses') ? activeClass : '', 'menu-item']">
+                    <li :class="[currentPage.includes('expanses/list') ? activeClass : '', 'menu-item']">
                       <router-link :to="{ name: 'expenses.data' }" class="menu-link">Daftar Permohonan</router-link>
                     </li>
                     <li :class="[currentPage.includes('expanses/income') ? activeClass : '', 'menu-item']">
@@ -86,7 +86,7 @@
                     <span class="menu-text">User</span>
                   </router-link>
                 </li>
-                <li :class="[currentPage.includes('setting') ? activeClass : '', 'menu-item']"  v-show="$can('read users')">
+                <li :class="[currentPage.includes('setting') ? activeClass : '', 'menu-item']"  v-show="authenticated.role == 0">
                   <router-link :to="{ name: 'role.permissions' }" class="menu-link">
                     <span class="menu-icon fas fa-user-cog"></span> 
                     <span class="menu-text">Role Permission</span>

@@ -1,6 +1,6 @@
 <template>
 <div class="app-main" >
-    <main v-if="$can('read users')">
+    <main>
         <div class="wrapper">
         <div class="page">
           <div class="page-inner">

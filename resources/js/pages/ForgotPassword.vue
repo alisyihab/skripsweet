@@ -61,10 +61,11 @@
                         'success'
                       );
                   } if (this.response = result.error) {
-                    this.$swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                        });
+                    this.this.$swal.fire(
+                        'Error',
+                        'gagal di kirim ' + this.email,
+                        'error'
+                      );
                   }
                 }, error => {
                     console.error(error);

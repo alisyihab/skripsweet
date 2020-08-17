@@ -9,7 +9,7 @@
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item active">
                     <router-link :to="{ name: 'expenses.data' }" v-show="$route.name !== 'expenses.data' ">
-                      <i class="breadcrumb-icon fa fa-angle-left mr-2"></i> Kembali ke list produk
+                      <i class="breadcrumb-icon fa fa-angle-left mr-2"></i> Kembali 
                     </router-link>
                   </li>
                 </ol>

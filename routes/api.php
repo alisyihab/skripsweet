@@ -68,4 +68,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // profile Customer
     Route::get('total_transaction', 'API\DashboardController@countTrans');
+
+    // finace
+    Route::get('finace', 'API\FinaceController@index');
 });

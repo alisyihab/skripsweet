@@ -91,6 +91,7 @@ class TransactionController extends Controller
                     ]);
 
                     $amount += $subtotal;
+
                 }
             }
             $transaction->update(['amount' => $amount]);
@@ -98,7 +99,8 @@ class TransactionController extends Controller
 
             FinancialRecords::create([
                 'amount' => $transaction->amount,
-                'type' => 0
+                'type' => 0,
+                'note' => $row['laundry_price']['name']
             ]);
 
             return response()->json([

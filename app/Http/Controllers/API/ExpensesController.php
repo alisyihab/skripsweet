@@ -49,12 +49,21 @@ class ExpensesController extends Controller
 
         $user = $request->user();
         $status = $user->role == 0 || $user->role == 2 ? 1:0;
+
         $request->request->add([
             'user_id' => $user->id,
             'status' => $status
         ]);
 
         $expenses = Expense::create($request->all());
+
+        if ($user->role == 0) {
+            FinancialRecords::create([
+                'amount' => $request->price,
+                'type' => 1,
+                'note' => $request->description
+            ]);
+        }
 
         $users = User::whereIn('role', [0])->get();
         Notification::send($users, new ExpensesNotification($expenses, $user));
@@ -78,7 +87,8 @@ class ExpensesController extends Controller
 
         FinancialRecords::create([
             'amount' => $expenses->price,
-            'type' => 1
+            'type' => 1,
+            'note' => $expenses->note
         ]);
 
         return response()->json(['status' => 'success']);

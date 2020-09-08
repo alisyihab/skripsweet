@@ -17,6 +17,7 @@ class CreateFinancialRecordsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('amount');
             $table->boolean('type');
+            $table->string('note');
             $table->timestamps();
         });
     }

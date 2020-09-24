@@ -54,7 +54,7 @@
                 <span class="mr-2">Revenue</span> <small class="text-success"><i class="fa fa-caret-up"></i> 87%</small>
               </dt>
               <dd class="text-right mb-0">
-                <small class="text-muted">Rp. {{ total_debit | convert }} </small> <strong></strong>
+                <h4 class="text-muted">Rp. {{ total_debit | convert }} </h4>
               </dd>
             </dl>
           </div>
@@ -65,7 +65,7 @@
                 <small class="text-danger"><i class="fa fa-caret-down"></i>12%</small>
               </dt>
               <dd class="text-right mb-0">
-                <small class="text-muted">Rp. {{ total_credit | convert }} </small> <strong></strong>
+                <h4 class="text-muted">Rp. {{ total_credit | convert }} </h4> <strong></strong>
               </dd>
             </dl>
           </div><!-- /.card-body -->
@@ -77,8 +77,8 @@
                 24%</small>
               </p>
               <p class="text-center">
-                <span class="text-muted">Rp. {{ total_debit - total_credit | convert }} </span> 
-                <strong class="h3"></strong> 
+                <span class="text-muted">Laba keuntungan tahun {{ year }} </span> <br>
+                <strong class="h3">Rp. {{ total_debit - total_credit | convert }}</strong> 
               </p>
             </div>
           </div><!-- /.card-body -->

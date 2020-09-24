@@ -98,8 +98,8 @@ class TransactionController extends Controller
             DB::commit();
 
             FinancialRecords::create([
-                'amount' => $transaction->amount,
-                'type' => 0,
+                'debit' => $transaction->amount,
+                'credit' => 0,
                 'note' => $row['laundry_price']['name']
             ]);
 

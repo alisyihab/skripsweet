@@ -59,8 +59,8 @@ class ExpensesController extends Controller
 
         if ($user->role == 0) {
             FinancialRecords::create([
-                'amount' => $request->price,
-                'type' => 1,
+                'credit' => $request->price,
+                'debit' => 0,
                 'note' => $request->description
             ]);
         }

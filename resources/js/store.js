@@ -10,7 +10,8 @@ import notification from "./stores/notification";
 import customer from "./stores/customer";
 import transaction from "./stores/transaction";
 import dashboard from "./stores/dashboard";
-import person from "./stores/person"
+import person from "./stores/person";
+import finace from "./stores/finace";
 
 Vue.use(Vuex);
 
@@ -25,6 +26,7 @@ const store = new Vuex.Store({
         customer,
         transaction,
         dashboard,
+        finace,
         person
     },
     state: {

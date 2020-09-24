@@ -1,7 +1,7 @@
 <template>
-<div class="app-main" >
+  <div class="app-main">
     <main v-if="$can('read users')">
-        <div class="wrapper">
+      <div class="wrapper">
         <div class="page">
           <div class="page-inner">
             <header class="page-title-bar">
@@ -18,9 +18,9 @@
                 <h1 class="page-title mr-sm-auto"> {{ $route.meta.title }} </h1>
                 <div class="btn-toolbar">
                   <router-link
-                      :to="{ name: 'persons.add' }"
-                      v-show="$route.name == 'persons.data'"
-                      class="btn btn-light"
+                    :to="{ name: 'persons.add' }"
+                    v-show="$route.name == 'persons.data'"
+                    class="btn btn-light"
                   >
                     <i class="oi oi-plus"></i>
                     <span class="ml-1">Tambah Data</span>
@@ -35,27 +35,27 @@
         </div>
       </div>
     </main>
-
+    
     <div v-if="!$can('read users')">
-        <page404 />
+      <page404/>
     </div>
-</div>
+  </div>
 </template>
 <script>
-    import Page404 from '../../components/Page404';
+  import Page404 from '../../components/Page404';
 
-    export default {
-        name: 'IndexUsers',
-        components: {
-            'page404': Page404
-        },
-        watch: {
-            $route: {
-                immediate: true,
-                handler(to, from) {
-                    document.title = to.meta.title;
-                }
-            }
-        },
-    }
+  export default {
+    name: 'IndexUsers',
+    components: {
+      'page404': Page404
+    },
+    watch: {
+      $route: {
+        immediate: true,
+        handler(to, from) {
+          document.title = to.meta.title;
+        }
+      }
+    },
+  }
 </script>

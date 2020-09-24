@@ -1,7 +1,7 @@
 <template>
-<div class="app-main" >
+  <div class="app-main">
     <main>
-        <div class="wrapper">
+      <div class="wrapper">
         <div class="page">
           <div class="page-inner">
             <header class="page-title-bar">
@@ -25,28 +25,28 @@
         </div>
       </div>
     </main>
-
+    
     <div v-if="!$can('read users')">
-        <page404 />
+      <page404/>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
-    import Page404 from '../../components/Page404';
+  import Page404 from '../../components/Page404';
 
-    export default {
-        name: 'IndexSetting',
-        components: {
-            'page404': Page404
-        },
-        watch: {
-            $route: {
-                immediate: true,
-                handler(to, from) {
-                    document.title = to.meta.title;
-                }
-            }
-        },
-    }
+  export default {
+    name: 'IndexSetting',
+    components: {
+      'page404': Page404
+    },
+    watch: {
+      $route: {
+        immediate: true,
+        handler(to, from) {
+          document.title = to.meta.title;
+        }
+      }
+    },
+  }
 </script>

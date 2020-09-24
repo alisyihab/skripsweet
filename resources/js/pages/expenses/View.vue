@@ -7,20 +7,20 @@
       <template>
         <dt>Permintaan Karyawan</dt>
         <dd>- {{ description }}</dd>
-
+        
         <hr>
         <dt>Biaya Yang Diperlukan</dt>
         <dd>- Rp {{ price }}</dd>
         <hr>
-
+        
         <dt>Catatan</dt>
         <dd>- {{ note }}</dd>
         <hr>
-
+        
         <dt>Admin</dt>
         <dd>- {{ user.name }}</dd>
         <hr>
-
+        
         <dt>Status</dt>
         <dd>
           <span class="label label-success" v-if="status == 1">Diterima</span>
@@ -28,7 +28,7 @@
           <span class="label label-default" v-else>Ditolak</span>
         </dd>
         <hr>
-
+        
         <div v-if="status == 2">
           <dt>Alasan Penolakan</dt>
           <dd>- {{ reason }}</dd>
@@ -41,7 +41,7 @@
             </div>
         </span>
       </template>
-
+      
       <div v-if="formReason">
         <div class="form-group">
           <label>Alasan Penolakan</label>
@@ -56,83 +56,83 @@
   </div>
 </template>
 <script>
-import {mapActions, mapState} from 'vuex';
+  import {mapActions, mapState} from 'vuex';
 
-export default {
-  name: 'ViewEpenses',
-  created() {
-    this.editExpenses(this.$route.params.id).then((res) => {
-      let row = res.data;
-      this.description = row.description;
-      this.price = row.price;
-      this.note = row.note;
-      this.status = row.status;
-      this.reason = row.reason;
-      this.user = row.user
-    })
-  },
-  data() {
-    return {
-      description: '',
-      price: '',
-      note: '',
-      status: '',
-      reason: '',
-      user: '',
-      formReason: false,
-      inputReason: ''
-    }
-  },
-  computed: {
-    ...mapState('user', {
-      authenticated: state => state.authenticated
-    }),
-  },
-  methods: {
-    ...mapActions('expenses', ['editExpenses', 'acceptExpenses', 'cancelExpenses']),
-    accept() {
-      this.$swal({
-        title: 'Kamu Yakin?',
-        text: "Permintaan yang disetujui tidak dapat dikembalikan!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Iya, Lanjutkan!'
-      }).then((result) => {
-        if (result.value) {
-          this.$swal.fire(
+  export default {
+    name: 'ViewEpenses',
+    created() {
+      this.editExpenses(this.$route.params.id).then((res) => {
+        let row = res.data;
+        this.description = row.description;
+        this.price = row.price;
+        this.note = row.note;
+        this.status = row.status;
+        this.reason = row.reason;
+        this.user = row.user
+      })
+    },
+    data() {
+      return {
+        description: '',
+        price: '',
+        note: '',
+        status: '',
+        reason: '',
+        user: '',
+        formReason: false,
+        inputReason: ''
+      }
+    },
+    computed: {
+      ...mapState('user', {
+        authenticated: state => state.authenticated
+      }),
+    },
+    methods: {
+      ...mapActions('expenses', ['editExpenses', 'acceptExpenses', 'cancelExpenses']),
+      accept() {
+        this.$swal({
+          title: 'Kamu Yakin?',
+          text: "Permintaan yang disetujui tidak dapat dikembalikan!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Iya, Lanjutkan!'
+        }).then((result) => {
+          if (result.value) {
+            this.$swal.fire(
               'Success!',
               'Data Permintaan Disimpan.',
               'success'
-          );
-          this.acceptExpenses(this.$route.params.id).then(() => this.$router.push({name: 'expenses.data'}))
-        }
-      })
-    },
-    cancelRequest() {
-      this.$swal({
-        title: 'Kamu Yakin?',
-        text: "Permintaan yang ditolak tidak dapat dikembalikan!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Iya, Lanjutkan!'
-      }).then((result) => {
-        if (result.value) {
-          this.cancelExpenses({id: this.$route.params.id, reason: this.inputReason}).then(() => {
-            this.$swal.fire(
+            );
+            this.acceptExpenses(this.$route.params.id).then(() => this.$router.push({name: 'expenses.data'}))
+          }
+        })
+      },
+      cancelRequest() {
+        this.$swal({
+          title: 'Kamu Yakin?',
+          text: "Permintaan yang ditolak tidak dapat dikembalikan!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Iya, Lanjutkan!'
+        }).then((result) => {
+          if (result.value) {
+            this.cancelExpenses({id: this.$route.params.id, reason: this.inputReason}).then(() => {
+              this.$swal.fire(
                 'Success!',
                 'Permintaan berhasil ditolak.',
                 'success'
-            );
-            this.formReason = false
-            this.$router.push({name: 'expenses.data'})
-          })
-        }
-      })
+              );
+              this.formReason = false
+              this.$router.push({name: 'expenses.data'})
+            })
+          }
+        })
+      }
     }
   }
-}
 </script>

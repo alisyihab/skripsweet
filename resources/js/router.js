@@ -51,252 +51,252 @@ import Page404 from "./pages/Page404";
 Vue.use(Router);
 
 const router = new Router({
-    mode: 'history',
-    routes: [
+  mode: 'history',
+  routes: [
+    {
+      path: '*',
+      component: Page404,
+    },
+    {
+      path: '/',
+      redirect: '/login'
+    },
+    {
+      path: '/reset-password',
+      name: 'reset-password',
+      component: ForgotPassword,
+    },
+    {
+      path: '/reset-password/:token',
+      name: 'reset-password-form',
+      component: ResetPasswordForm,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/dashboard',
+      name: 'home',
+      component: Home,
+      meta: {requiresAuth: true}
+    },
+    {
+      path: '/outlets',
+      component: IndexOutlet,
+      meta: {requiresAuth: true},
+      children: [
         {
-            path: '*',
-            component: Page404,
+          path: '',
+          name: 'outlets.data',
+          component: DataOutlet,
+          meta: {title: 'Manage Outlets'}
         },
         {
-            path: '/',
-            redirect: '/login'
+          path: 'add',
+          name: 'outlets.add',
+          component: AddOutlet,
+          meta: {title: 'Add Outlets'}
         },
         {
-            path: '/reset-password',
-            name: 'reset-password',
-            component: ForgotPassword,
+          path: 'edit/:id',
+          name: 'outlets.edit',
+          component: EditOutlet,
+          meta: {title: 'Edit Outlet'}
+        }
+      ]
+    },
+    {
+      path: "/product",
+      component: IndexProduct,
+      meta: {requiresAuth: true},
+      children: [
+        {
+          path: '',
+          name: 'products.data',
+          component: DataProduct,
+          meta: {title: 'Manage Produk Laundry'}
         },
         {
-            path: '/reset-password/:token', 
-            name: 'reset-password-form', 
-            component: ResetPasswordForm,
+          path: 'add',
+          name: 'products.add',
+          component: AddProduct,
+          meta: {title: 'Tambah Produk Laundry'}
         },
         {
-            path: '/login',
-            name: 'login',
-            component: Login
+          path: 'edit/:id',
+          name: 'products.edit',
+          component: EditProduct,
+          meta: {title: 'Edit Produk Laundry'}
+        }
+      ]
+    },
+    {
+      path: '/setting',
+      component: Setting,
+      meta: {requiresAuth: true},
+      children: [
+        {
+          path: 'role-permission',
+          name: 'role.permissions',
+          component: SetPermission,
+          meta: {title: 'Set Hak Akses'}
+        },
+      ]
+    },
+    {
+      path: '/expanses',
+      component: IndexExpenses,
+      meta: {requiresAuth: true},
+      children: [
+        {
+          path: 'list',
+          name: 'expenses.data',
+          component: DataExpenses,
+          meta: {title: 'Permintaan Biaya'}
         },
         {
-            path: '/dashboard',
-            name: 'home',
-            component: Home,
-            meta: { requiresAuth: true }
+          path: 'add',
+          name: 'expenses.create',
+          component: CreateExpenses,
+          meta: {title: 'Tambah Data Biaya'}
         },
         {
-            path: '/outlets',
-            component: IndexOutlet,
-            meta: { requiresAuth: true },
-            children: [
-                {
-                    path: '',
-                    name: 'outlets.data',
-                    component: DataOutlet,
-                    meta: { title: 'Manage Outlets' }
-                },
-                {
-                    path: 'add',
-                    name: 'outlets.add',
-                    component: AddOutlet,
-                    meta: { title: 'Add Outlets' }
-                },
-                {
-                    path: 'edit/:id',
-                    name: 'outlets.edit',
-                    component: EditOutlet,
-                    meta: { title: 'Edit Outlet' }
-                }
-            ]
+          path: 'edit/:id',
+          name: 'expenses.edit',
+          component: EditExpenses,
+          meta: {title: 'Edit Expenses'}
         },
         {
-            path: "/product",
-            component: IndexProduct,
-            meta: { requiresAuth: true },
-            children: [
-                {
-                    path: '',
-                    name: 'products.data',
-                    component: DataProduct,
-                    meta: { title: 'Manage Produk Laundry' }
-                },
-                {
-                    path: 'add',
-                    name: 'products.add',
-                    component: AddProduct,
-                    meta: { title: 'Tambah Produk Laundry' }
-                },
-                {
-                    path: 'edit/:id',
-                    name: 'products.edit',
-                    component: EditProduct,
-                    meta: { title: 'Edit Produk Laundry' }
-                }
-            ]
+          path: 'view/:id',
+          name: 'expenses.view',
+          component: ViewExpenses,
+          meta: {title: 'Lihat Permintaan'}
         },
         {
-            path: '/setting',
-            component: Setting,
-            meta: { requiresAuth: true },
-            children: [
-                {
-                    path: 'role-permission',
-                    name: 'role.permissions',
-                    component: SetPermission,
-                    meta: { title: 'Set Hak Akses' }
-                },
-            ]
+          path: 'income',
+          name: 'expenses.income',
+          component: Income,
+          meta: {title: 'Pendapatan'}
+        },
+      ]
+    },
+    {
+      path: '/customers',
+      component: IndexCustomer,
+      meta: {requiresAuth: true},
+      children: [
+        {
+          path: '',
+          name: 'customers.data',
+          component: DataCustomer,
+          meta: {title: 'Daftar Pelanggan'}
         },
         {
-            path: '/expanses',
-            component: IndexExpenses,
-            meta: { requiresAuth: true },
-            children: [
-                {
-                    path: 'list',
-                    name: 'expenses.data',
-                    component: DataExpenses,
-                    meta: { title: 'Permintaan Biaya' }
-                },
-                {
-                    path: 'add',
-                    name: 'expenses.create',
-                    component: CreateExpenses,
-                    meta: { title: 'Tambah Data Biaya' }
-                },
-                {
-                    path: 'edit/:id',
-                    name: 'expenses.edit',
-                    component: EditExpenses,
-                    meta: { title: 'Edit Expenses' }
-                },
-                {
-                    path: 'view/:id',
-                    name: 'expenses.view',
-                    component: ViewExpenses,
-                    meta: { title: 'Lihat Permintaan' }
-                },
-                {
-                    path: 'income',
-                    name: 'expenses.income',
-                    component: Income,
-                    meta: { title: 'Pendapatan' }
-                },
-            ]
+          path: 'add',
+          name: 'customers.add',
+          component: AddCustomer,
+          meta: {title: 'Buat Pelanggan Baru'}
         },
         {
-            path: '/customers',
-            component: IndexCustomer,
-            meta: { requiresAuth: true },
-            children: [
-                {
-                    path: '',
-                    name: 'customers.data',
-                    component: DataCustomer,
-                    meta: { title: 'Daftar Pelanggan' }
-                },
-                {
-                    path: 'add',
-                    name: 'customers.add',
-                    component: AddCustomer,
-                    meta: { title: 'Buat Pelanggan Baru' }
-                },
-                {
-                    path: 'edit/:id',
-                    name: 'customers.edit',
-                    component: EditCustomer,
-                    meta: { title: 'Edit Customer' }
-                }
-            ]
+          path: 'edit/:id',
+          name: 'customers.edit',
+          component: EditCustomer,
+          meta: {title: 'Edit Customer'}
+        }
+      ]
+    },
+    {
+      path: '/transactions',
+      component: IndexTransaction,
+      meta: {requiresAuth: true},
+      children: [
+        {
+          path: 'create',
+          name: 'transactions.add',
+          component: AddTransaction,
+          meta: {title: 'Buat Transaksi'}
         },
         {
-            path: '/transactions',
-            component: IndexTransaction,
-            meta: { requiresAuth: true },
-            children: [
-                {
-                    path: 'create',
-                    name: 'transactions.add',
-                    component: AddTransaction,
-                    meta: { title: 'Buat Transaksi' }
-                },
-                {
-                    path: 'view/:id',
-                    name: 'transactions.view',
-                    component: ViewTransaction,
-                    meta: { title: 'Detail Transaksi' }
-                },
-                {
-                    path: 'invoice/:id',
-                    name: 'transactions.invoice',
-                    component: InvoiceTrasaction,
-                    meta: { title: 'Invoice' }
-                },
-                {
-                    path: 'list',
-                    name: 'transactions.list',
-                    component: ListTransaction,
-                    meta: { title: 'Daftar Transaksi' }
-                },
-                {
-                    path: 'payment/:id',
-                    name: 'transaction.payment',
-                    component: AccPayment,
-                    meta: {title: 'Pembayaran'}
-                },
-            ]
+          path: 'view/:id',
+          name: 'transactions.view',
+          component: ViewTransaction,
+          meta: {title: 'Detail Transaksi'}
         },
         {
-            path: '/users',
-            component: IndexUsers,
-            meta: { requiresAuth: true },
-            children: [
-                {
-                    path: '',
-                    name: 'persons.data',
-                    component: DataPersons,
-                    meta: { title: 'Daftar Pengguna' }
-                },
-                {
-                    path: 'add',
-                    name: 'persons.add',
-                    component: AddPerson,
-                    meta: { title: 'Tambah Pengguna' }
-                },
-                {
-                    path: 'edit/:id',
-                    name: 'persons.edit',
-                    component: EditPerson,
-                    meta: { title: 'Ubah Pengguna' }
-                }
-            ]
+          path: 'invoice/:id',
+          name: 'transactions.invoice',
+          component: InvoiceTrasaction,
+          meta: {title: 'Invoice'}
         },
         {
-            path: '/notification',
-            component: IndexNotification,
-            meta: { requiresAuth: true },
-            children: [
-                {
-                    path: '',
-                    name: 'notifications.data',
-                    component: DataNotification,
-                    meta: { title: 'Pemberitahuan' }
-                }
-            ]
+          path: 'list',
+          name: 'transactions.list',
+          component: ListTransaction,
+          meta: {title: 'Daftar Transaksi'}
         },
-    ]
+        {
+          path: 'payment/:id',
+          name: 'transaction.payment',
+          component: AccPayment,
+          meta: {title: 'Pembayaran'}
+        },
+      ]
+    },
+    {
+      path: '/users',
+      component: IndexUsers,
+      meta: {requiresAuth: true},
+      children: [
+        {
+          path: '',
+          name: 'persons.data',
+          component: DataPersons,
+          meta: {title: 'Daftar Pengguna'}
+        },
+        {
+          path: 'add',
+          name: 'persons.add',
+          component: AddPerson,
+          meta: {title: 'Tambah Pengguna'}
+        },
+        {
+          path: 'edit/:id',
+          name: 'persons.edit',
+          component: EditPerson,
+          meta: {title: 'Ubah Pengguna'}
+        }
+      ]
+    },
+    {
+      path: '/notification',
+      component: IndexNotification,
+      meta: {requiresAuth: true},
+      children: [
+        {
+          path: '',
+          name: 'notifications.data',
+          component: DataNotification,
+          meta: {title: 'Pemberitahuan'}
+        }
+      ]
+    },
+  ]
 });
 
 router.beforeEach((to, from, next) => {
-    store.commit('CLEAR_ERRORS');
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-        let auth = store.getters.isAuth;
-        if (!auth) {
-            next({ name: 'login' })
-        } else {
-            next()
-        }
+  store.commit('CLEAR_ERRORS');
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    let auth = store.getters.isAuth;
+    if (!auth) {
+      next({name: 'login'})
     } else {
-        next()
+      next()
     }
+  } else {
+    next()
+  }
 });
 
 export default router

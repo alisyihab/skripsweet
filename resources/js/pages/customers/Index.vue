@@ -1,5 +1,5 @@
 <template>
-<div class="app-main">
+  <div class="app-main">
     <main v-show="$can('read customer')">
       <div class="wrapper">
         <div class="page">
@@ -18,9 +18,9 @@
                 <h1 class="page-title mr-sm-auto"> {{ $route.meta.title }} </h1>
                 <div class="btn-toolbar">
                   <router-link
-                      :to="{ name: 'customers.add' }"
-                      v-show="$route.name == 'customers.data'"
-                      class="btn btn-light"
+                    :to="{ name: 'customers.add' }"
+                    v-show="$route.name == 'customers.data'"
+                    class="btn btn-light"
                   >
                     <i class="oi oi-plus"></i>
                     <span class="ml-1">Tambah Data</span>
@@ -42,20 +42,20 @@
 </template>
 
 <script>
- import Page404 from '../Page404';
+  import Page404 from '../Page404';
 
-export default {
-  name: 'IndexExpenses',
-  components: {
-    'page404': Page404
-  },
-  watch: {
-    $route: {
-      immediate: true,
-      handler(to, from) {
-        document.title = to.meta.title;
+  export default {
+    name: 'IndexExpenses',
+    components: {
+      'page404': Page404
+    },
+    watch: {
+      $route: {
+        immediate: true,
+        handler(to, from) {
+          document.title = to.meta.title;
+        }
       }
-    }
-  },
-}
+    },
+  }
 </script>

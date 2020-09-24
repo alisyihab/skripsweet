@@ -86,8 +86,8 @@ class ExpensesController extends Controller
         Notification::send($expenses->user, new ExpensesNotification($expenses, $expenses->user));
 
         FinancialRecords::create([
-            'amount' => $expenses->price,
-            'type' => 1,
+            'credit' => $expenses->price,
+            'debit' => 0,
             'note' => $expenses->note
         ]);
 

@@ -31,55 +31,55 @@
 </template>
 
 <script>
-import $axios from "../../api";
-import moment from 'moment'
-import InfiniteLoading from 'vue-infinite-loading';
+  import $axios from "../../api";
+  import moment from 'moment'
+  import InfiniteLoading from 'vue-infinite-loading';
 
-export default {
-  data() {
-    return {
-      notifications: [],
-      // page: 1
-    }
-  },
-  // methods: {
-  //     infiniteHandler($state) {
-  //         $axios.get(`list-notif`, {
-  //             params: {
-  //                 page: this.page,
-  //             },
-  //         }).then(({ data }) => {
-  //             if (data.result.data.length) {
-  //                 this.page += 1;
-  //                 this.notifications.push(...data.result.data);
-  //                 $state.loaded();
-  //             } else {
-  //                 $state.complete();
-  //             }
-  //         })
-  //     }
-  // },
-  // filters: {
-  //     formatDate(val) {
-  //         return moment(new Date(val)).fromNow()
-  //     }
-  // },
-  // components: {
-  //     InfiniteLoading
-  // }
-  mounted() {
-    notifications: {
-      $axios.get(`list-notif`).then((response) => {
-        this.notifications = response.data.result;
-      }).catch((error) => {
-        console.log(error)
-      })
-    }
-  },
-  filters: {
-      formatDate(val) {
-          return moment(new Date(val)).calendar()
+  export default {
+    data() {
+      return {
+        notifications: [],
+        // page: 1
       }
-  },
-}
+    },
+    // methods: {
+    //     infiniteHandler($state) {
+    //         $axios.get(`list-notif`, {
+    //             params: {
+    //                 page: this.page,
+    //             },
+    //         }).then(({ data }) => {
+    //             if (data.result.data.length) {
+    //                 this.page += 1;
+    //                 this.notifications.push(...data.result.data);
+    //                 $state.loaded();
+    //             } else {
+    //                 $state.complete();
+    //             }
+    //         })
+    //     }
+    // },
+    // filters: {
+    //     formatDate(val) {
+    //         return moment(new Date(val)).fromNow()
+    //     }
+    // },
+    // components: {
+    //     InfiniteLoading
+    // }
+    mounted() {
+      notifications: {
+        $axios.get(`list-notif`).then((response) => {
+          this.notifications = response.data.result;
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    filters: {
+      formatDate(val) {
+        return moment(new Date(val)).calendar()
+      }
+    },
+  }
 </script>

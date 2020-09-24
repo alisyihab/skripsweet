@@ -1,9 +1,9 @@
 import $axios from '../api';
 
 const state = () => ({
-    customers: [],
-    page: 1,
-    id: ''
+  customers: [],
+  page: 1,
+  id: ''
 });
 
 const mutations = {
@@ -19,56 +19,56 @@ const mutations = {
 };
 
 const actions = {
-  getCustomers({ commit, state }, payload) {
-    let search = typeof payload != 'undefined' ? payload:''
+  getCustomers({commit, state}, payload) {
+    let search = typeof payload != 'undefined' ? payload : ''
 
     return new Promise((resolve) => {
       $axios.get(`/customer?page=${state.page}&q=${search}`)
-      .then((response) => {
-        commit('ASSIGN_DATA', response.data);
-        resolve(response.data)
-      })
+        .then((response) => {
+          commit('ASSIGN_DATA', response.data);
+          resolve(response.data)
+        })
     })
   },
-  submitCustomer({ dispatch, commit }, payload) {
+  submitCustomer({dispatch, commit}, payload) {
     return new Promise((resolve, reject) => {
-        $axios.post(`/customer`, payload, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
+      $axios.post(`/customer`, payload, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
         .then((response) => {
-            dispatch('getCustomers').then(() => {
-                resolve(response.data)
-            })
+          dispatch('getCustomers').then(() => {
+            resolve(response.data)
+          })
         })
         .catch((error) => {
-            if (error.response.status == 422) {
-                commit('SET_ERRORS', error.response.data.errors, { root: true })
-            }
+          if (error.response.status == 422) {
+            commit('SET_ERRORS', error.response.data.errors, {root: true})
+          }
         })
     })
   },
-  editCustomer({ commit }, payload) {
+  editCustomer({commit}, payload) {
     return new Promise((resolve) => {
       $axios.get(`/customer/${payload}/edit`)
-      .then((response) => {
-        resolve(response.data)
-      })
+        .then((response) => {
+          resolve(response.data)
+        })
     })
   },
-  updateCustomer({ state }, payload) {
+  updateCustomer({state}, payload) {
     return new Promise((resolve) => {
       $axios.post(`/customer/${state.id}`, payload, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
+        headers: {
+          'Content-Type': 'multipart/form-data'
         }
       }).then((response) => {
         resolve(response.data)
       })
     })
   },
-  removeCustomer({ dispatch }, payload) {
+  removeCustomer({dispatch}, payload) {
     return new Promise((resolve) => {
       $axios.delete(`/customer/${payload}`).then((response) => {
         dispatch('getCustomers').then(() => resolve(response.data))

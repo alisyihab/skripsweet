@@ -14,7 +14,11 @@ class FinaceController
         $filter = request()->year;
 
         $finace = FinancialRecords::
-            select(DB::raw("SUM(debit) as debit"), DB::raw("SUM(credit) as credit"), DB::raw("MONTHNAME(created_at) as monthname"))
+            select(
+                DB::raw("SUM(CASE WHEN type = '0' THEN amount ELSE 0 END) AS debit"), 
+                DB::raw("SUM(CASE WHEN type = '1' THEN amount ELSE 0 END) AS credit"),
+                DB::raw("MONTHNAME(created_at) as monthname"),  
+            )
             ->where('created_at', 'LIKE', '%' . $filter . '%')
             ->groupBy('monthname')
             ->get()
@@ -25,7 +29,8 @@ class FinaceController
             $data[] = [
                 'date' => $row['monthname'],
                 'debit' => $row['debit'],
-                'credit' => $row['credit']
+                'credit' => $row['credit'],
+                // 'note' => $row['note']
             ];
         }
         

@@ -126,12 +126,12 @@
                 <th>Metode Pembayaran</th>
                 <td>:</td>
                 <td class="text-left">
-                                    <span v-if="transaction.payment.type == 'false'">
-                                        Cash
-                                    </span>
+                    <span v-if="transaction.payment.type == 'false'">
+                      Cash
+                    </span>
                   <span v-else>
-                                        Deposit
-                                    </span>
+                    Deposit
+                  </span>
                 </td>
               </tr>
               <hr>

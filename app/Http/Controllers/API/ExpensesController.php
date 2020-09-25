@@ -59,8 +59,8 @@ class ExpensesController extends Controller
 
         if ($user->role == 0) {
             FinancialRecords::create([
-                'credit' => $request->price,
-                'debit' => 0,
+                'amount' => $request->price,
+                'type' => 1,
                 'note' => $request->description
             ]);
         }
@@ -86,8 +86,8 @@ class ExpensesController extends Controller
         Notification::send($expenses->user, new ExpensesNotification($expenses, $expenses->user));
 
         FinancialRecords::create([
-            'credit' => $expenses->price,
-            'debit' => 0,
+            'amount' => $expenses->price,
+            'type' => 1,
             'note' => $expenses->note
         ]);
 

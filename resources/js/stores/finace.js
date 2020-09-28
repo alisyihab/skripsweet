@@ -13,7 +13,7 @@ const mutations = {
 const actions = {
   getChartBar({ commit }, payload) {
     return new Promise(( resolve ) => {
-      $axios.get(`/finace?year=${payload.year}`).then((response) => {
+      $axios.get(`/finace?year=${payload.year}&month=${payload.month}`).then((response) => {
         commit('ASSIGN_DATA_FINACE', response.data);
         resolve(response.data)
       })

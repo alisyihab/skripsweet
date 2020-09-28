@@ -16,7 +16,7 @@
         <div class="card-metric">
           <div class="metric">
             <p class="metric-value h3">
-              <sub><i class="fas fa-tshirt text-info"></i></sub> 
+              <sub><i class="fas fa-tshirt text-info"></i></sub>
               <span class="value">{{ totData.orders }}</span>
             </p>
             <h2 class="metric-label"> Laundry </h2>
@@ -24,23 +24,23 @@
         </div>
       </div>
       <div class="col-12 col-sm-6 col-lg-3">
-          <div class="card-metric">
-            <div class="metric">
-                <h2 class="metric-label text-success"> Pendapatan </h2>
-                <p class="metric-value h1">
-                    <sup>Rp. </sup> <span class="value">{{ totData.income | convert }}</span>
-                </p>
-            </div>
+        <div class="card-metric">
+          <div class="metric">
+            <h2 class="metric-label text-success"> Pendapatan </h2>
+            <p class="metric-value h1">
+              <sup>Rp. </sup> <span class="value">{{ totData.income | convert }}</span>
+            </p>
+          </div>
         </div>
       </div>
       <div class="col-12 col-sm-6 col-lg-3">
         <div class="card-metric">
-            <div class="metric">
-                <h2 class="metric-label text-danger"> Pengeluaran </h2>
-                <p class="metric-value h1">
-                    <sup>Rp. </sup> <span class="value">{{ totData.expanse | convert }}</span>
-                </p>
-            </div>
+          <div class="metric">
+            <h2 class="metric-label text-danger"> Pengeluaran </h2>
+            <p class="metric-value h1">
+              <sup>Rp. </sup> <span class="value">{{ totData.expanse | convert }}</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -60,7 +60,7 @@
         <div class="card-metric">
           <div class="metric">
             <p class="metric-value h3">
-              <sub><i class="fas fa-tshirt text-info"></i></sub> 
+              <sub><i class="fas fa-tshirt text-info"></i></sub>
               <span class="value">{{ totData.orders }}</span>
             </p>
             <h2 class="metric-label"> Laundry </h2>
@@ -72,42 +72,42 @@
 </template>
 
 <script>
-import $axios from "../../api";
-import {mapActions, mapState} from 'vuex';
+  import $axios from "../../api";
+  import {mapActions, mapState} from 'vuex';
 
-export default {
-  data() {
-    return {
-      totData: [],
-    }
-  },
-  computed: {
-    ...mapState('user', {
-      authenticated: state => state.authenticated
-    }),
-  },
-  mounted() {
-    totData: {
-      $axios.get(`data`).then(response => {
-        this.totData = response.data;
-      })
-        .catch(error => {
-            console.log(error)
-        })
-    }
-  },
-  filters: {
-      convert: function (value) {
-          if (value >= 1000000000) {
-              value=(value/1000000000)+" M"
-          } else if (value >= 1000000) {
-              value=(value/1000000)+" Jt";
-          } else if (value >= 1000) {
-              value=(value/1000)+" Rb";
-          }
-
-          return value;
+  export default {
+    data() {
+      return {
+        totData: [],
       }
+    },
+    computed: {
+      ...mapState('user', {
+        authenticated: state => state.authenticated
+      }),
+    },
+    mounted() {
+      totData: {
+        $axios.get(`data`).then(response => {
+          this.totData = response.data;
+        })
+          .catch(error => {
+            console.log(error)
+          })
+      }
+    },
+    filters: {
+      convert: function (value) {
+        if (value >= 1000000000) {
+          value = (value / 1000000000) + " M"
+        } else if (value >= 1000000) {
+          value = (value / 1000000) + " Jt";
+        } else if (value >= 1000) {
+          value = (value / 1000) + " Rb";
+        }
+
+        return value;
+      }
+    }
   }
-}
 </script>

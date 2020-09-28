@@ -4,13 +4,17 @@
       <h1 class="section-title mb-0"> &nbsp; </h1><!-- .dropdown -->
       <div class="col-lg-2 col-md-4 col-sm-4">
         <div class="form-group">
-        <label>Tahun</label>
-          <select v-model="year" class="form-control">
-            <option v-for="(y, i) in years" :key="i" :value="y">{{ y }}</option>
-          </select>
+          <label>Tahun</label>
+            <select v-model="year" class="form-control">
+              <option v-for="(y, i) in years" :key="i" :value="y">{{ y }}</option>
+            </select>
         </div>
       </div>
     </div>
+    <button type="button" class="btn btn-light mb-2" @click="exportData">
+      <i class="oi oi-data-transfer-download"></i> 
+      <span class="ml-1">Export</span>
+    </button>
     <div class="row">
       <!-- grid column -->
       <div class="col-xl-8">
@@ -100,18 +104,21 @@
     },
     created() {
       this.getChartBar({
-        year: this.year
+        year: this.year,
+        month: this.month
       })
     },
     data() {
       return {
-        year: moment().format('Y')
+        year: moment().format('Y'),
+        month: moment().format('MM')
       }
     },
     watch: {
       year() {
         this.getChartBar({
-          year: this.year
+          year: this.year,
+          month: this.month
         })
       }
     },
@@ -119,6 +126,10 @@
       ...mapState('finace', {
         finace: state => state.finace
       }),
+      ...mapState('user', {
+        authenticated: state => state.authenticated
+      }),
+      ...mapState(['token']),
       years() {
         return _.range(2010, moment().add(1, 'years').format('Y'))
       },
@@ -150,6 +161,9 @@
     },
     methods: {
       ...mapActions('finace', ['getChartBar']),
+      exportData() {
+        window.open(`/api/export-finace?api_token=${this.token}&month=${this.month}&year=${this.year}`)
+      }
     },
     filters: {
       convert: function (value) {

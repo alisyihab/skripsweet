@@ -7,16 +7,19 @@
           <hr>
           <div class="form-group">
             <label>Tagihan</label>
-            <input type="text"
-                   :value="transaction.amount | currency('Rp', '2', { spaceBetweenAmountAndSymbol: true })"
-                   class="form-control"
-                   readonly/>
+            <input 
+              type="text"
+              :value="transaction.amount | currency('Rp', '2', { spaceBetweenAmountAndSymbol: true })"
+              class="form-control"
+             readonly
+            />
           </div>
           <div class="form-group">
             <label>Jumlah Bayar</label>
-            <input type="number"
-                   class="form-control"
-                   v-model="amount"/>
+            <input 
+              type="number"
+              class="form-control"
+              v-model="amount"/>
           </div>
           <div class="form-group" v-if="authenticated.role == 3">
             <label>Bukti Transfer</label>
@@ -146,7 +149,7 @@
           </div>
         </div>
         
-        <div class="col-md-12" style="padding-top: 20px">
+        <div class="col-md-12" style="padding-top: 20px" v-if="transaction.payment">
           <h5>Detail Laundry</h5>
           <hr>
           <div class="table-responsive">

@@ -5,12 +5,8 @@
         <h6>Transaksi Terahir</h6>
       </div>
       <div class="card-body">
-        <facebook-loader 
-          v-if="!trans"
-          :speed="1"
-        />
         <ul class="list-unstyled list-unstyled-border"
-            v-for="(row, index) in trans" :key="index" v-else>
+            v-for="(row, index) in trans" :key="index">
           <li class="media">
             <img
               class="mr-3 rounded-circle"
@@ -67,7 +63,6 @@
   import dayjs from 'dayjs';
   import relativeTime from 'dayjs/plugin/relativeTime';
   import Vue2Filters from 'vue2-filters';
-  import { FacebookLoader } from 'vue-content-loader';
 
   require('dayjs/locale/id')
 
@@ -105,8 +100,7 @@
       }
     },
     components: {
-      mixins: [Vue2Filters.mixin],
-      FacebookLoader
+      mixins: [Vue2Filters.mixin]
     }
   }
 </script>

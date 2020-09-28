@@ -6,6 +6,7 @@ use App\FinancialRecords;
 use App\Http\Resources\TransactionCollection;
 use App\Http\Controllers\Controller;
 use App\DetailTransaction;
+use App\Notifications\DetailNotification;
 use App\Notifications\TransactionNotification;
 use App\Notifications\PaymentNotification;
 use App\Payment;
@@ -102,6 +103,8 @@ class TransactionController extends Controller
                 'type' => 0,
                 'note' => $row['laundry_price']['name']
             ]);
+
+            Notification::send($transaction->customer, new DetailNotification($transaction, $user));
 
             return response()->json([
                 'status' => 'success',

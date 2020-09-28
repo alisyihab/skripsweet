@@ -95,7 +95,7 @@
                   </tr>
                   <tr>
                     <th>
-                      <button class="btn btn-primary" @click="accept">Terima</button>
+                      <button class="btn btn-primary" @click="accept" v-if="transaction.status == 1">Terima</button>
                     </th>
                   </tr>
                 </table>

@@ -5,23 +5,19 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class DetailTransactionNotification extends Notification
+class DetailNotification extends Notification
 {
     use Queueable;
 
-    protected $detail;
+    protected $detailTransaction;
     protected $user;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct($detail, $user)
+
+    public function __construct($detailTransaction, $user)
     {
-        $this->detail = $detail;
+        $this->detailTransaction = $detailTransaction;
         $this->user = $user;
     }
 
@@ -33,35 +29,31 @@ class DetailTransactionNotification extends Notification
      */
     public function via($notifiable)
     {
-         return ['database', 'broadcast'];
+        return ['database', 'broadcast'];
     }
 
-    /**
-     * @param $notifiable
-     * @return array
-     */
     public function toDatabase($notifiable)
     {
         return [
             'sender_id' => $this->user->id,
             'sender_name' => $this->user->name,
-            'sender_photo' => $this->user->photo,
-            'detail' => $this->detail
+            'detailTransaction' => $this->detailTransaction,
+            'note' => 'Laundry anda sedang di proses, silahkan melakukan pembayaran'
         ];
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
-     * @return BroadcastMessage
+     * @param  mixed  $notifiable
+     * @return array
      */
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
             'sender_id' => $this->user->id,
             'sender_name' => $this->user->name,
-            'detail' => $this->detail
+            'detailTrasaction' => $this->detailTransaction,
         ]);
     }
 }

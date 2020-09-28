@@ -66,6 +66,9 @@
                                                     Pembayaran telah di verifikasi oleh admin.
                                                     <span v-html="row.data.transaction.status_label"></span>
                                                 </p>
+                                                <p v-else-if="row.data.detailTransaction" class="text-muted">
+                                                    {{ row.data.note }}
+                                                </p>
                                                 <span class="date">{{ row.created_at | formatDate }}</span>
                                             </div>
                                         </a>
@@ -160,6 +163,13 @@
                         name: 'transactions.view',
                         params: {
                             id: row.data.transaction.id
+                        }
+                    }))
+                } else if (row.data.detailTransaction) {
+                    this.readNotification({id: row.id}).then(() => this.$router.push({
+                        name: 'transactions.view',
+                        params: {
+                            id: row.data.detailTransaction.id
                         }
                     }))
                 }

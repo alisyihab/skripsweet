@@ -365,7 +365,7 @@
               this.payment_message = null
               this.via_deposit = false
             }, 500)
-            this.detailTransaction(this.$route.params.id)
+            this.$router.push({ name: 'transactions.list' })
           } else {
             this.loading = false
             this.$swal.fire({

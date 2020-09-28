@@ -63,10 +63,10 @@
               'success'
             );
           }
-          if (this.response = result.error) {
-            this.this.$swal.fire(
+          if (this.response = result.data.error) {
+            this.$swal.fire(
               'Error',
-              'gagal di kirim ' + this.email,
+              this.email + ' ' + result.data.pesan,
               'error'
             );
           }

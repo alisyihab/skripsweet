@@ -6,17 +6,17 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class DetailNotification extends Notification
+class CompleteItemNotification extends Notification
 {
     use Queueable;
 
-    protected $detailTransaction;
+    protected $transaction;
     protected $user;
 
 
-    public function __construct($detailTransaction, $user)
+    public function __construct($transaction, $user)
     {
-        $this->detailTransaction = $detailTransaction;
+        $this->transaction = $transaction;
         $this->user = $user;
     }
 
@@ -36,8 +36,8 @@ class DetailNotification extends Notification
         return [
             'sender_id' => $this->user->id,
             'sender_name' => $this->user->name,
-            'detailTransaction' => $this->detailTransaction,
-            'note' => 'Laundry anda sedang di proses, silahkan melakukan pembayaran'
+            'completeItem' => $this->transaction,
+            'note' => 'Laundry anda telah selesai, terimakasih telah menggunakan jasa kami. jangan lupa beri penilaian ya agar kami bisa meninggkatkan service kepuasan anda :)'
         ];
     }
 
@@ -52,7 +52,7 @@ class DetailNotification extends Notification
         return new BroadcastMessage([
             'sender_id' => $this->user->id,
             'sender_name' => $this->user->name,
-            'detailTrasaction' => $this->detailTransaction,
+            'completeItem' => $this->transaction,
         ]);
     }
 }

@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\API;
 
 use App\FinancialRecords;
-use App\Http\Resources\TransactionCollection;
-use App\Http\Controllers\Controller;
+use App\Payment;
+use App\Transaction;
+use App\User;
 use App\DetailTransaction;
 use App\Notifications\DetailNotification;
 use App\Notifications\TransactionNotification;
 use App\Notifications\PaymentNotification;
-use App\Payment;
-use App\Transaction;
-use App\User;
+use App\Notifications\CompleteItemNotification;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\TransactionCollection;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -131,15 +132,16 @@ class TransactionController extends Controller
 
     public function completeItem(Request $request)
     {
+        $user = $request->user();
         $this->validate($request, [
             'id' => 'required|exists:detail_transactions,id'
         ]);
 
         $transaction = DetailTransaction::with(['transaction.customer'])->find($request->id);
-
         $transaction->update(['status' => 1]);
-        
         $transaction->transaction->customer()->update(['point' => $transaction->transaction->customer->point + 1]);
+
+        Notification::send($transaction->transaction->customer, new CompleteItemNotification($transaction, $user));
 
         return response()->json([
             'status' => 'success'
@@ -253,12 +255,13 @@ class TransactionController extends Controller
 
     public function accept(Request $request)
     {
+        $user = request()->user();
+
         $this->validate($request, ['id' => 'required|exists:transactions,id']);
 
         $transaction = Transaction::with(['detail.product'])->find($request->id);
         $transaction->update(['status' => 2]);
 
-        $user = request()->user();
         
         Notification::send($transaction->customer, new TransactionNotification($transaction, $user));
 

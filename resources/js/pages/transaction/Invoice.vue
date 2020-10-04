@@ -1,5 +1,5 @@
 <template>
-  <div class="invoice">
+  <div>
     <div class="invoice-print" id="printMe">
       <div class="row">
         <div class="col-lg-12">

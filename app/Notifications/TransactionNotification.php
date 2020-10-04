@@ -47,8 +47,8 @@ class TransactionNotification extends Notification
         return [
             'sender_id' => $this->user->id,
             'sender_name' => $this->user->name,
-            'sender_photo' => $this->user->photo,
-            'transaction' => $this->transaction
+            'transaction' => $this->transaction,
+            'note' => 'pembayaran telah di terima, laundry anda sedang di prosess.'
         ];
     }
 

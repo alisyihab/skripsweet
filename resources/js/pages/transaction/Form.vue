@@ -124,15 +124,13 @@
       </div>
     </div>
     
-    <div class="col-md-12" v-if="isSuccess">
-      <div class="alert alert-success">
-        Transaksi Berhasil, Total Tagihan:
-        {{ total | currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) }}
-        <strong>
+    <div class="col-md-4" v-if="isSuccess">
+      <div class="alert alert-info alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">×</button> 
+        <strong>Transaksi Berhasil, Total Tagihan :</strong>  {{ total | currency('Rp.', '2', { spaceBetweenAmountAndSymbol: true }) }} 
           <router-link :to="{ name: 'transactions.view', params: {id: transaction_id} }">
-            Lihat Detail
+              Lihat Detail
           </router-link>
-        </strong>
       </div>
     </div>
   </div>
@@ -159,7 +157,13 @@
         transactions: {
           customer_id: null,
           detail: [
-            {laundry_price: null, qty: 1, price: 0, subtotal: 0}
+            {
+              laundry_price: null, 
+              qty: 1, 
+              price: 0, 
+              subtotal: 0,
+              photo: null
+            }
           ]
         }
       }
@@ -235,13 +239,13 @@
           })
         }
 
-        // if (filter.length <= 0) {
-        //     this.$swal.fire({
-        //         icon: 'error',
-        //         title: 'Oops...',
-        //         text: 'Paket Belum diisi',
-        //     });
-        // }
+        if (filter.length <= 0) {
+            this.$swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Paket Belum diisi',
+            });
+        }
       },
       newCustomer() {
         this.isForm = true

@@ -26,7 +26,7 @@
                 <td><strong>Laba </strong></td>
                 <td> &nbsp; </td>
                 <td>
-                    Rp. {{ $row['debit'] - $row['credit'] }} 
+                    Rp. {{ number_format($row['debit'] - $row['credit']) }} 
                 </td>
             </tr>
         @endforeach

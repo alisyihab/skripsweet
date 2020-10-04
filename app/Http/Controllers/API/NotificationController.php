@@ -37,10 +37,7 @@ class NotificationController extends Controller
         $notifications = 
             $user->notifications()
             ->orderBy('created_at', 'DESC')
-            ->get()
-            ->groupBy(function($date) {
-                return Carbon::parse($date->created_at)->format('Y-m-d');
-            })
+            ->paginate(10)
         ;
 
         return response()->json([
